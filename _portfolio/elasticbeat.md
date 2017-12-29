@@ -8,6 +8,6 @@ code. Working with the Elastic team I pushed out PRs to fix multiple bugs and su
 <a href="https://github.com/elastic/beats/pull/5705">here</a> and <a href="https://github.com/elastic/beats/pull/5698">here</a>
 team: Single
 date: November 2017
-category: ELKB
+category: Android
 ---
  
