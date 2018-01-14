@@ -1,9 +1,10 @@
 ---
-anchor: Elasticbeat
-title: Elasticbeats
-image: img/portfolio/elasticbeat.png
-description: Elasticbeat is a fantastic open source project part of the Elastic family. Beats are lightweight data shippers to capture all sorts of data such as logs, metrics or http responses. While utilizing these Beats I encountered various bugs inside of their code. Working with the Elastic team I pushed out PRs to fix multiple bugs and submited multiple backport PRs. 
-team: Single
-date: November 2017
-category: ELKB
+anchor: PropertyBoss
+title: PropertyBoss
+image: img/portfolio/pb.png
+description: As part of a high school project worked on a team to develop a property management website. The functionality of the website
+was completed to the satisfcation of a client. 
+team: Team
+date: September 2015
+category: PropertyBoss
 ---
