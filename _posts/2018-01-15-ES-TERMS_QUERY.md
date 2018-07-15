@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Elasticsearch Deep Pagination"
-subtitle:   "When and how to do to deep pagination in Elasticsearch"
+title:      "Elasticsearch Terms Query Limits"
+subtitle:   "Explorining the limits of Elasticsearch Terms Query"
 date:       2016-03-27 17:00:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
@@ -9,251 +9,265 @@ comments: true
 tags: [ Elasticsearch ]
 ---
 
-**Note : Click <a href="#customize">this</a> to skip to the part where I explain about customizing this theme for your use.**
+# Background
 
-## How this blog was created
-![Clean Blog](/img/posts/heartvbrain1.png)
+## Terms Query
+[ES Terms Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html)
 
-## Setting Up AD
+A terms query filters documents that have fields that match any of the provided terms. For example:
 
-## Getting ISO
-Go to https://www.microsoft.com/en-gb/evalcenter/evaluate-windows-server-2012-r2 and download the Windows Server 2012 R2 evaluation. You will need to fill in a few fields but they can contain bogus data. Pick ISO as the file type, 64bit and English as the Product language.
+```
+GET /_search
+{
+    "query": {
+        "terms" : { "id" : ["id1", "id2", "id3"]}
+    }
+}
+```
+
+This query will return all documents that have a field "id" which have a value of "id1" or "id2" or "id3"
+
+## Query Context
+[ES Query Context](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html)
+
+When you provide Elasticsearch a query it will not only filter out any documents that do not match the query, but assign each document a score which signifies how
+
+well the document matched the query, this score is added to the _score field of the returned documents. 
+
+Sometimes one does not care about how well a document matches the query instead all they care about is does this document match the query.
+
+In that case one can use the filter context where no _score is calculated, resulting in quicker searches and better caching. 
+
+## Bool query
+[ES Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+
+The bool query returns all documents that match the must clauses and documents which match more should clause's will have a bigger final _score
+
+For example:
+
+```
+POST _search
+{
+  "query": {
+    "bool" : {
+      "must" : {
+        "term" : { "name" : "Krystian" }
+      },
+      "must_not" : {
+        "range" : {
+          "age" : { "gte" : 10, "lte" : 20 }
+        }
+      },
+      "should" : [
+        { "term" : { "hobby" : "sitting" } },
+        { "term" : { "hobby" : "sleeping" } }
+      ],
+      "minimum_should_match" : 1
+    }
+  }
+}
+```
+
+This query will return all documents that have the field "name" equal to "Krystian" and !(20 >= age >= 10) and have sitting or sleeping as a hobby.
+
+The minimum_should_match parameter means that at minimum for any documents returned at least 1 should clause should match. 
+
+https://stackoverflow.com/questions/48984706/default-value-of-minimum-should-match explains how minimum_should_match works in different contexts
+
+# Initial Problem
+Back when the ANM team was using Elasticsearch (ES) 5.5 there was an issue raised about being unable to query for more than 1024 specific events  RK-3116 - Event Pages(s) -- "Tooltip pop up on event bubbles fails to load on 1/day / 1K Events" DONE  . 
+
+To query for specific events a terms query is used
+
+```
+{ "query": { "terms" : { "event_ids" : ["event1", "event2", .... , "event1025"]} } }
+```
 
 
-## Creating Virtual Machine
-Using your favourite virtual machine manager (Using VirtualBox in this case) we will create a virtual machine with our windows server iso file. https://dalanzg.github.io/tips-tutorials/windows/2016/05/22/how-to-install-windows-server-2012-on-virtualbox/ ensure the VM is created with a virtual hard disk with size at least 20gb, recommended RAM is at least 2 GB.
+Which can be replicated in go code by doing
 
-Before starting the virtual machine and selecting the ISO file. Go to the settings of the virtual machine → network → adapater 1 and selected Bridged Adapter with the Name that of your ethernet connection ie enp0s25
 
-Language to install → English
+```
+func TestExample1(t *testing.T) {
+   client := setUpClient(t)
+   ids := createIds()
 
-Time and currency format → English
+   // creating query
+   q := elastic.NewTermsQuery("EventID", stringToIntArray(ids)...)
+   searchService := client.Search().Index("*").Query(q)
 
-Keyboard → US 
+   _, err := searchService.Do(context.TODO())
+   assert.Nil(t, err)
+}
 
-Install now 
+// dont need to really understand these helper methods, just for being able to run the code
+func createIds() []string {
+   ids := make([]string, 66000)
+   i := 0
+   for i < 66000 {
+      ids[i] = fmt.Sprintf("id%d", i)
+      i++
+   }
+   return ids
+}
 
-Select Windows Server 2012 R2 Standard Evaluation (Server with a GUI) → next
+func setUpClient(t *testing.T) *elastic.Client {
+   client, err := elastic.NewSimpleClient(elastic.SetURL("http://localhost:9200"),
+      elastic.SetTraceLog(log.New(os.Stderr, "ELASTIC ", log.LstdFlags)))
+   if err != nil {
+      t.Fatal("Cant connect to ES")
+   }
+   return client
+}
 
-I Accept → Next
+func stringToIntArray(val []string) []interface{} {
+   ret := make([]interface{}, 0)
+   for _, item := range val {
+      ret = append(ret, item)
+   }
+   return ret
+}
+```
 
-Custom: Install Windows only (advanced) 
+When this is run against ES 5.5 the query will return an error saying
 
-Select your virtual hard disk → next 
+```
+ELASTIC 2018/07/05 14:53:23 HTTP/1.1 400 Bad Request
+Transfer-Encoding: chunked
+Content-Type: application/json; charset=UTF-8
 
-Your virtual machine will restart. Once it has restarted you will be prompted for an admin password. This admin is not an AD admin just an admin for the virtual machine. 
+8000
+{"error":{"root_cause":[{"type":"too_many_clauses","reason":"too_many_clauses: maxClauseCount is set to 1024"}],"type":"search_phase_execution_exception","reason":"all shards failed","phase":"query","grouped":true,"failed_shards":[{"shard":0,"index":"rim-events-2017.02.31","node":"cbJd_LkQTayn3p6DycegVQ","reason":{"type":"query_shard_exception","reason":"failed to create query: {\n \"terms\" : {\n \"EventID\" : [\n \"id9\",\n \"`
+```
 
-Once windows server has been installed note down your virtual machines ip address for example: 172.20.127.174
 
-## Setting Up Active Directory
-https://forum.forgerock.com/2016/08/setting-active-directory-domain-evaluating-forgerock-stack/ From there you follow the sections called "Give the computer an appropriate hostname" and "Install Active Directory Domain Services ADDS Using Server Manager". 
+The error returned indicates that there are too many clauses in the query.
 
-Set your hostname using powershell
+Clauses come from a [bool query] (https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html), so my guess is that ES turns the terms query into a bunch of should clauses in a bool query with 1 should clause per 1 term which causes 1024+ should clauses, which then results in this error code (this is my only my speculation no proof to back it up, [this](https://github.com/elastic/elasticsearch/pull/27968/commits/92849ba2067493786398da60807b3a4a7587f39d#r158552400) does seem to hint at a relation between terms query and bool query but that is only guessing).
 
-Rename-Computer -NewName LOCAL-AD-TEST
+It seems others also had an [issue](https://github.com/elastic/elasticsearch/issues/28980#issuecomment-386651557) with the terms filter using ES 5.6 .
 
-Restart your VM to have the change take effect
 
-Once the Server Manager page appears → add roles and features
 
-next → role based or feature-based installation → next → local server should be selected make sure hostname is correct 
+# Initial Solution
 
-select the checkbox corresponding to Active Directory Domain Services → Add features → next → next → next 
 
-select restart the destination server automatically if required → yes → install 
+To fix the issue a simple trick was added to turn the terms query into a bool query with multiple terms queries inside such as this
 
-once installation has completed select promote this server to a domain controller → add a new forest → root domain name: company.local.test → next
+```
+func TestExample2(t *testing.T) {
 
-Set password to whatever you want (remember it to log in later) → next 
+   client := setUpClient(t)
+   ids := createIds()
 
-Dont worry about the DNS error → keep hitting next until you can install → install→ close then computer should restart
+   q := elastic.NewBoolQuery()
+   // ensure each document returned matches atleast one of the should clauses
+   q = q.MinimumNumberShouldMatch(1)
+   i := 0
+   // maximum of 1024 terms per query need to split up the terms across multiple
+   // should queries
+   for i < len(ids) {
+      // if more than 1024 terms remaining then put in the next 1024 terms and iterate again
+      // if less than 1024 terms remaining then put the remaining terms in
+      if len(ids)-(i+1024) < 0 {
+         q = q.Should(elastic.NewTermsQuery("EventID", stringToInterfaceArray(ids[i:])...))
+         i += len(ids)
+      } else {
+         q = q.Should(elastic.NewTermsQuery("EventID", stringToInterfaceArray(ids[i:i+1024])...))
+         i += 1024
+      }
+   }
+   searchService := client.Search().Index("*").Query(q)
 
-## Setting Up TLS/SSL
-From https://forum.forgerock.com/2016/08/setting-active-directory-domain-evaluating-forgerock-stack/ again follow the section called "ADCS Using Server Manager" but stop at step 6 we will be using our own self signed certificates. 
+   _, err := searchService.Do(context.TODO())
+   assert.Nil(t, err)
+}
+```
 
-Add roles and features from Server Manager → next → next → select local server → next
+Resulting in this query:
 
-Select checkbox corresponding to Active Directory Certificate Services → add features → next until you reach Select role services 
-
-only select certification authority → next 
-
-select restart the destination server automatically if required → yes → install 
-
-once installation is finished click close 
-
-## Creating self signed certificates 
-We will follow https://gist.github.com/magnetikonline/0ccdabfec58eb1929c997d22e7341e45 with slight modifications to create our self signed certificates 
-
-(Following two commands will be run on your linux machine)
-
-openssl genrsa -des3 -out ca.key 4096
-
-openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
-
-From the active directory server, open Manage computer certificates.
-
-Add the generated ca.crt to the certificate path Trusted Root Certification Authorities\Certificates
-
-Create a new request.inf definition with the following contents - replacing Subject with the qualified domain name of your active directory server (only need to change if didn't set host name to LOCAL-AD-TEST and root domain to company.local.test):
-
-[Version]
+```
+{ 
+  "query": { 
+    "bool" : { 
+      "should" : [ 
+        { "terms" : { "EventID" : [ "id0", "id1", ... "id1023" ] } }, 
+        { "terms" : { "EventID" : [ "id1024", "id1025", ... "id2047" ] } }, 
+        ...
+       ],
+    "minimum_should_match" : 1 
+    } 
+  }  
+}
+```
  
-Signature="$Windows NT$"
- 
-[NewRequest]
- 
-Subject = "CN=LOCAL-AD-TEST.company.local.test,DC=company,DC=local,DC=test"
-;
-KeySpec = 1
-KeyLength = 1024
-Exportable = TRUE
-MachineKeySet = TRUE
-SMIME = False
-PrivateKeyArchive = FALSE
-UserProtected = FALSE
-UseExistingKeySet = FALSE
-ProviderName = "Microsoft RSA SChannel Cryptographic Provider"
-ProviderType = 12
-RequestType = PKCS10
-KeyUsage = 0xa0
- 
-[EnhancedKeyUsageExtension]
- 
-OID=1.3.6.1.5.5.7.3.1 ; this is for Server Authentication
+
+This would split up the terms across multiple should queries and ensure that atleast 1 should clause matched the documents that were returned. This bumped up the 
+possible events to be search to 1024 * 1024 (1024 clauses per bool query * 1024 terms per terms query) = 1048576. There might be potential to nest bool queries inside of bool queries
+but that was left untested and as an exercise to the reader (wink)
+
+# Rediscovery
+With more ES features being added to ANM this issue of max terms came up in conversation again.
+
+When retested it was found that any amount of terms could in fact be used even 999 999 terms without any warning just a slow query response time. By then however ANM had already upversioned ES from 5.5 to 6.3.
+
+As mentioned by the ES team in this [issue](https://github.com/elastic/elasticsearch/issues/28980#issuecomment-386651557) they are not quite sure why a terms query could not have 1k+ terms in ES 5.5 but by ES 6.0 they know it got magically fixed. 
+
+This can be verified by running the first example against ES 6.0 and seeing that it returns no errors. However with [ES 6.2](https://www.elastic.co/guide/en/elasticsearch/reference/current/release-notes-6.2.0.html) a small feature was introduced 
+
+```
+"Introduce limit to the number of terms in Terms Query #27968 (issue: #18829)".
+```
+
+With this update ES introduced an actual limit to the # of terms that can be allowed. The limit is 2^16 == 65536.
+
+This limit was not actually enforced in [ES 6.2](https://github.com/elastic/elasticsearch/commit/edb922435fc567a1ba87ad09fcde9257dedc1999#diff-1391ee50bb2cf8de56a2408044a4638cR426) and instead will show a deprecated error in the logs but the query will run okay.
+
+```
+[2018-07-10T16:38:17,005][WARN ][o.e.d.i.q.TermsQueryBuilder] Deprecated: the number of terms [66000] used in the Terms Query request has exceeded the allowed maximum of [65536]. This maximum can be set by changing the [index.max_terms_count] index level setting.
+```
+
+this explains why we were able to run a terms query with 999 999 terms. If one runs the first example against a ES 6.2 one can see there is no error and the query returns as expected.
+
+But with [ES 7.0](https://github.com/elastic/elasticsearch/pull/27968/files#diff-1391ee50bb2cf8de56a2408044a4638cR422) this limit will be enforced and will cause any query to fail if > 65536 terms and return error 400.
 
 
 
-Run the following to create a new client certificate request of client.csr (note: it's critical this is run from the active directory server to ensure a private key -> certificate association):
-
-C:\> certreq -new request.inf client.csr
-
-Back on your linux machine create v3ext.txt containing the following with IP.1 set to the IP of your windows virtual machine
-
-subjectAltName = @alt_names
-
-[alt_names]
-IP.1 = 172.20.127.174
-
-Next create the certificate based on the request
-
-openssl x509 -req -days 3650 -in client.csr -CA ca.crt -CAkey ca.key -extfile v3ext.txt -set_serial 01 -out client.crt
-
-From the active directory server with client.crt present, run the following:
-
-C:\> certreq -accept client.crt
-
-Open Manage computer certificates, the new certificate should now be present under Personal\Certificates if not manually import them through the gui. 
-
-Export the new certificate shown under Personal\Certificates as a PFX with the private key attatched. https://www.geocerts.com/support/migrate_iis shows how to export as a PFX
-
-Then on your linux box transform the PFX into a pem file by doing
-
-openssl pkcs12 -in client_ssl.pfx -out client_ssl.pem -clcerts
-https://stackoverflow.com/questions/15413646/converting-pfx-to-pem-using-openssl
-
-If you do not use shared folders (view Notes section below to learn how to use shared folders) you need to have the same set of files on both systems after each step. Which can be done using email/slack and sending the files back and forth.
-
-It is also possible to install openssl and then directly perform all the operations on the windows server. Here is a link to do this: https://www.tbs-certificates.co.uk/FAQ/en/openssl-windows.html
-
-## Modifying password complexity policy
-To add users with simple passwords we need to modify the password policy to ignore password complexity
-
-https://www.interactivewebs.com/blog/index.php/server-tips/windows-2012-turn-off-password-complexity/
-
-In the Server Manager click on Tools and from the drop down click Group Policy Management
-Expand Forest >> Domains >> company.local.test 
-Right click on the Default Domain Policy and click on the Edit from the context menu.
-Now Expand Computer Configuration → Policies →Windows Settings→Security Settings→Account Policies →Password Policy → double click Password Policy
-Double-click on the Passwords Must Meet Complexity Requirements option in the right pane.
-Select Disabled under define this policy setting:
-Click Apply then OK all the way out and close the GPO window.
-
-## Creating sample groups
-First we will create an organisation unit to hold our groups
-
-https://technet.microsoft.com/en-us/library/cc771564(v=ws.11).aspx
-
-Open Active Directory Users and Computers
-In the console tree, right-click the domain name.
-Point to New , and then click Organizational Unit .
-Type the name of the organizational unit (OU) we will use Groups.
-
-Now we will create groups in our OU
-
-https://msdn.microsoft.com/en-us/library/aa545347(v=cs.70).aspx
-
-In Active Directory Users and Computers window, expand company.local.test
-In the console tree, right-click the folder in which you want to add a new group.
-Click New, and then click Group.
-Type the name of the new group we will create two groups one for user and one for admin
-In the New Object - Group dialog box, do the following:
-In Group scope, click Domain Local.
-In Group type, click Security.
-Click Finish.
-
-## Creating sample users
-https://technet.microsoft.com/en-us/library/cc732336(v=ws.11).aspx
-
-Open Active Directory Users and Computers
-In the console tree, right-click the Users folder
-
-Point to New , and then click InetOrgPerson .
-
-First name: admin
-
-user logon name: admin
-
-user logon name (pre-Windows 2000): admin1
-
-password: password
-
-uncheck the User must change password at next login
-
-finish → then repeat for first name: user, user logon name: user, user logon name (pre-Windows 2000): user1
+# Solution
+The previous hack while it worked, it is un-ideal, what should be done is the should terms can go in the filter context of the bool query and the limit can be bumped up to 65536
 
 
-Now we will add the sample users to the groups 
+```
+func TestGoodSolution(t *testing.T) {
 
-https://technet.microsoft.com/en-us/library/cc772524(v=ws.11).aspx
+   // new limit to 65536 term's per terms query
+   maxTerms := 65536
 
-Right click the admin account we created → add to a group → for the object names to select  enter "admin; user" → check names → select the admin group then ok → select user group then ok
+   client := setUpClient(t)
+   ids := createIds()
 
-Repeat process for user account but only place him in the user group
+   q := elastic.NewBoolQuery()
+   // ensure each document returned matches atleast one of the should clauses
+   q = q.MinimumNumberShouldMatch(1)
+   i := 0
+   // maximum of 65536 terms per query need to split up the terms across multiple
+   // should queries
+   for i < len(ids) {
+      // if more than 65536 terms remaining then put in the next 65536 terms and iterate again
+      // if less than 65536 terms remaining then put the remaining terms in
+      if len(ids)-(i+maxTerms) < 0 {
+         q = q.Should(elastic.NewTermsQuery("EventID", stringToInterfaceArray(ids[i:])...))
+         i += len(ids)
+      } else {
+         q = q.Should(elastic.NewTermsQuery("EventID", stringToInterfaceArray(ids[i:i+maxTerms])...))
+         i += maxTerms
+      }
+   }
 
-Test if AD is working properly
-Testing TLS on windows machine
-Can only be done from a machine that has the client certificates
+   // putting the should clauses into the filter
+   searchService := client.Search().Index("*").Query(elastic.NewBoolQuery().Filter(q))
 
-Follow same steps as "Testing regular LDAP over windows machine" except change Port to 636 and select SSL
-
-Testing regular AD on windows machine
-Open ldp.exe → connection → connect 
-
-For server do localhost or the ip of your virtual machine → Port 389 and not using SSL → ok 
-
-Connection → bind → if testing from virtual machine you can Bind as currently logged on user otherwise Bind with credentials. Username: administrator, Password: whatever was set during installation, Domain is DC=company,DC=local,DC=test → ok
-
-View → tree → BaseDN select DC=company,DC=local,DC=test → ok → if in the left pane text appeared you are good smile :) 
-
-Notes
-For transferring files back and forth between the virtual machine and your host shared folders can be pretty handy
-
-With the virtual machine already started from the virtual box menu go to devices → insert guest additions CD image → open this computer → CD Drive D: Virtualbox guest additions → run VBoxWindowsAdditions → restart machine 
-
-again from virtual box menu go to devices → shared folders → shared folder settings → click the folder with a green plus (Adds new shared folder) → select folder you want to share and other options as appropriate → then click okay
-
-shared folder should now be accessible under network locations when file explorer is open 
-
-http://helpdeskgeek.com/virtualization/virtualbox-share-folder-host-guest/
-
-
-## Setting up and customizing a Jekyll Blog
-
-### A.Pick a template
-
-If you are (lazy like me) and don't want to write CSS, HTML & Javascript for frontend; you can checkout these resources to choose a jekyll template:
-
-* [Jekyll Official List](https://github.com/jekyll/jekyll/wiki/themes)
-* [themes.jekyllrc.org](http://themes.jekyllrc.org/)
-* [jekyllthemes.io](http://jekyllthemes.io/)
-* [jekyllthemes.org](http://j
+   _, err := searchService.Do(context.TODO())
+   assert.Nil(t, err)
+}
+```
