@@ -6,7 +6,7 @@ date:       2016-03-27 17:00:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
-tags: [ CodeMonkey ]
+tags: [ Elasticsearch ]
 ---
 
 **Note : Click <a href="#customize">this</a> to skip to the part where I explain about customizing this theme for your use.**
