@@ -142,7 +142,7 @@ Content-Type: application/json; charset=UTF-8
 
 The error returned indicates that there are too many clauses in the query.
 
-Clauses come from a [bool query] (https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html), so my guess is that ES turns the terms query into a bunch of should clauses in a bool query with 1 should clause per 1 term which causes 1024+ should clauses, which then results in this error code (this is my only my speculation no proof to back it up, [this](https://github.com/elastic/elasticsearch/pull/27968/commits/92849ba2067493786398da60807b3a4a7587f39d#r158552400) does seem to hint at a relation between terms query and bool query but that is only guessing).
+Clauses come from a [bool query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html), so my guess is that ES turns the terms query into a bunch of should clauses in a bool query with 1 should clause per 1 term which causes 1024+ should clauses, which then results in this error code (this is my only my speculation no proof to back it up, [this](https://github.com/elastic/elasticsearch/pull/27968/commits/92849ba2067493786398da60807b3a4a7587f39d#r158552400) does seem to hint at a relation between terms query and bool query but that is only guessing).
 
 It seems others also had an [issue](https://github.com/elastic/elasticsearch/issues/28980#issuecomment-386651557) with the terms filter using ES 5.6 .
 
