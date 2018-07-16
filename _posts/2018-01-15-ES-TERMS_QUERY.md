@@ -30,18 +30,16 @@ This query will return all documents that have a field "id" which have a value o
 ## Query Context
 [ES Query Context](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html)
 
-When you provide Elasticsearch a query it will not only filter out any documents that do not match the query, but assign each document a score which signifies how
-
-well the document matched the query, this score is added to the _score field of the returned documents. 
+When you provide Elasticsearch a query it will not only filter out any documents that do not match the query, but assign each document a score which signifies how well the document matched the query, this score is added to the ```_score``` field of the returned documents. 
 
 Sometimes one does not care about how well a document matches the query instead all they care about is does this document match the query.
 
-In that case one can use the filter context where no _score is calculated, resulting in quicker searches and better caching. 
+In that case one can use the filter context where no ```_score``` is calculated, resulting in quicker searches and better caching. 
 
 ## Bool query
 [ES Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
 
-The bool query returns all documents that match the must clauses and documents which match more should clause's will have a bigger final _score
+The bool query returns all documents that match the ```must``` clauses and documents which match more ```should``` clause's will have a bigger final ```_score```
 
 For example:
 
@@ -72,10 +70,10 @@ This query will return all documents that have the field "name" equal to "Krysti
 
 The minimum_should_match parameter means that at minimum for any documents returned at least 1 should clause should match. 
 
-https://stackoverflow.com/questions/48984706/default-value-of-minimum-should-match explains how minimum_should_match works in different contexts
+[This SO question](https://stackoverflow.com/questions/48984706/default-value-of-minimum-should-match) takes a deep dive into how minimum_should_match works in different contexts and queries.
 
 # Initial Problem
-Back when the ANM team was using Elasticsearch (ES) 5.5 there was an issue raised about being unable to query for more than 1024 specific events  RK-3116 - Event Pages(s) -- "Tooltip pop up on event bubbles fails to load on 1/day / 1K Events" DONE  . 
+Back when team was using Elasticsearch (ES) 5.5 there was an issue raised about being unable to query for more than 1024 specific events  RK-3116 - Event Pages(s) -- "Tooltip pop up on event bubbles fails to load on 1/day / 1K Events" DONE  . 
 
 To query for specific events a terms query is used
 
