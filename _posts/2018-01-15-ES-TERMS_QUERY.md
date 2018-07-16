@@ -73,12 +73,13 @@ The minimum_should_match parameter means that at minimum for any documents retur
 [This SO question](https://stackoverflow.com/questions/48984706/default-value-of-minimum-should-match) takes a deep dive into how minimum_should_match works in different contexts and queries.
 
 # Initial Problem
-Back when team was using Elasticsearch (ES) 5.5 there was an issue raised about being unable to query for more than 1024 specific events  RK-3116 - Event Pages(s) -- "Tooltip pop up on event bubbles fails to load on 1/day / 1K Events" DONE  . 
+Back in 2017 the team I was working on received a Jira from the QA team about Tooltips being unable to load with 1k Events. A little background, our UI has an event timeline where the user can hover over events and a http request was made to the backend to receive more information about the events. The backend would take the requested Event IDs and perform an query against an Elasticsearch v5.5 instance. In situations where a large amount of Event IDs were requested the backend would return *Interal Server Error 500*. 
 
-To query for specific events a terms query is used
+
+The query performed by the backend service looked essentially like this
 
 ```
-{ "query": { "terms" : { "event_ids" : ["event1", "event2", .... , "event1025"]} } }
+{ "query": { "terms" : { "event_ids" : ["event1", "event2", .... , "event1029"]} } }
 ```
 
 
@@ -144,8 +145,6 @@ The error returned indicates that there are too many clauses in the query.
 Clauses come from a [bool query] (https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html), so my guess is that ES turns the terms query into a bunch of should clauses in a bool query with 1 should clause per 1 term which causes 1024+ should clauses, which then results in this error code (this is my only my speculation no proof to back it up, [this](https://github.com/elastic/elasticsearch/pull/27968/commits/92849ba2067493786398da60807b3a4a7587f39d#r158552400) does seem to hint at a relation between terms query and bool query but that is only guessing).
 
 It seems others also had an [issue](https://github.com/elastic/elasticsearch/issues/28980#issuecomment-386651557) with the terms filter using ES 5.6 .
-
-
 
 # Initial Solution
 
