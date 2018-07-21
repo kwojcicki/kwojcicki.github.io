@@ -4,7 +4,7 @@ default_author: Krystian Wojcicki
 description: "Wojik"  # used in site head
 
 # register on google analytics and replace this token
-# google_analytics: UA-75681059-1
+google_analytics: UA-122722214-1
 # disque comments are broken if you send http:// along with url, this url is same as the one given on disqus
 # Deleting the value would remove it from footer.
 # disqus_url: shikherverma.com
