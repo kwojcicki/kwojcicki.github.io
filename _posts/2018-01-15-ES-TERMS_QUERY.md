@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Elasticsearch Terms Query Limits"
-subtitle:   "Explorining the limits of Elasticsearch Terms Query"
+subtitle:   "Exploring the limits of Elasticsearch Terms Query"
 date:       2016-03-27 17:00:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
@@ -73,7 +73,7 @@ The minimum_should_match parameter means that at minimum for any documents retur
 [This SO question](https://stackoverflow.com/questions/48984706/default-value-of-minimum-should-match) takes a deep dive into how minimum_should_match works in different contexts and queries.
 
 # Initial Problem
-Back in 2017 the team I was working on received a Jira from the QA team about Tooltips being unable to load with 1k Events. A little background, our UI has an event timeline where the user can hover over events and a http request was made to the backend to receive more information about the events. The backend would take the requested Event IDs and perform an query against an Elasticsearch v5.5 instance. In situations where a large amount of Event IDs were requested the backend would return *Interal Server Error 500*. 
+Back in 2017 the team I was working on received a Jira from the QA team about Tooltips being unable to load with 1k Events. Our UI had an event timeline where the user could hover over events and a http request was made to the backend to receive more information about the events. The backend would take the requested Event IDs and perform a query against an Elasticsearch v5.5 instance. In situations where a large amount of Event IDs were requested the backend would return *Interal Server Error 500*. 
 
 
 The query performed by the backend service looked essentially like this
