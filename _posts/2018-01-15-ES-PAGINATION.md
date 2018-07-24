@@ -9,251 +9,38 @@ comments: true
 tags: [ Elasticsearch ]
 ---
 
-**Note : Click <a href="#customize">this</a> to skip to the part where I explain about customizing this theme for your use.**
+# Intro
 
-## How this blog was created
-![Clean Blog](/img/posts/heartvbrain1.png)
+Almost every application has some sort of pagination mechanism. One of the most common is a simple list of numbers allowing you to quickly switch between pages.
+![Google Pagination](/img/posts/google-pagination.png)
 
-## Setting Up AD
+Another popular one is a prev/next pagination 
+![Reddit Pagination](/img/posts/reddit-pagination.png)
 
-## Getting ISO
-Go to https://www.microsoft.com/en-gb/evalcenter/evaluate-windows-server-2012-r2 and download the Windows Server 2012 R2 evaluation. You will need to fill in a few fields but they can contain bogus data. Pick ISO as the file type, 64bit and English as the Product language.
+Regardless of your method many developers dread the implementation and lets be honest who actually goes past the second page of a google search!
 
+# Elasticsearch
 
-## Creating Virtual Machine
-Using your favourite virtual machine manager (Using VirtualBox in this case) we will create a virtual machine with our windows server iso file. https://dalanzg.github.io/tips-tutorials/windows/2016/05/22/how-to-install-windows-server-2012-on-virtualbox/ ensure the VM is created with a virtual hard disk with size at least 20gb, recommended RAM is at least 2 GB.
-
-Before starting the virtual machine and selecting the ISO file. Go to the settings of the virtual machine → network → adapater 1 and selected Bridged Adapter with the Name that of your ethernet connection ie enp0s25
-
-Language to install → English
-
-Time and currency format → English
-
-Keyboard → US 
-
-Install now 
-
-Select Windows Server 2012 R2 Standard Evaluation (Server with a GUI) → next
-
-I Accept → Next
-
-Custom: Install Windows only (advanced) 
-
-Select your virtual hard disk → next 
-
-Your virtual machine will restart. Once it has restarted you will be prompted for an admin password. This admin is not an AD admin just an admin for the virtual machine. 
-
-Once windows server has been installed note down your virtual machines ip address for example: 172.20.127.174
-
-## Setting Up Active Directory
-https://forum.forgerock.com/2016/08/setting-active-directory-domain-evaluating-forgerock-stack/ From there you follow the sections called "Give the computer an appropriate hostname" and "Install Active Directory Domain Services ADDS Using Server Manager". 
-
-Set your hostname using powershell
-
-Rename-Computer -NewName LOCAL-AD-TEST
-
-Restart your VM to have the change take effect
-
-Once the Server Manager page appears → add roles and features
-
-next → role based or feature-based installation → next → local server should be selected make sure hostname is correct 
-
-select the checkbox corresponding to Active Directory Domain Services → Add features → next → next → next 
-
-select restart the destination server automatically if required → yes → install 
-
-once installation has completed select promote this server to a domain controller → add a new forest → root domain name: company.local.test → next
-
-Set password to whatever you want (remember it to log in later) → next 
-
-Dont worry about the DNS error → keep hitting next until you can install → install→ close then computer should restart
-
-## Setting Up TLS/SSL
-From https://forum.forgerock.com/2016/08/setting-active-directory-domain-evaluating-forgerock-stack/ again follow the section called "ADCS Using Server Manager" but stop at step 6 we will be using our own self signed certificates. 
-
-Add roles and features from Server Manager → next → next → select local server → next
-
-Select checkbox corresponding to Active Directory Certificate Services → add features → next until you reach Select role services 
-
-only select certification authority → next 
-
-select restart the destination server automatically if required → yes → install 
-
-once installation is finished click close 
-
-## Creating self signed certificates 
-We will follow https://gist.github.com/magnetikonline/0ccdabfec58eb1929c997d22e7341e45 with slight modifications to create our self signed certificates 
-
-(Following two commands will be run on your linux machine)
-
-openssl genrsa -des3 -out ca.key 4096
-
-openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
-
-From the active directory server, open Manage computer certificates.
-
-Add the generated ca.crt to the certificate path Trusted Root Certification Authorities\Certificates
-
-Create a new request.inf definition with the following contents - replacing Subject with the qualified domain name of your active directory server (only need to change if didn't set host name to LOCAL-AD-TEST and root domain to company.local.test):
-
-[Version]
+Elasticsearch has a ton of great documentation and some of it (while a little outdated) explains the issue with [pagination in a distributed system](https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html)
  
-Signature="$Windows NT$"
- 
-[NewRequest]
- 
-Subject = "CN=LOCAL-AD-TEST.company.local.test,DC=company,DC=local,DC=test"
-;
-KeySpec = 1
-KeyLength = 1024
-Exportable = TRUE
-MachineKeySet = TRUE
-SMIME = False
-PrivateKeyArchive = FALSE
-UserProtected = FALSE
-UseExistingKeySet = FALSE
-ProviderName = "Microsoft RSA SChannel Cryptographic Provider"
-ProviderType = 12
-RequestType = PKCS10
-KeyUsage = 0xa0
- 
-[EnhancedKeyUsageExtension]
- 
-OID=1.3.6.1.5.5.7.3.1 ; this is for Server Authentication
+ ```
+ Deep Paging in Distributed Systems
 
+To understand why deep paging is problematic, let�s imagine that we are searching within a single index with five primary shards. When we request the first page of results (results 1 to 10), each shard produces its own top 10 results and returns them to the coordinating node, which then sorts all 50 results in order to select the overall top 10.
 
+Now imagine that we ask for page 1,000�results 10,001 to 10,010. Everything works in the same way except that each shard has to produce its top 10,010 results. The coordinating node then sorts through all 50,050 results and discards 50,040 of them!
 
-Run the following to create a new client certificate request of client.csr (note: it's critical this is run from the active directory server to ensure a private key -> certificate association):
+You can see that, in a distributed system, the cost of sorting results grows exponentially the deeper we page. There is a good reason that web search engines don�t return more than 1,000 results for any query.
+```
 
-C:\> certreq -new request.inf client.csr
+Basically the deeper a request pages into the data the more work the coordinating node and other nodes will have to do. While this may not cause problems locally in a dev build, once enough data is accrued the request can cause terrible consequences for ones Elasticsearch cluster
 
-Back on your linux machine create v3ext.txt containing the following with IP.1 set to the IP of your windows virtual machine
+# Solutions
 
-subjectAltName = @alt_names
+While Elasticsearch does have its limitations, these limitations are quite reasonable with possible solutions to satisfy most customers
 
-[alt_names]
-IP.1 = 172.20.127.174
+### 1. Do not do it!
 
-Next create the certificate based on the request
+As simple as that, for the average user if the result they are looking for is not in the first few pages they will refine their search. So instead give the user as many tools for searching as possible to be able to filter the results down to what the user needs.
 
-openssl x509 -req -days 3650 -in client.csr -CA ca.crt -CAkey ca.key -extfile v3ext.txt -set_serial 01 -out client.crt
-
-From the active directory server with client.crt present, run the following:
-
-C:\> certreq -accept client.crt
-
-Open Manage computer certificates, the new certificate should now be present under Personal\Certificates if not manually import them through the gui. 
-
-Export the new certificate shown under Personal\Certificates as a PFX with the private key attatched. https://www.geocerts.com/support/migrate_iis shows how to export as a PFX
-
-Then on your linux box transform the PFX into a pem file by doing
-
-openssl pkcs12 -in client_ssl.pfx -out client_ssl.pem -clcerts
-https://stackoverflow.com/questions/15413646/converting-pfx-to-pem-using-openssl
-
-If you do not use shared folders (view Notes section below to learn how to use shared folders) you need to have the same set of files on both systems after each step. Which can be done using email/slack and sending the files back and forth.
-
-It is also possible to install openssl and then directly perform all the operations on the windows server. Here is a link to do this: https://www.tbs-certificates.co.uk/FAQ/en/openssl-windows.html
-
-## Modifying password complexity policy
-To add users with simple passwords we need to modify the password policy to ignore password complexity
-
-https://www.interactivewebs.com/blog/index.php/server-tips/windows-2012-turn-off-password-complexity/
-
-In the Server Manager click on Tools and from the drop down click Group Policy Management
-Expand Forest >> Domains >> company.local.test 
-Right click on the Default Domain Policy and click on the Edit from the context menu.
-Now Expand Computer Configuration → Policies →Windows Settings→Security Settings→Account Policies →Password Policy → double click Password Policy
-Double-click on the Passwords Must Meet Complexity Requirements option in the right pane.
-Select Disabled under define this policy setting:
-Click Apply then OK all the way out and close the GPO window.
-
-## Creating sample groups
-First we will create an organisation unit to hold our groups
-
-https://technet.microsoft.com/en-us/library/cc771564(v=ws.11).aspx
-
-Open Active Directory Users and Computers
-In the console tree, right-click the domain name.
-Point to New , and then click Organizational Unit .
-Type the name of the organizational unit (OU) we will use Groups.
-
-Now we will create groups in our OU
-
-https://msdn.microsoft.com/en-us/library/aa545347(v=cs.70).aspx
-
-In Active Directory Users and Computers window, expand company.local.test
-In the console tree, right-click the folder in which you want to add a new group.
-Click New, and then click Group.
-Type the name of the new group we will create two groups one for user and one for admin
-In the New Object - Group dialog box, do the following:
-In Group scope, click Domain Local.
-In Group type, click Security.
-Click Finish.
-
-## Creating sample users
-https://technet.microsoft.com/en-us/library/cc732336(v=ws.11).aspx
-
-Open Active Directory Users and Computers
-In the console tree, right-click the Users folder
-
-Point to New , and then click InetOrgPerson .
-
-First name: admin
-
-user logon name: admin
-
-user logon name (pre-Windows 2000): admin1
-
-password: password
-
-uncheck the User must change password at next login
-
-finish → then repeat for first name: user, user logon name: user, user logon name (pre-Windows 2000): user1
-
-
-Now we will add the sample users to the groups 
-
-https://technet.microsoft.com/en-us/library/cc772524(v=ws.11).aspx
-
-Right click the admin account we created → add to a group → for the object names to select  enter "admin; user" → check names → select the admin group then ok → select user group then ok
-
-Repeat process for user account but only place him in the user group
-
-Test if AD is working properly
-Testing TLS on windows machine
-Can only be done from a machine that has the client certificates
-
-Follow same steps as "Testing regular LDAP over windows machine" except change Port to 636 and select SSL
-
-Testing regular AD on windows machine
-Open ldp.exe → connection → connect 
-
-For server do localhost or the ip of your virtual machine → Port 389 and not using SSL → ok 
-
-Connection → bind → if testing from virtual machine you can Bind as currently logged on user otherwise Bind with credentials. Username: administrator, Password: whatever was set during installation, Domain is DC=company,DC=local,DC=test → ok
-
-View → tree → BaseDN select DC=company,DC=local,DC=test → ok → if in the left pane text appeared you are good smile :) 
-
-Notes
-For transferring files back and forth between the virtual machine and your host shared folders can be pretty handy
-
-With the virtual machine already started from the virtual box menu go to devices → insert guest additions CD image → open this computer → CD Drive D: Virtualbox guest additions → run VBoxWindowsAdditions → restart machine 
-
-again from virtual box menu go to devices → shared folders → shared folder settings → click the folder with a green plus (Adds new shared folder) → select folder you want to share and other options as appropriate → then click okay
-
-shared folder should now be accessible under network locations when file explorer is open 
-
-http://helpdeskgeek.com/virtualization/virtualbox-share-folder-host-guest/
-
-
-## Setting up and customizing a Jekyll Blog
-
-### A.Pick a template
-
-If you are (lazy like me) and don't want to write CSS, HTML & Javascript for frontend; you can checkout these resources to choose a jekyll template:
-
-* [Jekyll Official List](https://github.com/jekyll/jekyll/wiki/themes)
-* [themes.jekyllrc.org](http://themes.jekyllrc.org/)
-* [jekyllthemes.io](http://jekyllthemes.io/)
-* [jekyllthemes.org](http://j
+### 2. 
