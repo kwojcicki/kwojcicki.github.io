@@ -50,7 +50,7 @@ As simple as that, for the average user if the result they are looking for is no
 
 #### 2a. Scroll Query
 
-#### 2a. Serach After Query
+#### 2a. Search After Query
 
 ### 3. Aggregate
 
