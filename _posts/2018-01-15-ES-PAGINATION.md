@@ -44,4 +44,16 @@ While Elasticsearch does have its limitations, these limitations are quite reaso
 As simple as that, for the average user if the result they are looking for is not in the first few pages they will refine their search. So instead give the user as many tools for searching as possible to be able to filter the results down to what the user needs.
 
 ### 2. Change your Elasticsearch query
+
+#### 2a. From / Size
+
+
 #### 2a. Scroll Query
+
+#### 2a. Serach After Query
+
+### 3. Aggregate
+
+### 4. Limited Paging
+
+
