@@ -46,7 +46,9 @@ As simple as that, for the average user if the result they are looking for is no
 ### 2. Change your Elasticsearch query
 
 #### 2a. From / Size
-
+A very basic form of pagination can be achieved using the [From/Size query parameters](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html). These allow you to specify offset from the first result you want to fetch and how many hits to be returned.
+Warning there is a limit that ```from + size <= 10 000```, if that equality is broken the search will fail. 
+This default can be overwritten by changing ```index.max_result_window```, THIS IS NOT RECOMMENDED as 
 
 #### 2a. Scroll Query
 
