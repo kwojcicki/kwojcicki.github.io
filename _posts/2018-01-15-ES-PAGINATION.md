@@ -23,8 +23,8 @@ Regardless of your method many developers dread the implementation and lets be h
 
 Elasticsearch has a ton of great documentation and some of it (while a little outdated) explains the issue with [pagination in a distributed system](https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html)
  
- ```
- Deep Paging in Distributed Systems
+```
+Deep Paging in Distributed Systems
 
 To understand why deep paging is problematic, let’s imagine that we are searching within a single index with five primary shards. When we request the first page of results (results 1 to 10), each shard produces its own top 10 results and returns them to the coordinating node, which then sorts all 50 results in order to select the overall top 10.
 
