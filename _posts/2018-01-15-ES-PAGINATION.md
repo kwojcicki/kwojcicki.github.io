@@ -56,9 +56,26 @@ While a search request returns a single “page” of results, the scroll API can be
 ```
 
 
+#### 2c. Search After parameter
 
+While pagination can be done using from and size the query cost becomes too expensive when the deep pagination is reached. With the scroll api while efficient for deep pagination the scroll contexts are costly and are not recommended for real time use. So what is Elasticsearchs ultimate solution? A live cursor using the search_after parameter.
 
-#### 2c. Search After Query
+```
+GET twitter/_search
+{
+    "size": 10,
+    "query": {
+        "match" : {
+            "title" : "elasticsearch"
+        }
+    },
+    "search_after": [1463538857, "654323"],
+    "sort": [
+        {"date": "asc"},
+        {"_id": "desc"}
+    ]
+}
+```
 
 ### 3. Aggregate
 
