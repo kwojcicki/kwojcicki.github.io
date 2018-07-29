@@ -12,6 +12,7 @@ tags: [ Elasticsearch ]
 # Intro
 
 Almost every application has some sort of pagination mechanism. One of the most common is a simple list of numbers allowing you to quickly switch between pages.
+![Google Pagination](/img/posts/google-pagination.png)
 
 Another popular one is a prev/next pagination 
 
