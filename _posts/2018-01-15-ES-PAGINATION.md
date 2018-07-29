@@ -49,6 +49,7 @@ Warning there is a limit that ```from + size <= 10 000```, if that equality is b
 This default can be overwritten by changing ```index.max_result_window```, THIS IS NOT RECOMMENDED as it could cause query time to explode.
 
 #### 2b. Scroll Query
+
 ```
 While a search request returns a single “page” of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
 ```
