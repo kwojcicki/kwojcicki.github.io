@@ -1,13 +1,25 @@
 ---
 layout:     post
-title:      "Elasticsearch Terms Query Limits"
-subtitle:   "Exploring the limits of Elasticsearch Terms Query"
+title:      "Elasticsearch Deep Pagination"
+subtitle:   "When and how to do to deep pagination in Elasticsearch"
 date:       2016-03-27 17:00:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
 tags: [ Elasticsearch ]
 ---
+
+# Intro
+
+Almost every application has some sort of pagination mechanism. One of the most common is a simple list of numbers allowing you to quickly switch between pages.
+
+Another popular one is a prev/next pagination 
+
+Regardless of your method many developers dread the implementation and lets be honest who actually goes past the second page of a google search!
+
+# Elasticsearch
+
+Elasticsearch has a ton of great documentation and some of it (while a little outdated) explains the issue with [pagination in a distributed system](https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html)
 
 # Background
 

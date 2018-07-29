@@ -12,8 +12,10 @@ tags: [ Elasticsearch ]
 # Intro
 
 Almost every application has some sort of pagination mechanism. One of the most common is a simple list of numbers allowing you to quickly switch between pages.
+![Google Pagination](/img/posts/google-pagination.png)
 
 Another popular one is a prev/next pagination 
+![Reddit Pagination](/img/posts/reddit-pagination.png)
 
 Regardless of your method many developers dread the implementation and lets be honest who actually goes past the second page of a google search!
 
@@ -49,7 +51,6 @@ Warning there is a limit that ```from + size <= 10 000```, if that equality is b
 This default can be overwritten by changing ```index.max_result_window```, THIS IS NOT RECOMMENDED as it could cause query time to explode.
 
 #### 2b. Scroll Query
-
 ```
 While a search request returns a single “page” of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
 ```
@@ -80,4 +81,4 @@ GET twitter/_search
 
 ### 4. Limited Paging
 
-test
+
