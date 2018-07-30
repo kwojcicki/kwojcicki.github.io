@@ -30,7 +30,7 @@ To understand why deep paging is problematic, let's imagine that we are searchin
 
 Now imagine that we ask for page 1,000—results 10,001 to 10,010. Everything works in the same way except that each shard has to produce its top 10,010 results. The coordinating node then sorts through all 50,050 results and discards 50,040 of them!
 
-You can see that, in a distributed system, the cost of sorting results grows exponentially the deeper we page. There is a good reason that web search engines don’t return more than 1,000 results for any query.
+You can see that, in a distributed system, the cost of sorting results grows exponentially the deeper we page. There is a good reason that web search engines don't return more than 1,000 results for any query.
 ```
 
 Basically the deeper a request pages into the data the more work the coordinating node and other nodes will have to do. While this may not cause problems locally in a dev build, once enough data is accrued the request can cause terrible consequences for ones Elasticsearch cluster
