@@ -52,7 +52,7 @@ This default can be overwritten by changing ```index.max_result_window```, THIS 
 
 #### 2b. Scroll Query
 ```
-While a search request returns a single “page” of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
+While a search request returns a single "page" of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
 ```
 
 
