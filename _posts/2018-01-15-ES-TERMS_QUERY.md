@@ -136,7 +136,7 @@ Transfer-Encoding: chunked
 Content-Type: application/json; charset=UTF-8
 
 8000
-{"error":{"root_cause":[{"type":"too_many_clauses","reason":"too_many_clauses: maxClauseCount is set to 1024"}],"type":"search_phase_execution_exception","reason":"all shards failed","phase":"query","grouped":true,"failed_shards":[{"shard":0,"index":"rim-events-2017.02.31","node":"cbJd_LkQTayn3p6DycegVQ","reason":{"type":"query_shard_exception","reason":"failed to create query: {\n \"terms\" : {\n \"EventID\" : [\n \"id9\",\n \"`
+{"error":{"root_cause":[{"type":"too_many_clauses","reason":"too_many_clauses: maxClauseCount is set to 1024"}],"type":"search_phase_execution_exception","reason":"all shards failed","phase":"query","grouped":true,"failed_shards":[{"shard":0,"index":"events-2017.02.31","node":"cbJd_LkQTayn3p6DycegVQ","reason":{"type":"query_shard_exception","reason":"failed to create query: {\n \"terms\" : {\n \"EventID\" : [\n \"id9\",\n \"`
 ```
 
 
