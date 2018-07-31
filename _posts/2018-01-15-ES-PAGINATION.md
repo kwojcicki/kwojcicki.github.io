@@ -37,7 +37,7 @@ Basically the deeper a request pages into the data the more work the coordinatin
 
 # Solutions
 
-While Elasticsearch does have its limitations, these limitations are quite reasonable with possible solutions to satisfy most customers
+While Elasticsearch does have its limitations, these limitations are quite reasonable with a few possible solutions to satisfy most customers
 
 ### 1. Do not do it!
 
@@ -55,6 +55,33 @@ This default can be overwritten by changing ```index.max_result_window```, THIS 
 While a search request returns a single "page" of results, the scroll API can be used to retrieve large numbers of results (or even all results) from a single search request, in much the same way as you would use a cursor on a traditional database.
 ```
 
+As explained quite well by Elastic [themselves](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html), a scroll query lets you perform a query and then using a cursor iterate over all the results.
+
+
+To perform a scroll query the scroll parameter must specify the ```scroll``` paramter in the query string
+
+```
+POST /twitter/_search?scroll=1m
+{
+    "size": 100,
+    "query": {
+        "match" : {
+            "title" : "elasticsearch"
+        }
+    }
+}
+```
+
+This will return a ```scroll_id```
+
+Which can then be used to scroll through the results as the following
+
+```
+POST  /_search/scroll 
+{
+    "scroll_id" : "DXF1ZXJ5QW5kRmV0Y2gBAAAAAAAAAD4WYm9laVYtZndUQlNsdDcwakFMNjU1QQ==" 
+}
+```
 
 #### 2c. Search After parameter
 
