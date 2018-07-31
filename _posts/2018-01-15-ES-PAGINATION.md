@@ -83,6 +83,8 @@ POST  /_search/scroll
 }
 ```
 
+Each call to the scroll API will return a batch of the results, as specified by the size in the original call, alongside the scroll_id for the next batch.
+
 #### 2c. Search After parameter
 
 While pagination can be done using from and size the query cost becomes too expensive when the deep pagination is reached. With the scroll api while efficient for deep pagination the scroll contexts are costly and are not recommended for real time use. So what is Elasticsearchs ultimate solution? A live cursor using the search_after parameter.
