@@ -106,6 +106,8 @@ GET twitter/_search
 }
 ```
 
+For a ```search_after``` parameter there must be as many values as their are fields in the sort clause, and in the same order. Here the query returns 10 documents after that date and id.
+
 ### 3. Aggregate
 
 ### 4. Limited Paging
