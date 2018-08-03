@@ -48,8 +48,10 @@ As simple as that, for the average user if the result they are looking for is no
 #### 2a. From / Size
 
 A very basic form of pagination can be achieved using the [From/Size query parameters](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html). These allow you to specify offset from the first result you want to fetch and how many hits to be returned.
+
 Warning there is a limit that ```from + size <= 10 000```, if that equality is broken the search will fail. 
-This default can be overwritten by changing ```index.max_result_window```, THIS IS NOT RECOMMENDED as it could cause query time to explode.
+
+This default can be overwritten by changing ```index.max_result_window```, ***THIS IS NOT RECOMMENDED*** as it could cause query time to explode due to the extra work your Elasticsearch instances need to do.
 
 #### 2b. Scroll Query
 
@@ -116,4 +118,5 @@ Elasticsearch in addition to its search queries has quite extensive [aggregation
 
 ### 4. Limited Paging
 
+As said before, how often do users actually traverse to the second or third page of a dataset? If acceptable and properly documented having a paging limit can be a good mix of providing enough data to the user without overwhelming them.
 
