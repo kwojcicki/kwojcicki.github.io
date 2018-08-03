@@ -112,6 +112,8 @@ For a ```search_after``` parameter there must be as many values as their are fie
 
 ### 3. Aggregate
 
+Elasticsearch in addition to its search queries has quite extensive [aggregation abilities](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html). While slightly complex to get into at first, aggregations provide a good interface to simplify huge datasets into small digestible titbit. Instead of returning all events to a user, instead return a count of all errors and return the most recent 10 of each category. Instead of returning all cpu usage metrics of an entire data centers cluster, return a per node average as well as any nodes that are very far away from that average. 
+
 ### 4. Limited Paging
 
 
