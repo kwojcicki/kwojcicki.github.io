@@ -20,7 +20,7 @@ First:
 * sudo apt install slapd ldap-utils
 * sudo dpkg-reconfigure slapd
 * Omit LDAP server configuration: No
-* DNS domain name can be anything you want will be using rockport.local.test.linux for this
+* DNS domain name can be anything you want will be using company.local.test.linux for this
 * Organization name should be the same as the DNS domain name
 * Select MDB for the database backend
 * Set the password however you want in this example we will be using password
@@ -38,7 +38,9 @@ For the following sections for any ldapadd or ldapmodify command the expect outp
 with no error messages following it
 
 for example
-``` adding new entry "cn=admin,ou=groups,dc=rockport,dc=local,dc=test,dc=linux" ```
+```
+adding new entry "cn=admin,ou=groups,dc=company,dc=local,dc=test,dc=linux" 
+```
 
 
 ## Adding password policy
@@ -53,7 +55,7 @@ sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/ppolicy.ldif
 Create a Policies myoupolicy.ldif OrganizationalUnit
 
 ```
-dn: ou=Policies,dc=rockport,dc=local,dc=test,dc=linux
+dn: ou=Policies,dc=company,dc=local,dc=test,dc=linux
 objectClass: top
 objectClass: organizationalUnit
 ou: Policies
@@ -62,14 +64,16 @@ description: My Organization policies come here
 
 Add myoupolicy.ldif
 
-sudo ldapadd -D cn=admin,dc=rockport,dc=local,dc=test,dc=linux -w password -f myoupolicy.ldif
+sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f myoupolicy.ldif
 
 Create file ppmodule.ldif to load the pp module
 
+```
 dn: cn=module{0},cn=config
 changetype: modify
 add: olcModuleLoad
 olcModuleLoad: ppolicy
+```
 
 load the module ppmodule.ldif
 
@@ -77,11 +81,13 @@ sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ppmodule.ldif
 
 Prepare for Overlay Create file ppolicyoverlay.ldif
 
+```
 dn: olcOverlay={0}ppolicy,olcDatabase={1}mdb,cn=config
 objectClass: olcOverlayConfig
 objectClass: olcPPolicyConfig
 olcOverlay: {0}ppolicy
-olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=rockport,dc=local,dc=test,dc=linux
+olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=company,dc=local,dc=test,dc=linux
+```
 
 Add ppolicyoverlay.ldif using ldapadd command
 
@@ -89,7 +95,8 @@ sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ppolicyoverlay.ldif
 
 Create passwordpolicy.ldif for MyOrganization
 
-dn: cn=MyOrgPPolicy,ou=Policies,dc=rockport,dc=local,dc=test,dc=linux
+```
+dn: cn=MyOrgPPolicy,ou=Policies,dc=company,dc=local,dc=test,dc=linux
 cn: MyOrgPPolicy
 objectClass: pwdPolicy
 objectClass: device
@@ -108,10 +115,11 @@ pwdFailureCountInterval: 0
 pwdMustChange: TRUE
 pwdAllowUserChange: TRUE
 pwdSafeModify: FALSE
+```
 
 Add passwordpolicy.ldif in LDAP
 
-sudo ldapadd -D cn=admin,dc=rockport,dc=local,dc=test,dc=linux -w password -f passwordpolicy.ldif
+sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f passwordpolicy.ldif
 
 
 Verify the configuration
@@ -120,14 +128,15 @@ sudo ldapsearch -Y EXTERNAL -H ldapi:/// -b olcDatabase={1}mdb,cn=config
 
 The output of the command should contain something along the lines of
 
+```
 # {3}ppolicy, {1}mdn, config
-
 objectClass: olcOverlayConfig
 objectClass: olcPPolicyConfig
 olcOverlay: {3}ppolicy
-olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=rockport,dc=local,dc=test,dc=linux
+olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=company,dc=local,dc=test,dc=linux
+```
 
-Setting up TLS for OpenLDAP
+## Setting up TLS for OpenLDAP
 Again using https://help.ubuntu.com/lts/serverguide/openldap-server.html#openldap-tls
 
 sudo apt install gnutls-bin ssl-cert
@@ -136,9 +145,11 @@ sudo sh -c "certtool --generate-privkey > /etc/ssl/private/cakey.pem"
 
 Create the template/file /etc/ssl/ca.info to define the CA:
 
-cn = Rockport Networks
+```
+cn = My Cool Company
 ca
 cert_signing_key
+```
 
 Run the following commands to create the CA
 
@@ -153,8 +164,8 @@ sudo certtool --generate-privkey \
 
 Create the /etc/ssl/ldap01.info info file containing where ip_address is replaced with the ip of your local linux:
 
-organization = Rockport Networks
-cn = rockport.local.test.linux
+organization = My Cool Company
+cn = company.local.test.linux
 tls_www_server
 encryption_key
 signing_key
@@ -217,7 +228,7 @@ $servers→setValue('server','base',array('dc=example,dc=com'));
 
 with
 
-$servers→setValue('server','base',array('dc=rockport,dc=local,dc=test,dc=linux'));
+$servers→setValue('server','base',array('dc=company,dc=local,dc=test,dc=linux'));
 
 If TLS was not configured or certificates are not installed uncomment the following line
 
@@ -249,18 +260,18 @@ Create a file called add_content.ldif with the following content
 
 You will need to change the dc part of the domain name to match what was specified during installation.
 
-dn: cn=Users,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=Users,dc=company,dc=local,dc=test,dc=linux
 objectClass: posixGroup
 cn: Users
 gidnumber: 500
 
 
-dn: ou=Groups,dc=rockport,dc=local,dc=test,dc=linux
+dn: ou=Groups,dc=company,dc=local,dc=test,dc=linux
 objectClass: organizationalUnit
 ou: Groups
 
 
-dn: cn=adminuser,cn=Users,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=adminuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 cn:  adminuser
 gidnumber: 500
 homedirectory: /home/users/adminuser
@@ -275,7 +286,7 @@ userPassword: {MD5}X03MO1qnZdYdgyfeuILPmQ==
 
 
 
-dn: cn=regularuser,cn=Users,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 cn:  regularuser
 gidnumber: 500
 homedirectory: /home/users/regularuser
@@ -294,14 +305,14 @@ slappasswd -h {MD5} -s password
 
 Next we will add it to the OpenLDAP server
 
-sudo ldapadd -x -D cn=admin,dc=rockport,dc=local,dc=test,dc=linux -w password -f add_content.ldif
+sudo ldapadd -x -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f add_content.ldif
 
 Adding sample readonly admin user
 https://serverfault.com/questions/120499/ldap-slapd-creating-users-with-access-to-specific-trees
 
 Create a file called read_only.ldif with the following content
 
-dn: ou=Readonly,dc=rockport,dc=local,dc=test,dc=linux
+dn: ou=Readonly,dc=company,dc=local,dc=test,dc=linux
 
 objectClass: organizationalUnit
 
@@ -309,7 +320,7 @@ ou: Groups
 
 
 
-dn: cn=postfix,ou=Readonly,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=postfix,ou=Readonly,dc=company,dc=local,dc=test,dc=linux
 cn: postfix
 objectClass: simpleSecurityObject
 objectClass: organizationalRole
@@ -323,13 +334,13 @@ sudo slappasswd -s secret
 
 Next we will add it to the OpenLDAP server
 
-sudo ldapadd -x -D cn=admin,dc=rockport,dc=local,dc=test,dc=linux -w password -f read_only.ldif
+sudo ldapadd -x -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f read_only.ldif
 
 Once this is done, add some ACLs to your /usr/share/slapd/slapd.conf that look something like this:
 
-access to dn.sub="ou=Users,dc=rockport,dc=local,dc=test,dc=linux"
+access to dn.sub="ou=Users,dc=company,dc=local,dc=test,dc=linux"
 
-by dn.exact="cn=postfix,ou=Readonly,dc=rockport,dc=local,dc=test,dc=linux" read
+by dn.exact="cn=postfix,ou=Readonly,dc=company,dc=local,dc=test,dc=linux" read
 
 by dn="@ADMIN@" write
 
@@ -367,33 +378,33 @@ Next enable member of overlay
 sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f memberOf.ldif
 
 Adding sample groups
-Create createGroup.ldif file with the following contents which will create a group called admin and regular then add the already existing account cn=admin,dc=rockport,dc=local,dc=test,dc=linux to the admin group and then add  cn=regularuser,cn=Users,dc=rockport,dc=local,dc=test,dc=linux to the regular group
+Create createGroup.ldif file with the following contents which will create a group called admin and regular then add the already existing account cn=admin,dc=company,dc=local,dc=test,dc=linux to the admin group and then add  cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux to the regular group
 
-dn: cn=admin,ou=groups,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=admin,ou=groups,dc=company,dc=local,dc=test,dc=linux
 objectclass: top
 objectclass: groupofnames
 cn: admin
 description: admin users
-member: cn=admin,dc=rockport,dc=local,dc=test,dc=linux
+member: cn=admin,dc=company,dc=local,dc=test,dc=linux
 
 
 
-dn: cn=regular,ou=groups,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=regular,ou=groups,dc=company,dc=local,dc=test,dc=linux
 objectclass: top
 objectclass: groupofnames
 cn: regular
 description: regular users
-member: cn=regularuser,cn=Users,dc=rockport,dc=local,dc=test,dc=linux
+member: cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 
 Add the group 
 
-sudo ldapadd -D cn=admin,dc=rockport,dc=local,dc=test,dc=linux -w password -f createGroup.ldif
+sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f createGroup.ldif
 
 you can run the following command to see if it's all set up properly:
 
-sudo ldapsearch -x -LLL -H ldap:/// -b cn=admin,dc=rockport,dc=local,dc=test,dc=linux dn memberof
+sudo ldapsearch -x -LLL -H ldap:/// -b cn=admin,dc=company,dc=local,dc=test,dc=linux dn memberof
 
 And it should yield this result
 
-dn: cn=admin,dc=rockport,dc=local,dc=test,dc=linux
+dn: cn=admin,dc=company,dc=local,dc=test,dc=linux
 memberOf: cn=admin,ou=groups,dc=example,dc=com
