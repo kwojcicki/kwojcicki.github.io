@@ -9,65 +9,56 @@ comments: true
 tags: [ OpenLDAP ]
 ---
 
-Setting Up OpenLDAP
-Installing OpenLDAP
+# Setting Up OpenLDAP
+
+## Installing OpenLDAP
 https://help.ubuntu.com/lts/serverguide/openldap-server.html and https://www.linuxbabe.com/ubuntu/install-configure-openldap-server-ubuntu-16-04
 
-OpenLDAP installation is much simpler than AD first install 
+OpenLDAP installation is much simpler than AD and can be easily in a terminal.
 
-sudo apt install slapd ldap-utils
+First:
+* sudo apt install slapd ldap-utils
+* sudo dpkg-reconfigure slapd
+* Omit LDAP server configuration: No
+* DNS domain name can be anything you want will be using rockport.local.test.linux for this
+* Organization name should be the same as the DNS domain name
+* Select MDB for the database backend
+* Set the password however you want in this example we will be using password
+* Don't remove the database when slapd is purged
+* Yes move old database
+* No dont allow LDAPv2 protocol
 
-sudo dpkg-reconfigure slapd
-
-Omit LDAP server configuration: No
-
-DNS domain name can be anything you want will be using rockport.local.test.linux for this
-
-Organization name should be the same as the DNS domain name
-
-Select MDB for the database backend
-
-Set the password however you want in this example we will be using password
-
-Dont remove the database when slapd is purged
-
-Yes move old database
-
-No dont allow LDAPv2 protocol
-
-warning
-
+*** Warning ***
 If a different backend database is picked (ie not MDB) the following ldif files will need to be changed to match the database selected
 
 
 
 For the following sections for any ldapadd or ldapmodify command the expect output is
-adding new entry "fully qualified domain name of what you were adding"
-
+``` adding new entry "fully qualified domain name of what you were adding"```
 with no error messages following it
 
 for example
+``` adding new entry "cn=admin,ou=groups,dc=rockport,dc=local,dc=test,dc=linux" ```
 
-adding new entry "cn=admin,ou=groups,dc=rockport,dc=local,dc=test,dc=linux"
 
-
-Adding password policy
+## Adding password policy
 
 
 For all these commands replace -w password with -w [ admin password ] 
 
- Enable ppolicy overlay
+### Enable ppolicy overlay
 
 sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/ppolicy.ldif
 
-
 Create a Policies myoupolicy.ldif OrganizationalUnit
 
+```
 dn: ou=Policies,dc=rockport,dc=local,dc=test,dc=linux
 objectClass: top
 objectClass: organizationalUnit
 ou: Policies
 description: My Organization policies come here
+```
 
 Add myoupolicy.ldif
 
