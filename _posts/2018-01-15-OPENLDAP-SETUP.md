@@ -207,7 +207,7 @@ Use the ldapmodify command to tell slapd about our TLS work via the slapd-config
 
 sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f certinfo.ldif
 
-Visualising OpenLDAP 
+## Visualising OpenLDAP 
 Visualising the LDAP server can be useful as well. PhpLDAPadmin can help us with that (similar to phpmyadmin except for LDAP) Using https://www.linuxbabe.com/ubuntu/install-configure-openldap-server-ubuntu-16-04
 
 sudo apt install phpldapadmin
@@ -247,7 +247,7 @@ To get rid of other php versions do (replace php5 with whatever extra versions y
 sudo apt-get purge 'php5*' 
 To add or remove users using phpldapadmin is quite simple http://www.techrepublic.com/article/how-to-populate-an-ldap-server-with-users-and-groups-via-phpldapadmin/
 
-GUI utilisation
+## GUI utilisation
 
 For the following sections adding sample users and adding sample groups can be done using this tool instead of the command line.
 
@@ -255,21 +255,20 @@ Enabling memberOf and adding readonly admin user should be doing using CLI
 
 However the order in which we do things must stay the same.
 
-Adding sample users
+## Adding sample users
 Create a file called add_content.ldif with the following content
 
 You will need to change the dc part of the domain name to match what was specified during installation.
 
+```
 dn: cn=Users,dc=company,dc=local,dc=test,dc=linux
 objectClass: posixGroup
 cn: Users
 gidnumber: 500
 
-
 dn: ou=Groups,dc=company,dc=local,dc=test,dc=linux
 objectClass: organizationalUnit
 ou: Groups
-
 
 dn: cn=adminuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 cn:  adminuser
@@ -284,8 +283,6 @@ uid: adminuser
 uidnumber: 1000
 userPassword: {MD5}X03MO1qnZdYdgyfeuILPmQ==
 
-
-
 dn: cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 cn:  regularuser
 gidnumber: 500
@@ -298,8 +295,9 @@ sn: regularuser
 uid: regularuser
 uidnumber: 1001
 userPassword: {MD5}X03MO1qnZdYdgyfeuILPmQ==
+```
 
-Password for both of the users is password if a different password is required use the following command and replace userPassword in the ldif file
+Password for both of the users is ```password``` if a different password is required use the following command and replace userPassword in the ldif file
 
 slappasswd -h {MD5} -s password
 
@@ -312,20 +310,16 @@ https://serverfault.com/questions/120499/ldap-slapd-creating-users-with-access-t
 
 Create a file called read_only.ldif with the following content
 
+```
 dn: ou=Readonly,dc=company,dc=local,dc=test,dc=linux
-
 objectClass: organizationalUnit
-
 ou: Groups
-
-
-
 dn: cn=postfix,ou=Readonly,dc=company,dc=local,dc=test,dc=linux
 cn: postfix
 objectClass: simpleSecurityObject
 objectClass: organizationalRole
 userPassword: {SSHA}n+aYhO/TOitWkyMp9v/fe5ndtOhY0/3U
-
+```
 
 This last line is a hash of the password you want to use, generated via the slappasswd utility:
 
@@ -350,9 +344,9 @@ Enabling memberOf openldap functionality
 https://help.marklogic.com/knowledgebase/article/View/457/0/using-openldap-for-authorising-marklogic-security-roles
 
 Create a ldif file with the following contents
-
 memberOf.ldif
 
+```
 dn: cn=module,cn=config
 cn: module
 objectClass: olcModuleList
@@ -360,14 +354,13 @@ objectclass: top
 olcModuleLoad: memberof.la
 olcModulePath: /usr/lib/ldap
 
-
-
 dn: olcOverlay=memberof,olcDatabase={1}mdb,cn=config
 objectclass: olcconfig
 objectclass: olcMemberOf
 objectclass: olcoverlayconfig
 objectclass: top
 olcoverlay: memberof
+```
 
 For the above file olcModulePath should be the location of memberof.la to find this location
 
@@ -377,9 +370,10 @@ Next enable member of overlay
 
 sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f memberOf.ldif
 
-Adding sample groups
+## Adding sample groups
 Create createGroup.ldif file with the following contents which will create a group called admin and regular then add the already existing account cn=admin,dc=company,dc=local,dc=test,dc=linux to the admin group and then add  cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux to the regular group
 
+```
 dn: cn=admin,ou=groups,dc=company,dc=local,dc=test,dc=linux
 objectclass: top
 objectclass: groupofnames
@@ -395,6 +389,7 @@ objectclass: groupofnames
 cn: regular
 description: regular users
 member: cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
+```
 
 Add the group 
 
@@ -406,5 +401,7 @@ sudo ldapsearch -x -LLL -H ldap:/// -b cn=admin,dc=company,dc=local,dc=test,dc=l
 
 And it should yield this result
 
+```
 dn: cn=admin,dc=company,dc=local,dc=test,dc=linux
 memberOf: cn=admin,ou=groups,dc=example,dc=com
+```
