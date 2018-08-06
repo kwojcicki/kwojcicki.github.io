@@ -16,7 +16,6 @@ https://help.ubuntu.com/lts/serverguide/openldap-server.html and https://www.lin
 
 OpenLDAP installation is much simpler than AD and can be easily in a terminal.
 
-
 First:
 * sudo apt install slapd ldap-utils
 * sudo dpkg-reconfigure slapd
