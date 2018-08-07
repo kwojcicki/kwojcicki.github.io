@@ -33,7 +33,6 @@ First:
 If a different backend database is picked (ie not MDB) the following ldif files will need to be changed to match the database selected
 
 
-
 For the following sections for any ldapadd or ldapmodify command the expect output is
 ``` adding new entry "fully qualified domain name of what you were adding"```
 with no error messages following it
