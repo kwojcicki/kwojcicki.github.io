@@ -9,4 +9,4 @@ comments: true
 tags: [ Go ]
 ---
 
-WIP
+WIP this is a living document and you can expect frequent changes to it.
