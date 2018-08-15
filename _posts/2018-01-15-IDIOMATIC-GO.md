@@ -15,7 +15,7 @@ Personally I really enjoy coding in Go, its concise but still gives you enough t
 
 ## Mutex hat
 
-## Package strucutre and naming
+## Package structure and naming
 
 ## Testing
 
