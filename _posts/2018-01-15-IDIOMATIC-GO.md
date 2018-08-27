@@ -21,4 +21,8 @@ Personally I really enjoy coding in Go, its concise but still gives you enough t
 
 ## Testing
 
+## Defer
+
+## Structure initilization 
+
 While the built in style is a great start there are some places where it can be improved upon, this page will take a look at my opinionated styleguide for Go.
