@@ -29,7 +29,13 @@ Firstly do properly logging no more ```fmt.Println()```, instead migrate over to
 
 Packages should have lower case names and be relatively short and self explanatory. 
 
+Try to avoid using generic names such as helper/utils/package. 
+
 ## Package structure
+
+In general it is quite easy to combine packages together, on the other hand splitting up packages can be quite combersome. 
+
+Prefer many small packages each with their own responsibility (SRP).
 
 ## Testing
 
