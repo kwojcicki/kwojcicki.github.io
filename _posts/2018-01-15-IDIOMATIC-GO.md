@@ -49,4 +49,15 @@ func getCat(id int) (cat){
 } 
 ```
 
-## Structure initialization 
+## Structure initialization
+
+When initializing a structure use named structs, helps with code reviews and in general the codes readability
+
+```
+params := request.Params{
+	URL: "http://google.com",
+	Method: "Post",
+	Headers: map[string]string{"Authentication": "a123abc"},
+	Body: body,
+}
+```
