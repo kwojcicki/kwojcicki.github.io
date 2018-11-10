@@ -23,6 +23,8 @@ In general, the preferred method or idiomatic way of writing Go is to keep it si
 
 Firstly do properly logging no more ```fmt.Println()```, instead migrate over to a logging library like logrus.
 
+Secondly error messages should start with a lowercase letter and should not end with a '.', the same applies to log messages.
+
 ## Mutex hat
 
 ## Package naming
