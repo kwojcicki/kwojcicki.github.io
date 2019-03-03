@@ -47,3 +47,4 @@ Soft Paywall == Can be circumvented using multiple browsers/private sessions
 # To Read
 * [How Discord Scaled Elixir to 5,000,000 Concurrent Users](https://blog.discordapp.com/scaling-elixir-f9b8e1e7c29b)
 * [How Does Distributed Consensus Work](https://medium.com/s/story/lets-take-a-crack-at-understanding-distributed-consensus-dad23d0dc95)
+* [An introduction to distributed systems](https://github.com/aphyr/distsys-class)
