@@ -9,7 +9,7 @@ comments: true
 tags: [ Living ]
 ---
 
-Soft Paywall == Can be circumvented using multiple browsers/private sessions
+Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 # Startups
 
@@ -17,6 +17,7 @@ Soft Paywall == Can be circumvented using multiple browsers/private sessions
  * [First Principles Thinking](https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0?fbclid=IwAR1vDu_ywdjqaZHP6ppzoe0WZl2Mif_ffYx6gBZUonDAjx2KpJ17bjJnI1g)
  * [How to Get Startup Ideas](http://www.paulgraham.com/startupideas.html)
 * [Awesome CTO Resources](https://github.com/mateusz-brainhub/awesome-cto-resources)
+* [Turning side projects into profitable startups](https://levels.io/startups/)
 
 # Systems
 
@@ -48,3 +49,4 @@ Soft Paywall == Can be circumvented using multiple browsers/private sessions
 * [How Discord Scaled Elixir to 5,000,000 Concurrent Users](https://blog.discordapp.com/scaling-elixir-f9b8e1e7c29b)
 * [How Does Distributed Consensus Work](https://medium.com/s/story/lets-take-a-crack-at-understanding-distributed-consensus-dad23d0dc95)
 * [An introduction to distributed systems](https://github.com/aphyr/distsys-class)
+* [Status as a Service (StaaS)](https://www.eugenewei.com/blog/2019/2/19/status-as-a-service)
