@@ -25,6 +25,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Designing Data-Intensive Applications](http://puhonua.com/docs/DDIA.pdf)
 * [Build-your-own-x](https://github.com/danistefanovic/build-your-own-x)
 * [Reconstructing Twitter's Firehose](https://docs.google.com/document/d/1xVrPoNutyqTdQ04DXBEZW4ZW4A5RAQW2he7qIpTmG-M/preview)
+* [Using PostgreSQL in Tantan - From 0 to 350bn rows in 2 years] (http://www.pgconf.asia/JP/wp-content/uploads/2016/12/From-0-to-350bn-rows-in-2-years-PgConfAsia2016-v1.pdf)
 
 # Programming
 * [Practical Go: Real world advice for writing maintainable Go programs](http://puhonua.com/docs/DDIA.pdf)
