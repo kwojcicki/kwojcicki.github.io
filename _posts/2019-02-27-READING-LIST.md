@@ -54,3 +54,5 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [An introduction to distributed systems](https://github.com/aphyr/distsys-class)
 * [Status as a Service (StaaS)](https://www.eugenewei.com/blog/2019/2/19/status-as-a-service)
 * [Communication](https://ubiquity.acm.org/communication.cfm?volume=all)
+* [Database blog articles](https://architecture-database.blogspot.com/)
+* [How to Register a company in the SA: Comprehensive guide for founders](http://aynuriev.com/how-to-register-company-usa/)
