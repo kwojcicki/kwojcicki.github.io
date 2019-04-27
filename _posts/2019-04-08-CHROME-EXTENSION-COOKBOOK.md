@@ -107,3 +107,37 @@ chrome.identity.getProfileUserInfo(function(info) {
 });
 ```
 
+#JQuery
+
+#Context menu/right click menu
+Script should look like this:
+
+```
+function getword(info,tab) {
+  console.log("Word " + info.selectionText + " was clicked.");
+  chrome.tabs.create({  
+    url: "http://www.google.com/search?q=" + info.selectionText
+  });
+}
+chrome.contextMenus.create({
+  title: "Search: %s", 
+  contexts:["selection"], 
+  onclick: getword
+});
+```
+
+And manifest.json:
+```
+{
+    "name": "App name",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Your description",
+    "permissions": [
+      "contextMenus"
+     ],
+    "background": { 
+      "scripts": ["script.js"]
+    }
+}
+```
