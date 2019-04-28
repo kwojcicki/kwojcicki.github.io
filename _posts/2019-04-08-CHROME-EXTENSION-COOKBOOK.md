@@ -141,3 +141,25 @@ And manifest.json:
     }
 }
 ```
+
+
+# HTTP requests
+```
+{
+    "name": "My extension",
+    ...
+    "permissions": [
+        "http://www.example.com/*"
+    ],
+    ...
+}
+```
+
+```
+var xhr = new XMLHttpRequest();
+
+xhr.open("GET", "http://www.example.com?par=0", false);
+xhr.send();
+
+var result = xhr.responseText;
+```
