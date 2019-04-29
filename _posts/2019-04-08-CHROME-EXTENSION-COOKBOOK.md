@@ -109,6 +109,30 @@ chrome.identity.getProfileUserInfo(function(info) {
 
 #JQuery
 
+
+You have to add your jquery script to your chrome-extension project and to the background section of your manifest.json like this :
+
+```
+  "background":
+    {
+        "scripts": ["thirdParty/jquery-2.0.3.js", "background.js"]
+    }
+```
+
+If you need jquery in a content_scripts, you have to add it in the manifest too:
+
+```
+"content_scripts": 
+    [
+        {
+            "matches":["http://website*"],
+            "js":["thirdParty/jquery.1.10.2.min.js", "script.js"],
+            "css": ["css/style.css"],
+            "run_at": "document_end"
+        }
+    ]
+```
+
 #Context menu/right click menu
 Script should look like this:
 
