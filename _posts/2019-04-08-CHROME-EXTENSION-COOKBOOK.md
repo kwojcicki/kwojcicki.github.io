@@ -185,5 +185,24 @@ var xhr = new XMLHttpRequest();
 xhr.open("GET", "http://www.example.com?par=0", false);
 xhr.send();
 
+
+# Modifying current url location
+```
+chrome.tabs.getCurrent(function (tab) {
+  //Your code below...
+  var tabUrl = encodeURIComponent(tab.url);
+  var tabTitle = encodeURIComponent(tab.title);
+  var myNewUrl = "https://www.mipanga.com/Content/Submit?url=" + tabUrl + "&title=" + tabTitle;
+
+  //Update the url here.
+  chrome.tabs.update(tab.id, {url: myNewUrl});
+});
+```
+
+```
+"permissions": [
+  "tabs"
+],
+```
 var result = xhr.responseText;
 ```
