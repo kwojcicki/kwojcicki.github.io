@@ -42,6 +42,17 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 });
 ```
 
+# Send to all tabs
+
+```
+chrome.tabs.query({}, function(tabs) {
+    var message = {foo: bar};
+    for (var i=0; i<tabs.length; ++i) {
+        chrome.tabs.sendMessage(tabs[i].id, message);
+    }
+});
+```
+
 ## Listening for message from anywhere
 ```
 chrome.runtime.onMessage.addListener(
