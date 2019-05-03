@@ -32,7 +32,7 @@ tags: [ Programming ]
   });
 ```
 
-## Sending message from background scirpt
+## Sending message from background script
 
 ```
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
