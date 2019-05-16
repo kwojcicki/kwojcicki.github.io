@@ -62,7 +62,7 @@ function myFunction() {
   	saved *= (1 + document.getElementById("interest").value/100)
     saved += year;
   }
-  document.getElementById("moneyresult").innerHTML  = saved;
+  document.getElementById("moneyresult").innerHTML  = "Money saved: " + saved;
 }
 </script>
 
