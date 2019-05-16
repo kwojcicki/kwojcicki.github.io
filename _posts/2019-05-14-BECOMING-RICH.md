@@ -51,7 +51,43 @@ And BOOM! over 1 million dollars in 48 years if I just start eating less now.
 
 But why should I stop at eating 2500 calories a day. If dropping 200 calories got me a million dollars why don't I drop 1000 calories and really start raking in the cash. Or I can just stop eating at all, just have vitamin gummy bears and water. Next self made billionaire here I come!
 
+Heres a small little calculator that will show you how much money you can save by starving yourself!
+
 <script>
-console.log("hello");
+function myFunction() {
+  var diff = document.getElementById("current").value - document.getElementById("desired").value;
+  var year = diff * document.getElementById("dperg").value * 365;
+  var saved = 0;
+  for(var i = 0; i < document.getElementById("years").value; i++){
+  	saved *= (1 + document.getElementById("interest").value/100)
+    saved += year;
+  }
+  document.getElementById("moneyresult").innerHTML  = saved;
+}
 </script>
+
+ <label for="current">Current daily calorie intact</label>
+<input id='current' type="number" onkeyup="myFunction()" placeholder="current daily calorie intact">
+<br>
+
+ <label for="desired">Reduced daily calorie intact</label>
+<input id='desired' type="number" onkeyup="myFunction()" placeholder="reduced daily calorie intact">
+<br>
+
+ <label for="dperg">$/calorie</label>
+<input id='dperg' type="number" onkeyup="myFunction()" placeholder="$/calorie">
+<br>
+
+ <label for="years">Years</label>
+<input id='years' type="number" onkeyup="myFunction()" placeholder="years">
+<br>
+
+ <label for="interest">Yearly interest rate ie 10</label>
+<input id='interest' type="number" onkeyup="myFunction()" placeholder="yearly interest rate ie 10">
+<br>
+
+<p id='moneyresult'></p>
+
+
+
 
