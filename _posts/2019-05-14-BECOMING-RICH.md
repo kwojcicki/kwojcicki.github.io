@@ -1,12 +1,12 @@
 ---
 layout:     post
-title:      "Creating a useful UI regression suite"
-subtitle:   "Extracting as much value as possible for your selenium testsuite"
-date:       2019-03-23 15:18:00
+title:      "1 easy trick to become a millionaire"
+subtitle:   "Showing you the easiest way to become the next self made millionaire!(Satire)"
+date:       2019-05-14 15:18:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
 comments: true
-tags: [ Programming ]
+tags: [ Money ]
 ---
 
 ***Disclaimer: This is a slight parody of [https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html](https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html).***
