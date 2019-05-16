@@ -11,7 +11,9 @@ tags: [ Money ]
 
 ***Disclaimer: This is a slight parody of [https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html](https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html).***
 
-***Take anything I say in this article with a grain of salt, and the numbers are sometimes rounded sometimes not depending on my mood when I was calculating :). ***
+
+***Take anything I say in this article with a grain of salt, and the numbers are sometimes rounded sometimes not depending on my mood when I was calculating :).***
+
 
 ***All these prices/nutrition facts will be based on the [independent city market website](https://www.independentcitymarket.ca***
 
@@ -33,19 +35,23 @@ As one could expect a pure canola oil diet isn't likely to keep me alive for a l
 
 I have seen some good looking [ham/cheese baguettes](https://www.independentcitymarket.ca/Food/Deli-%26-Ready-Meals/Ready-Meals-%26-Sides/Sandwiches-%26-Lunch-Kits/Ham-and-Compt%C3%A9-Cheese-Baguette/p/20786966_EA).
 
-![Baguette nutrition](/img/posts/sandwichnutrition.PNG)
 ![Baguette](/img/posts/sandwich.PNG)
+![Baguette nutrition](/img/posts/sandwichnutrition.PNG)
 
 To round off the meal we can add a nice [garden salad](https://www.independentcitymarket.ca/Food/Meal-Kits-%26-Deli/Ready-Meals-%26-Sides/Salads/Garden-Salad-with-Cheese%2C-Small/p/20099003_KG).
 
 ![Garden salad nutrition](/img/posts/gardensalad.PNG)
 ![Garden salad](/img/posts/gardensaladnutrition.PNG)
 
-If I add an extra 100 calories from the sandwich and the salad I would be spending an extra 4$  a day (1.25$ a day from the sandwich and 2.82$ from the salad). Which would be (4$ * 365 * (70 - 22)) = 71264$ by the time I am 70. Now this is not a million dollars but lets see what happens when we invest that money with a return of 10%. 
+If I add an extra 100 calories from the sandwich and the salad I would be spending an extra 4$  a day (1.25$ a day from the sandwich and 2.82$ from the salad). Which would be (4$ * 365 * (70 - 22)) = 71264$ by the time I am 70 or 1484$ a year. Now this is not a million dollars but lets see what happens when we invest those savings with a return of 10% and let the magic compounding go to work. 
 
 ![Return on investment](/img/posts/graph.PNG)
 
 And BOOM! over 1 million dollars in 48 years if I just start eating less now. 
 
 But why should I stop at eating 2500 calories a day. If dropping 200 calories got me a million dollars why don't I drop 1000 calories and really start raking in the cash. Or I can just stop eating at all, just have vitamin gummy bears and water. Next self made billionaire here I come!
+
+<script>
+console.log("hello");
+</script>
 
