@@ -56,3 +56,5 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Communication](https://ubiquity.acm.org/communication.cfm?volume=all)
 * [Database blog articles](https://architecture-database.blogspot.com/)
 * [How to Register a company in the SA: Comprehensive guide for founders](http://aynuriev.com/how-to-register-company-usa/)
+* [System-design-interview](https://github.com/checkcheckzz/system-design-interview)
+* [The Complete Guide to Deep Work](https://doist.com/blog/complete-guide-to-deep-work/)
