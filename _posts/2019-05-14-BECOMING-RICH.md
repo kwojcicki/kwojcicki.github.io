@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "1 easy trick to become a millionaire"
-subtitle:   "Showing you the easiest way to become the next self made millionaire!(Satire)"
+title:      "Starving yourself to riches"
+subtitle:   "The easiest way to become the next self made millionaire"
 date:       2019-05-14 15:18:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
@@ -9,7 +9,7 @@ comments: true
 tags: [ Money ]
 ---
 
-***Disclaimer: This is a slight parody of [https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html](https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html).***
+***Disclaimer: This is a parody of [https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html](https://www.cnbc.com/2019/03/28/suze-orman-spending-money-on-coffee-is-like-throwing-1-million-down-the-drain.html).***
 
 
 ***Take anything I say in this article with a grain of salt, and the numbers are sometimes rounded sometimes not depending on my mood when I was calculating :).***
@@ -43,7 +43,14 @@ To round off the meal we can add a nice [garden salad](https://www.independentci
 ![Garden salad nutrition](/img/posts/gardensalad.PNG)
 ![Garden salad](/img/posts/gardensaladnutrition.PNG)
 
-If I add an extra 100 calories from the sandwich and the salad I would be spending an extra 4$  a day (1.25$ a day from the sandwich and 2.82$ from the salad). Which would be (4$ * 365 * (70 - 22)) = 71264$ by the time I am 70 or 1484$ a year. Now this is not a million dollars but lets see what happens when we invest those savings with a return of 10% and let the magic compounding go to work. 
+If I add an extra 100 calories from the sandwich and the salad I would be spending an extra 4$  a day (1.25$ a day from the sandwich and 2.82$ from the salad). Which would be (4$ * 365 * (70 - 22)) = 71264$ by the time I am 70 or 1484$ a year. 
+
+Now this is not a million dollars but lets see what happens when we invest those savings with a return of 10% and let the magic compounding go to work.
+
+Given that we have an income of 1484$/year and an annual return of 10% we get a simple recursive equation. 
+
+f(0) = 0, f(1) = 1484
+f(x) = f(x - 1) * 1.1 + 1484 
 
 ![Return on investment](/img/posts/graph.PNG)
 
