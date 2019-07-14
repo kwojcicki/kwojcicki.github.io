@@ -16,7 +16,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Summary: How to Start a Startup (YC)](https://docs.google.com/document/d/1wkJ6Ruh2IiR-caT-PS3n5Yt5VKcmIsVhuQwjgqK7030/edit)
  * [First Principles Thinking](https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0?fbclid=IwAR1vDu_ywdjqaZHP6ppzoe0WZl2Mif_ffYx6gBZUonDAjx2KpJ17bjJnI1g)
  * [How to Get Startup Ideas](http://www.paulgraham.com/startupideas.html)
-* [Awesome CTO Resources](https://github.com/mateusz-brainhub/awesome-cto-resources)
+* [Awesome CTO Resources](https://github.com/mateusz-brainh]ub/awesome-cto-resources)
 * [Turning side projects into profitable startups](https://levels.io/startups/)
 
 # Systems
@@ -27,24 +27,30 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Reconstructing Twitter's Firehose](https://docs.google.com/document/d/1xVrPoNutyqTdQ04DXBEZW4ZW4A5RAQW2he7qIpTmG-M/preview)
 * [Using PostgreSQL in Tantan - From 0 to 350bn rows in 2 years](http://www.pgconf.asia/JP/wp-content/uploads/2016/12/From-0-to-350bn-rows-in-2-years-PgConfAsia2016-v1.pdf) 350 billion rows... enough said.
 * [Let's Build a Simple Database](https://cstack.github.io/db_tutorial/)
+* [Details of the Cloudflare outage on July 2, 2019](https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/) Interesting bit about how testing in prod bit Cloudflare in the butt. As well as how to make regex more manageable in large applications. 
 
 # Programming
+
 * [Practical Go: Real world advice for writing maintainable Go programs](http://puhonua.com/docs/DDIA.pdf)
 * [Open Data Structures](http://opendatastructures.org/ods-java/)
 * [Introduction To Algorithms](https://labs.xjtudlc.com/labs/wldmt/reading%20list/books/Algorithms%20and%20optimization/Introduction%20to%20Algorithms.pdf)
 * [Awesome-Design-Patterns](https://github.com/DovAmir/awesome-design-patterns)
-* [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+* [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) As a primarily backend developer this guide is super useful anytime I need to build a UI.
 
 # Interviews
-* [Cracking the Coding Interview](https://github.com/sunilsoni/Interview-Preparation/blob/master/books/Cracking%20the%20Coding%20Interview%2C%206th%20Edition%20189%20Programming%20Questions%20and%20Solutions.pdf)
+
+* [Cracking the Coding Interview](https://github.com/sunilsoni/Interview-Preparation/blob/master/books/Cracking%20the%20Coding%20Interview%2C%206th%20Edition%20189%20Programming%20Questions%20and%20Solutions.pdf) Just a great resource with tons of questions that frankly are quite common atleast in the interviews I have been in.
 
 # Productivity
+
 * [16 Things Everybody Should Stop Doing In Order To Be Successful](https://medium.com/@parkernash/16-things-everybody-should-stop-doing-in-order-to-be-successful-18be67a70a2c)
 
 # Blogs
+
 * [High Scalability](http://highscalability.com/) Great blog related to all things done at scale, its "Stuff The Internet Says On Scalability For XXX" series is top notch 
 
 # Misc
+
 * [The Mastermind](https://longform.org/posts/the-mastermind) Soft Paywall, interesting mini series about programmer turn criminal cartel boss.
 * [Our Boss Will Call Your Boss](https://cepr.shorthandstories.com/haiti-contractors/index.html) 7 Blackwater like security contractors arrested near Haiti's Central Bank. American government swoops in and rescues them. What really happened?
 
