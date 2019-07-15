@@ -44,6 +44,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 # Productivity
 
 * [16 Things Everybody Should Stop Doing In Order To Be Successful](https://medium.com/@parkernash/16-things-everybody-should-stop-doing-in-order-to-be-successful-18be67a70a2c)
+* ["10x engineers": Stereotypes and research](https://jasoncrawford.org/10x-engineers)
 
 # Blogs
 
@@ -65,3 +66,4 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [System-design-interview](https://github.com/checkcheckzz/system-design-interview)
 * [The Complete Guide to Deep Work](https://doist.com/blog/complete-guide-to-deep-work/)
 * [Branch Prediction](https://danluu.com/branch-prediction/)
+* [Why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/)
