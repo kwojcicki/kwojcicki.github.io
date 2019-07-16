@@ -28,6 +28,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Using PostgreSQL in Tantan - From 0 to 350bn rows in 2 years](http://www.pgconf.asia/JP/wp-content/uploads/2016/12/From-0-to-350bn-rows-in-2-years-PgConfAsia2016-v1.pdf) 350 billion rows... enough said.
 * [Let's Build a Simple Database](https://cstack.github.io/db_tutorial/)
 * [Details of the Cloudflare outage on July 2, 2019](https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/) Interesting bit about how testing in prod bit Cloudflare in the butt. As well as how to make regex more manageable in large applications. 
+* [From Laptop to Lambda: Outsourcing Everyday Jobs to Thousands of Transient Functional Containers](https://github.com/StanfordSNR/gg)
 
 # Programming
 
