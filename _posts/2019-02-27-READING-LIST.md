@@ -31,6 +31,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [From Laptop to Lambda: Outsourcing Everyday Jobs to Thousands of Transient Functional Containers](https://github.com/StanfordSNR/gg)
 * [Kubernetes 101: Pods, Nodes, Containers, and Clusters](https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16)
 
+
 # Programming
 
 * [Practical Go: Real world advice for writing maintainable Go programs](http://puhonua.com/docs/DDIA.pdf)
@@ -71,3 +72,4 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [The Complete Guide to Deep Work](https://doist.com/blog/complete-guide-to-deep-work/)
 * [Branch Prediction](https://danluu.com/branch-prediction/)
 * [Why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/)
+* [Operating a Large, Distributed System in a Reliable Way: Practices I Learned](https://blog.pragmaticengineer.com/operating-a-high-scale-distributed-system/)s
