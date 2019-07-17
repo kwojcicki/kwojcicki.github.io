@@ -29,6 +29,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Let's Build a Simple Database](https://cstack.github.io/db_tutorial/)
 * [Details of the Cloudflare outage on July 2, 2019](https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/) Interesting bit about how testing in prod bit Cloudflare in the butt. As well as how to make regex more manageable in large applications. 
 * [From Laptop to Lambda: Outsourcing Everyday Jobs to Thousands of Transient Functional Containers](https://github.com/StanfordSNR/gg)
+* [Kubernetes 101: Pods, Nodes, Containers, and Clusters](https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16)
 
 # Programming
 
@@ -54,7 +55,9 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 # Misc
 
 * [The Mastermind](https://longform.org/posts/the-mastermind) Soft Paywall, interesting mini series about programmer turn criminal cartel boss.
+* [Was Bitcoin Created By This International Drug Dealer? Maybe!](https://www.wired.com/story/was-bitcoin-created-by-this-international-drug-dealer-maybe/)
 * [Our Boss Will Call Your Boss](https://cepr.shorthandstories.com/haiti-contractors/index.html) 7 Blackwater like security contractors arrested near Haiti's Central Bank. American government swoops in and rescues them. What really happened?
+* [What every computer science major should know](http://matt.might.net/articles/what-cs-majors-should-know/)
 
 # To Read
 * [How Discord Scaled Elixir to 5,000,000 Concurrent Users](https://blog.discordapp.com/scaling-elixir-f9b8e1e7c29b)
