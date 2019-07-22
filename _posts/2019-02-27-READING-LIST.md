@@ -72,4 +72,5 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [The Complete Guide to Deep Work](https://doist.com/blog/complete-guide-to-deep-work/)
 * [Branch Prediction](https://danluu.com/branch-prediction/)
 * [Why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/)
-* [Operating a Large, Distributed System in a Reliable Way: Practices I Learned](https://blog.pragmaticengineer.com/operating-a-high-scale-distributed-system/)s
+* [Operating a Large, Distributed System in a Reliable Way: Practices I Learned](https://blog.pragmaticengineer.com/operating-a-high-scale-distributed-system/)
+* [Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/pdf/1907.06902.pdf)
