@@ -74,3 +74,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [Why you only need to test with 5 users](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/)
 * [Operating a Large, Distributed System in a Reliable Way: Practices I Learned](https://blog.pragmaticengineer.com/operating-a-high-scale-distributed-system/)
 * [Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/pdf/1907.06902.pdf)
+* [The Mom Test](http://manuelohan.com/wp-content/uploads/2017/05/The-Mom-Test-en.pdf)
+* [The Morning Paper](https://blog.acolyer.org/)
+* [Money Stuff](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine)
+* [](https://www.ycombinator.com/resources/#ideas)
