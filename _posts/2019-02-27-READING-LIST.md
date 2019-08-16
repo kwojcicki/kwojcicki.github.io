@@ -78,3 +78,4 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [The Morning Paper](https://blog.acolyer.org/)
 * [Money Stuff](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine)
 * [](https://www.ycombinator.com/resources/#ideas)
+* [](https://www.yegor256.com/)
