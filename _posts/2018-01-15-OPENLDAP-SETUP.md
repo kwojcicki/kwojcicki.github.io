@@ -63,7 +63,9 @@ description: My Organization policies come here
 
 Add myoupolicy.ldif
 
+```
 sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f myoupolicy.ldif
+```
 
 Create file ppmodule.ldif to load the pp module
 
@@ -76,7 +78,9 @@ olcModuleLoad: ppolicy
 
 load the module ppmodule.ldif
 
+```
 sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ppmodule.ldif
+```
 
 Prepare for Overlay Create file ppolicyoverlay.ldif
 
@@ -90,7 +94,9 @@ olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=company,dc=local,dc=test,dc=li
 
 Add ppolicyoverlay.ldif using ldapadd command
 
+```
 sudo ldapadd -Y EXTERNAL -H ldapi:/// -f ppolicyoverlay.ldif
+```
 
 Create passwordpolicy.ldif for MyOrganization
 
@@ -118,12 +124,15 @@ pwdSafeModify: FALSE
 
 Add passwordpolicy.ldif in LDAP
 
+```
 sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f passwordpolicy.ldif
-
+```
 
 Verify the configuration
 
+```
 sudo ldapsearch -Y EXTERNAL -H ldapi:/// -b olcDatabase={1}mdb,cn=config
+```
 
 The output of the command should contain something along the lines of
 
@@ -138,11 +147,13 @@ olcPPolicyDefault: cn=MyOrgPPolicy,ou=Policies,dc=company,dc=local,dc=test,dc=li
 ## Setting up TLS for OpenLDAP
 Again using https://help.ubuntu.com/lts/serverguide/openldap-server.html#openldap-tls
 
+```
 sudo apt install gnutls-bin ssl-cert
 
 sudo sh -c "certtool --generate-privkey > /etc/ssl/private/cakey.pem"
+```
 
-Create the template/file /etc/ssl/ca.info to define the CA:
+Create the file /etc/ssl/ca.info to define the CA:
 
 ```
 cn = My Cool Company
@@ -152,6 +163,7 @@ cert_signing_key
 
 Run the following commands to create the CA
 
+```
 sudo certtool --generate-self-signed \
 --load-privkey /etc/ssl/private/cakey.pem \ 
 --template /etc/ssl/ca.info \
@@ -160,9 +172,11 @@ sudo certtool --generate-self-signed \
 sudo certtool --generate-privkey \
 --bits 1024 \
 --outfile /etc/ssl/private/ldap01_slapd_key.pem
+```
 
 Create the /etc/ssl/ldap01.info info file containing where ip_address is replaced with the ip of your local linux:
 
+```
 organization = My Cool Company
 cn = company.local.test.linux
 tls_www_server
@@ -171,9 +185,11 @@ signing_key
 expiration_days = 3650
 
 ip_address="172.20.127.3"
+```
 
 Next we will create the server key and cert
 
+```
 sudo certtool --generate-certificate \
 --load-privkey /etc/ssl/private/ldap01_slapd_key.pem \
 --load-ca-certificate /etc/ssl/certs/cacert.pem \
@@ -186,11 +202,12 @@ sudo chmod 0640 /etc/ssl/private/ldap01_slapd_key.pem
 sudo gpasswd -a openldap ssl-cert
 
 sudo systemctl restart slapd.service
-
+```
 
 
 Create the file certinfo.ldif with the following contents
 
+```
 dn: cn=config
 replace: olcTLSCACertificateFile
 olcTLSCACertificateFile: /etc/ssl/certs/cacert.pem
@@ -200,38 +217,52 @@ olcTLSCertificateFile: /etc/ssl/certs/ldap01_slapd_cert.pem
 -
 replace: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/ssl/private/ldap01_slapd_key.pem
-
+```
 
 Use the ldapmodify command to tell slapd about our TLS work via the slapd-config database:
 
+```
 sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f certinfo.ldif
-
+```
 ## Visualising OpenLDAP 
 Visualising the LDAP server can be useful as well. PhpLDAPadmin can help us with that (similar to phpmyadmin except for LDAP) Using https://www.linuxbabe.com/ubuntu/install-configure-openldap-server-ubuntu-16-04
 
+```
 sudo apt install phpldapadmin
 
 sudo vim /etc/apache2/ports.conf
+```
 
 Replace Listen 80 to Listen 81 so that we can run the solution and the phpldapadmin page at the same time. Restart apache to put the changes into effect
 
+```
 sudo systemctl restart apache2.service
+```
 
 Next we will configure phpldapadmin
 
+```
 sudo vim /etc/phpldapadmin/config.php
+```
 
 Replace
 
+```
 $servers→setValue('server','base',array('dc=example,dc=com'));
+```
 
 with
 
+```
 $servers→setValue('server','base',array('dc=company,dc=local,dc=test,dc=linux'));
+```
+
 
 If TLS was not configured or certificates are not installed uncomment the following line
 
+```
 // $servers→setValue('server','tls',false);
+```
 
 Save the file and restart apache again 
 
@@ -243,7 +274,10 @@ locate bin/php
 
 To get rid of other php versions do (replace php5 with whatever extra versions you have installed)
 
+```
 sudo apt-get purge 'php5*' 
+```
+
 To add or remove users using phpldapadmin is quite simple http://www.techrepublic.com/article/how-to-populate-an-ldap-server-with-users-and-groups-via-phpldapadmin/
 
 ## GUI utilisation
@@ -298,11 +332,15 @@ userPassword: {MD5}X03MO1qnZdYdgyfeuILPmQ==
 
 Password for both of the users is ```password``` if a different password is required use the following command and replace userPassword in the ldif file
 
+```
 slappasswd -h {MD5} -s password
+```
 
 Next we will add it to the OpenLDAP server
 
+```
 sudo ldapadd -x -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f add_content.ldif
+```
 
 Adding sample readonly admin user
 https://serverfault.com/questions/120499/ldap-slapd-creating-users-with-access-to-specific-trees
@@ -322,15 +360,20 @@ userPassword: {SSHA}n+aYhO/TOitWkyMp9v/fe5ndtOhY0/3U
 
 This last line is a hash of the password you want to use, generated via the slappasswd utility:
 
+```
 sudo slappasswd -s secret
 {SSHA}n+aYhO/TOitWkyMp9v/fe5ndtOhY0/3U
+```
 
 Next we will add it to the OpenLDAP server
 
+```
 sudo ldapadd -x -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f read_only.ldif
+```
 
 Once this is done, add some ACLs to your /usr/share/slapd/slapd.conf that look something like this:
 
+```
 access to dn.sub="ou=Users,dc=company,dc=local,dc=test,dc=linux"
 
 by dn.exact="cn=postfix,ou=Readonly,dc=company,dc=local,dc=test,dc=linux" read
@@ -338,8 +381,9 @@ by dn.exact="cn=postfix,ou=Readonly,dc=company,dc=local,dc=test,dc=linux" read
 by dn="@ADMIN@" write
 
 by * read
+```
 
-Enabling memberOf openldap functionality
+## Enabling memberOf openldap functionality
 https://help.marklogic.com/knowledgebase/article/View/457/0/using-openldap-for-authorising-marklogic-security-roles
 
 Create a ldif file with the following contents
@@ -363,11 +407,15 @@ olcoverlay: memberof
 
 For the above file olcModulePath should be the location of memberof.la to find this location
 
+```
 sudo find / -name "memberof.la"
+```
 
 Next enable member of overlay
 
+```
 sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f memberOf.ldif
+```
 
 ## Adding sample groups
 Create createGroup.ldif file with the following contents which will create a group called admin and regular then add the already existing account cn=admin,dc=company,dc=local,dc=test,dc=linux to the admin group and then add  cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux to the regular group
@@ -392,11 +440,15 @@ member: cn=regularuser,cn=Users,dc=company,dc=local,dc=test,dc=linux
 
 Add the group 
 
+```
 sudo ldapadd -D cn=admin,dc=company,dc=local,dc=test,dc=linux -w password -f createGroup.ldif
+```
 
 you can run the following command to see if it's all set up properly:
 
+```
 sudo ldapsearch -x -LLL -H ldap:/// -b cn=admin,dc=company,dc=local,dc=test,dc=linux dn memberof
+```
 
 And it should yield this result
 
