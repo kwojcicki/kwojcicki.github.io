@@ -13,7 +13,7 @@ tags: [ Guide ]
 
 * Async functions and pushing to Kafka
 
-To push to kafka we first need to have a Kafka running make (make sure your pwd is this repo when running the command)
+To push to kafka we first need to have a Kafka running.
 
 ```bash
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
