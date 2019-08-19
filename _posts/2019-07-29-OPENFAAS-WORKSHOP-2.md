@@ -13,21 +13,21 @@ tags: [ Guide ]
 
 * Deploying and calling custom functions
 
-Using your favorite language (will use python in this example) we are going to build a word count function. That will take in sentences and return a json objet with keyvalue pairs that hold the word and occurrence
+Using your favorite language (will use python in this example) we are going to build a word count function. That will take in sentences and return a json object with keyvalue pairs that hold the word and occurrence
 
 ```bash
 faas new --lang python3 wc
 ```
 This will generate a folder called wc in your pwd and a wc.yml. Inside the wc folder you will see a `requirements.txt` + `handler.py`. The `handler.py` contains a single method handle(req) which is your entrypoint.
 
-one can directly call the handle method by appending the following to `handler.py`
+One can directly call the handle method by appending the following to `handler.py`
 
 ```python
 if __name__ == '__main__':
     print(handle("hello world asd hello"))
 ```
 
-then call the function as follows
+Then call the function as follows
 
 ```bash
 kwojcicki@ubuntu:~/workspace/openfaas-workshops$ python3 ./wc/handler.py 
@@ -87,7 +87,7 @@ kwojcicki@ubuntu:~/workspace/openfaas-workshops$ echo "Hello I I am" | faas invo
 
 Great, but what if our function has an error and needs to log something? For the python3 template OpenFaas uses the Forking method of invoking functions as seen below
 
-![watchdog](watchdog.png)
+![watchdog](/img/posts/watchdog.png)
 
 Normally OpenFaas returns the combination of stdout + stderr this can be turned off by adding 
 
@@ -138,5 +138,3 @@ kwojcicki@ubuntu:~/workspace/openfaas-workshops$ faas logs wc --since 1m --gatew
 
 2019-08-10 15:48:37.05917626 +0000 UTC wc (wc-c75969444-kgxcg) {"Hello": 1, "I": 2, "am": 1}
 ```
-
-While using stderr it log is not the best practice with the HTTP watchdog architecture the logging mechanism will improve.

@@ -31,4 +31,4 @@ faas-cli deploy -f https://raw.githubusercontent.com/openfaas/faas/master/stack.
 
 Next visit the OpenFaas UI and try invoking various functions
 
-![lab1-ui](./lab1-ui.png)
+![lab1-ui](/img/posts/lab1-ui.png)
