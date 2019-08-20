@@ -25,8 +25,8 @@ Recommendation for using KinD vs Minikube vs DO
 
 From what I have heard OpenFaas on DO is relatively easy to set up but may cost a few dollars in server fees.
 
-https://github.com/rgee0/openfaas-on-digitalocean
-https://marketplace.digitalocean.com/apps/openfaas
+[https://github.com/rgee0/openfaas-on-digitalocean](https://github.com/rgee0/openfaas-on-digitalocean)
+[https://marketplace.digitalocean.com/apps/openfaas](https://marketplace.digitalocean.com/apps/openfaas)
 
 # Minikube setup
 
@@ -36,7 +36,7 @@ I would recommend using KinD but for those that really do not want to use KinD h
 
 First install from [here](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
-On Mac/Linux (note if you are launching minikube in a Linux VM you will need to do nested virtualization I would recommend host vmware and nested vm to be virtualbox)
+On Mac/Linux (note if you are launching minikube in a Linux VM you will need to do nested virtualization I would recommend host vmware and the nested vm to be virtualbox)
 
 ``` bash
 export HTTP_PROXY=http://<proxy hostname:port>
@@ -56,7 +56,7 @@ set NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.1/24,192.168.39.0/24
 minikube start --cpus 4 --memory 8192
 ```
 
-https://github.com/kubernetes/minikube/blob/master/docs/http_proxy.md
+[https://github.com/kubernetes/minikube/blob/master/docs/http_proxy.md](https://github.com/kubernetes/minikube/blob/master/docs/http_proxy.md)
 
 # KinD Setup (on Ubunutu 18.04 LTS)
 
@@ -65,9 +65,6 @@ https://github.com/kubernetes/minikube/blob/master/docs/http_proxy.md
 KinD can be used on a Ubuntu VM or a baremetal Linux machine. You can get a Ubuntu iso [here](https://ubuntu.com/download/desktop). I would recommend giving the VM 8gb of RAM + 4 cores, a minimum of 4gb + 2 cores is required. A significant amount of memory will be needed a safe bet is 25 to 30GB.
 
 ## KinD Proxy setup
-
-In Firefox set your proxy as such
-![firefox proxy](ffproxy.png)
 
 For apt to go through a proxy copy and paste the following in your `/etc/environment`
 
@@ -116,8 +113,6 @@ newgrp docker
 
 Validating:
 
-`docker ps # should see something like`
-
 ```bash
 kwojcicki@kwojcicki-VirtualBox:~$ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
@@ -150,13 +145,10 @@ docker run hello-world
 
 Links used:
 
-https://docs.docker.com/install/linux/docker-ce/ubuntu/
-https://docs.docker.com/install/linux/linux-postinstall/
-https://docs.docker.com/config/daemon/systemd/#httphttps-proxy
+[https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+[https://docs.docker.com/install/linux/linux-postinstall/](https://docs.docker.com/install/linux/linux-postinstall/)
+[https://docs.docker.com/config/daemon/systemd/#httphttps-proxy](https://docs.docker.com/config/daemon/systemd/#httphttps-proxy)
 
-### KinD Git
-
-sudo apt-install git
 
 ### KinD Go
 
@@ -172,7 +164,7 @@ GO111MODULE="on" /usr/local/go/bin/go get sigs.k8s.io/kind@v0.4.0
 
 Links used:
 
-https://golang.org/doc/code.html#GOPATH
+[https://golang.org/doc/code.html#GOPATH](https://golang.org/doc/code.html#GOPATH)
 
 ### KinD Creating the Cluster
 
@@ -317,16 +309,20 @@ kwojcicki@kwojcicki-VirtualBox:~/workspace/faas$ echo "hello :)" | faas invoke h
 hello :)
 ```
 
-One can also head to the OpenFaas UI ($ip:31112 with username: admin and password: password) to take a look at your function. You should see something like the following.
-
-![openfaas ui](ui.png)
+One can also head to the OpenFaas UI ($ip:31112 with username: admin and password: password) to take a look at your function.
 
 # Labs
 
-[Lab 1](./lab1.md)
-[Lab 2](./lab2.md)
-[Lab 3](./lab3.md)
-[Lab 4](./lab4.md)
-[Lab 5](./lab5.md)
-[Lab 6](./lab6.md)
+[Lab 1](./OPENFAAS-WORKSHOP-1)
+
+[Lab 2](./OPENFAAS-WORKSHOP-2)
+
+[Lab 3](./OPENFAAS-WORKSHOP-3)
+
+[Lab 4](./OPENFAAS-WORKSHOP-4)
+
+[Lab 5](./OPENFAAS-WORKSHOP-5)
+
+[Lab 6](./OPENFAAS-WORKSHOP-6)
+
 [Trouble shooting](./TROUBLESHOOTING.md)
