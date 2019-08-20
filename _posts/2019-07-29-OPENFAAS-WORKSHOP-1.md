@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "OpenFaaS Setup"
-subtitle:   "Settuping up OpenFaaS and deploying your first serverless function"
+title:      "OpenFaaS Lab 1"
+subtitle:   "Familiarising yourself with the OpenFaaS UI"
 date:       2019-07-29 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
@@ -12,7 +12,6 @@ tags: [ Guide ]
 # Lab 1
 
 * Visiting and using the OpenFaas ui
-* Understanding OpenFaas templates + handlers
 
 First lets deploy a bunch of pre created functions
 

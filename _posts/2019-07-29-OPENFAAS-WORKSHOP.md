@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "OpenFaaS Setup"
-subtitle:   "Settuping up OpenFaaS and deploying your first serverless function"
+subtitle:   "Setting up OpenFaaS and deploying your first serverless function"
 date:       2019-07-29 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
@@ -325,4 +325,4 @@ One can also head to the OpenFaas UI ($ip:31112 with username: admin and passwor
 
 [Lab 6](./OPENFAAS-WORKSHOP-6)
 
-[Trouble shooting](./TROUBLESHOOTING.md)
+[Trouble shooting](./OPENFAAS-WORKSHOP-TROUBLESHOOTING)
