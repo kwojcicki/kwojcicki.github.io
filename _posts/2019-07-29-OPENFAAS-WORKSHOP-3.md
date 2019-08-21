@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "OpenFaaS Setup"
-subtitle:   "Settuping up OpenFaaS and deploying your first serverless function"
+title:      "OpenFaaS Lab 3"
+subtitle:   "Chaining functions"
 date:       2019-07-29 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
@@ -11,7 +11,7 @@ tags: [ Guide ]
 
 # Lab 3
 
-* Chaining functions on the user and openfaas side
+* Chaining functions on the user and OpenFaaS side
 
 There will be situations where it will be useful to take the output of one function and use it as an input to another. This can be done both client-side and using the API Gateway.
 

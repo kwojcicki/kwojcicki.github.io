@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "OpenFaaS Lab 2"
-subtitle:   "Deploying "
+subtitle:   "Deploying and call your first function"
 date:       2019-07-29 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	

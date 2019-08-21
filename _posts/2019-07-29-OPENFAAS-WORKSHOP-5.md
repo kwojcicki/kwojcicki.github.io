@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "OpenFaaS Setup"
-subtitle:   "Settuping up OpenFaaS and deploying your first serverless function"
+title:      "OpenFaaS Lab 5"
+subtitle:   "Autoscaling your function"
 date:       2019-07-29 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
