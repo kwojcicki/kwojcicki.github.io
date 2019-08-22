@@ -2,7 +2,7 @@
 layout:     post
 title:      "OpenFaaS Workshop Setup"
 subtitle:   "Setting up OpenFaaS and deploying your first serverless function"
-date:       2019-07-29 20:02:00
+date:       2019-08-21 20:02:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
 comments: true
