@@ -31,7 +31,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 * [From Laptop to Lambda: Outsourcing Everyday Jobs to Thousands of Transient Functional Containers](https://github.com/StanfordSNR/gg)
 * [Kubernetes 101: Pods, Nodes, Containers, and Clusters](https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16)
 
-
 # Programming
 
 * [Practical Go: Real world advice for writing maintainable Go programs](http://puhonua.com/docs/DDIA.pdf)
@@ -53,12 +52,15 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 * [High Scalability](http://highscalability.com/) Great blog related to all things done at scale, its "Stuff The Internet Says On Scalability For XXX" series is top notch 
 
+# General Programmer information
+* [What every computer science major should know](http://matt.might.net/articles/what-cs-majors-should-know/)
+* [Don't Call Yourself A Programmer, And Other Career Advice](https://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/)
+
 # Misc
 
 * [The Mastermind](https://longform.org/posts/the-mastermind) Soft Paywall, interesting mini series about programmer turn criminal cartel boss.
 * [Was Bitcoin Created By This International Drug Dealer? Maybe!](https://www.wired.com/story/was-bitcoin-created-by-this-international-drug-dealer-maybe/)
 * [Our Boss Will Call Your Boss](https://cepr.shorthandstories.com/haiti-contractors/index.html) 7 Blackwater like security contractors arrested near Haiti's Central Bank. American government swoops in and rescues them. What really happened?
-* [What every computer science major should know](http://matt.might.net/articles/what-cs-majors-should-know/)
 
 # To Read
 * [How Discord Scaled Elixir to 5,000,000 Concurrent Users](https://blog.discordapp.com/scaling-elixir-f9b8e1e7c29b)
