@@ -84,3 +84,4 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [](https://www.ycombinator.com/resources/#ideas)
 - [](https://www.yegor256.com/)
 - [Effective Java 3rd Edition](https://github.com/harvies/books/blob/master/Java/%5BJAVA%5D%5BEffective%20Java%203rd%20Edition%5D/%5BJAVA%5D%5BEffective%20Java%203rd%20Edition%5D.pdf)
+- [](http://bradfitz.com/misc/bct/)

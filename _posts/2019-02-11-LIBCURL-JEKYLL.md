@@ -1,19 +1,20 @@
 ---
-layout:     post
-title:      "Could not open library 'libcurl.dll'"
-subtitle:   "Fixing Ruby/Jekyll installation to find module libcurl"
-date:       2019-02-11 19:18:00
-author:     "Krystian Wojcicki"
+layout: post
+title: "Could not open library 'libcurl.dll'"
+subtitle: "Fixing Ruby/Jekyll installation to find module libcurl"
+date: 2019-02-11 19:18:00
+author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
-tags: [ Tutorial ]
+tags: [Tutorial]
 ---
 
 # Intro
 
-As a user of github and github pages I am also a user of jekyll which is a static site generator written in Ruby. 
+As a user of github and github pages I am also a user of jekyll which is a static site generator written in Ruby.
 
 As many others have seen setting up Ruby for the first time can be problematic, one of the most common errors seen is something of the following:
+
 ```
 PS C:\Users\kwojc\git\kwojcicki.github.io> bundle exec jekyll server
 Traceback (most recent call last):
@@ -63,10 +64,9 @@ If you are using some linux flavor OS simply install libcurl/curl using your fav
 
 To fix this on a windows machine we will need to download a curl binary and ensure its in our Path environment variable.
 
-* First visit https://curl.haxx.se/download.html or [click here](https://curl.haxx.se/download.html) and download the appropriate file for your operating system ensure that you correctly select 32 or 64 bit.
-* Unzip the zipped folder anywhere
-* Take the bin/libcurl.dll (****note if you have a 64 bit system the dll may be called libcurl-x64.dll you must rename it to libcurl.dll****) and place it into your ruby bin (for me it was C:\Ruby25-x64\bin)
-* Ensure that your ruby bin is in your Path environment variable, heres a link that can help https://www.java.com/en/download/help/path.xml or [click here](https://www.java.com/en/download/help/path.xml)
-* Restart your console/machine to ensure the Path variable update was applied and start up your local jekyll server
-* Success! ![Jekyll started succesfully](/img/posts/jekyll.png)
-  
+- First visit https://curl.haxx.se/download.html or [click here](https://curl.haxx.se/download.html) and download the appropriate file for your operating system ensure that you correctly select 32 or 64 bit.
+- Unzip the zipped folder anywhere
+- Take the bin/libcurl.dll (\***\*note if you have a 64 bit system the dll may be called libcurl-x64.dll you must rename it to libcurl.dll\*\***) and place it into your ruby bin (for me it was C:\Ruby25-x64\bin)
+- Ensure that your ruby bin is in your Path environment variable, heres a link that can help https://www.java.com/en/download/help/path.xml or [click here](https://www.java.com/en/download/help/path.xml)
+- Restart your console/machine to ensure the Path variable update was applied and start up your local jekyll server
+- Success! ![Jekyll started successfully](/img/posts/jekyll.png)
