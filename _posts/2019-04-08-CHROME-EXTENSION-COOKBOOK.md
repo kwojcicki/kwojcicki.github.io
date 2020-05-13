@@ -1,20 +1,22 @@
 ---
-layout:     post
-title:      "Signaling Intent"
-subtitle:   "How signaling intent can make you a better programmer"
-date:       2019-03-23 15:18:00
-author:     "Krystian Wojcicki"
+layout: post
+title: "Signaling Intent"
+subtitle: "How signaling intent can make you a better programmer"
+date: 2022-03-23 15:18:00
+author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
-tags: [ Programming ]
+tags: [Programming]
 ---
 
 # Chrome Extension Developer Cookbook
 
 [Highlighter/Reminder Extension](https://chrome.google.com/webstore/detail/mangowaffles-highlighter/cnbhfnmefmgngepojipphalclebolhhh)
 
-# Messaging 
-## Sending message from content script 
+# Messaging
+
+## Sending message from content script
+
 ```
  chrome.runtime.sendMessage({}, function(response) {
     if (response.data === undefined) {
@@ -54,6 +56,7 @@ chrome.tabs.query({}, function(tabs) {
 ```
 
 ## Listening for message from anywhere
+
 ```
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -76,7 +79,6 @@ chrome.runtime.onMessage.addListener(
       message('Settings retrieved', items);
     });
 ```
-
 
 # On install page
 
@@ -102,7 +104,8 @@ chrome.runtime.onInstalled.addListener(function(details) {
 });
 ```
 
-# 
+#
+
 ```
 // show the popup when the user clicks on the page action.
 chrome.pageAction.onClicked.addListener(function(tab) {
@@ -111,7 +114,8 @@ chrome.pageAction.onClicked.addListener(function(tab) {
 });
 ```
 
-# 
+#
+
 ```
 chrome.identity.getProfileUserInfo(function(info) {
   email = info.email;
@@ -119,7 +123,6 @@ chrome.identity.getProfileUserInfo(function(info) {
 ```
 
 #JQuery
-
 
 You have to add your jquery script to your chrome-extension project and to the background section of your manifest.json like this :
 
@@ -133,7 +136,7 @@ You have to add your jquery script to your chrome-extension project and to the b
 If you need jquery in a content_scripts, you have to add it in the manifest too:
 
 ```
-"content_scripts": 
+"content_scripts":
     [
         {
             "matches":["http://website*"],
@@ -150,18 +153,19 @@ Script should look like this:
 ```
 function getword(info,tab) {
   console.log("Word " + info.selectionText + " was clicked.");
-  chrome.tabs.create({  
+  chrome.tabs.create({
     url: "http://www.google.com/search?q=" + info.selectionText
   });
 }
 chrome.contextMenus.create({
-  title: "Search: %s", 
-  contexts:["selection"], 
+  title: "Search: %s",
+  contexts:["selection"],
   onclick: getword
 });
 ```
 
 And manifest.json:
+
 ```
 {
     "name": "App name",
@@ -171,14 +175,14 @@ And manifest.json:
     "permissions": [
       "contextMenus"
      ],
-    "background": { 
+    "background": {
       "scripts": ["script.js"]
     }
 }
 ```
 
-
 # HTTP requests
+
 ```
 {
     "name": "My extension",
@@ -199,21 +203,25 @@ xhr.send();
 
 # Modifying current url location
 ```
+
 chrome.tabs.getCurrent(function (tab) {
-  //Your code below...
-  var tabUrl = encodeURIComponent(tab.url);
-  var tabTitle = encodeURIComponent(tab.title);
-  var myNewUrl = "https://www.mipanga.com/Content/Submit?url=" + tabUrl + "&title=" + tabTitle;
+//Your code below...
+var tabUrl = encodeURIComponent(tab.url);
+var tabTitle = encodeURIComponent(tab.title);
+var myNewUrl = "https://www.mipanga.com/Content/Submit?url=" + tabUrl + "&title=" + tabTitle;
 
-  //Update the url here.
-  chrome.tabs.update(tab.id, {url: myNewUrl});
+//Update the url here.
+chrome.tabs.update(tab.id, {url: myNewUrl});
 });
+
 ```
 
 ```
+
 "permissions": [
-  "tabs"
+"tabs"
 ],
+
 ```
 var result = xhr.responseText;
 ```
