@@ -2,7 +2,7 @@
 layout: post
 title: "Fix Godot Tileset Pixel Bleeding"
 subtitle: "Fixing tileset pixel bleeding and visual artifacts in Godot"
-date: 2019-05-24 10:46:00
+date: 2020-05-24 10:46:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
