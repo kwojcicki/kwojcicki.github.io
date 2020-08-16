@@ -14,7 +14,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 # Startups
 
 - [Summary: How to Start a Startup (YC)](https://docs.google.com/document/d/1wkJ6Ruh2IiR-caT-PS3n5Yt5VKcmIsVhuQwjgqK7030/edit)
-- [First Principles Thinking](https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0?fbclid=IwAR1vDu_ywdjqaZHP6ppzoe0WZl2Mif_ffYx6gBZUonDAjx2KpJ17bjJnI1g)
+- [First Principles Thinking](https://medium.com/the-mission/elon-musks-3-step-first-principles-thinking-how-to-think-and-solve-difficult-problems-like-a-ba1e73a9f6c0)
 - [How to Get Startup Ideas](http://www.paulgraham.com/startupideas.html)
 - [Awesome CTO Resources](https://github.com/mateusz-brainh]ub/awesome-cto-resources)
 - [Turning side projects into profitable startups](https://levels.io/startups/)
@@ -62,6 +62,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Mastermind](https://longform.org/posts/the-mastermind) Soft Paywall, interesting mini series about programmer turn criminal cartel boss.
 - [Was Bitcoin Created By This International Drug Dealer? Maybe!](https://www.wired.com/story/was-bitcoin-created-by-this-international-drug-dealer-maybe/)
 - [Our Boss Will Call Your Boss](https://cepr.shorthandstories.com/haiti-contractors/index.html) 7 Blackwater like security contractors arrested near Haiti's Central Bank. American government swoops in and rescues them. What really happened?
+- [Money Stuff](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine) Matt Levine is a columnist covering finance. He is a former lawyer + investment banker. Super knowledgeable, writes well and is funny.
 
 # To Read
 
@@ -80,8 +81,9 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/pdf/1907.06902.pdf)
 - [The Mom Test](http://manuelohan.com/wp-content/uploads/2017/05/The-Mom-Test-en.pdf)
 - [The Morning Paper](https://blog.acolyer.org/)
-- [Money Stuff](https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine)
 - [](https://www.ycombinator.com/resources/#ideas)
 - [](https://www.yegor256.com/)
 - [Effective Java 3rd Edition](https://github.com/harvies/books/blob/master/Java/%5BJAVA%5D%5BEffective%20Java%203rd%20Edition%5D/%5BJAVA%5D%5BEffective%20Java%203rd%20Edition%5D.pdf)
 - [](http://bradfitz.com/misc/bct/)
+- [Marketing for Engineers](https://github.com/LisaDziuba/Marketing-for-Engineers)
+- [](https://ncase.me/trust/)
