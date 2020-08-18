@@ -1,7 +1,7 @@
 # Site settings
 title: Wojik
 default_author: Krystian Wojcicki
-description: "Wojik"  # used in site head
+description: "Wojik" # used in site head
 
 # register on google analytics and replace this token
 google_analytics: UA-122722214-1
@@ -13,9 +13,9 @@ google_analytics: UA-122722214-1
 # feedburner_url: https://feedburner.google.com/fb/a/mailverify?uri=programmer-wannabe&amp;loc=en_US
 
 # footer details. Deleting the value would remove it from footer.
-github_username:  kwojcicki
+github_username: kwojcicki
 # email: kwojcicki@sympatico.ca
-linkedin_username : krystian-wojcicki
+linkedin_username: krystian-wojcicki
 
 # used for portfolio on home page
 collections:
@@ -27,7 +27,7 @@ wpm: 150
 # Build settings
 markdown: kramdown
 highlighter: rouge
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+exclude: ["less", "node_modules", "Gruntfile.js", "package.json", "README.md"]
 port: 8888
 permalink: /blog/:title
 
@@ -36,4 +36,5 @@ paginate: 5
 paginate_path: blog/page:num
 
 # gem dependencies
-plugins: [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-seo-tag, jekyll-sitemap]
+plugins:
+  [jekyll-paginate, jekyll-feed, jekyll-gist, jekyll-seo-tag, jekyll-sitemap]
