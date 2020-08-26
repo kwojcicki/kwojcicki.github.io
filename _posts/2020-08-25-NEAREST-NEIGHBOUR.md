@@ -81,7 +81,7 @@ If we repeat this process on all the pixels in the enlarged image we end up with
 
 In this section we'll utilize a $$ 0 $$-index based coordinate system while keeping unit length and unit width. We utilize $$ 0 $$-indexing to simplify the code.
 
-Let's write a little python code to automate this interpolation process for us. In order to mimic OpenCV we will need to utilize the same process as they do in identifying the nearest pixel. Finding the nearest pixel can be thought of as rounding i.e. a pixel at $$ (0.6, 0) $$ has it's nearest neighbor (by distance) at $$ (1, 0) $$ or $$ \text{def nearest\_pixel(x, y)} \rightarrow  (\lfloor x \rceil, \lfloor y \rceil) $$. Unfortunately, rounding has many definitions; here are the [5](https://en.wikipedia.org/wiki/IEEE_754) as defined by IEEE-754.
+Let's write a little python code to automate this interpolation process for us. In order to mimic OpenCV we will need to utilize the same process as they do in identifying the nearest pixel. Finding the nearest pixel can be thought of as rounding i.e. a pixel at $$ (0.6, 0) $$ has it's nearest neighbor (by distance) at $$ (1, 0) $$ or $$ \text{def nearestPixel(x, y)} \rightarrow  (\lfloor x \rceil, \lfloor y \rceil) $$. Unfortunately, rounding has many definitions; here are the [5](https://en.wikipedia.org/wiki/IEEE_754) as defined by IEEE-754.
 
 | mode                            | $$ 11.5 $$ | $$ 12.5 $$ | $$ -11.5 $$ | $$ -12.5 $$ |
 | ------------------------------- | ---------- | ---------- | ----------- | ----------- |
@@ -93,7 +93,7 @@ Let's write a little python code to automate this interpolation process for us. 
 
 OpenCV utilizes the 3rd definition of rounding **toward $$ \textbf{0} $$**, i.e. truncating/flooring the pixel values is used to find the nearest neighbor. It's of course perfectly valid to use other rounding rules, but it will lead to minor differences in results. This [paper](https://arxiv.org/ftp/arxiv/papers/2003/2003.06885.pdf) examines the efficiency of the various methods and provides a visual example of the consequences of different rounding rules:
 
-[![different rounding techniques](/img/posts/nn_rounding.png)](https://arxiv.org/ftp/arxiv/papers/2003/2003.06885.pdf)
+[![different rounding techniques](/img/posts/nn_rounding.PNG)](https://arxiv.org/ftp/arxiv/papers/2003/2003.06885.pdf)
 
 The key takeaway from this image is that regardless of the rule chosen the overall resulting images are relativity the same, except around boundary pixels, due to different precision in the rounding rules.
 
