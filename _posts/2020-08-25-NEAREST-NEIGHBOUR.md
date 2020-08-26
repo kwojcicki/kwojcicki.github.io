@@ -63,7 +63,7 @@ We'll work through the algorithm for $$ P1 $$, $$ P2 $$, and $$ P3 $$.
   - ![P1 interpolation](/img/posts/nn_p1.PNG)
 - Pixel $$ P2 $$
   - Our pixel $$ P2 $$ is at $$ (1.5, 0.5) $$. When projected we'll have coordinates $$ (0.75, 0.25) $$, making $$ 1 : (0.5, 0.5) $$ the closest pixel.
-  - ![P2 interpolation](/img/posts/nn_p2.PNG)
+  - ![P2 interpolation](/img/posts/nn_p2.png)
 - Pixel $$ P3 $$
   - Our pixel $$ P3 $$ is at $$ (2.5, 2.5) $$. When projected we'll have coordinates $$ (1.25, 1.25) $$, making $$ 4 : (1.5, 1.5) $$ the closest pixel.
   - ![P3 interpolation](/img/posts/nn_p3.PNG)
