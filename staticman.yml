@@ -2,6 +2,15 @@ comments:
   # There are many more required config values here, not shown:
   # use the file linked above as a template
 
+  allowedFields: ["name", "email", "url", "message", "replying_to_uid"]
+
+  
+  branch: master
+
+  filename: "entry{@timestamp}"
+  
+  path: "_data/comments/{options.slug}"
+  
   # I guess used only for email notifications?
   name: "wojik"
 
