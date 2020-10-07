@@ -18,7 +18,11 @@ layout: default
             for tag in page.tags %}
             <a
               href="/blog/tags/{{ tag }}"
-              style="text-decoration: normal; font-weight: normal; color: #ffffff;"
+              style="
+                text-decoration: normal;
+                font-weight: normal;
+                color: #ffffff;
+              "
               ><i class="fa fa-tag"></i>{{ tag }}</a
             >
             {% endfor %} {% else %} {{ page.description }} {% endif %}
