@@ -4,15 +4,16 @@ comments:
 
   allowedFields: ["name", "email", "url", "message", "replying_to_uid"]
 
-  
   branch: master
 
   filename: "entry{@timestamp}"
-  
+
   path: "_data/comments/{options.slug}"
-  
+
   # I guess used only for email notifications?
   name: "wojik"
+
+  format: "yaml"
 
   # You may want a different set of "required fields". Staticman will
   # reject posts without all of these fields
