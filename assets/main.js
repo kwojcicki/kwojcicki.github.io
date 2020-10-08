@@ -20,7 +20,7 @@
         console.log("succes?");
         showModal(
           "Comment submitted",
-          'Thanks! Your comment is <a href="https://github.com/travisdowns/travisdowns.github.io/pulls">pending</a>. It will appear when approved.'
+          'Thanks! Your comment is <a href="https://github.com/kwojcicki/kwojcicki.github.io/pulls">pending</a>. It will appear when approved.'
         );
 
         $("#comment-form-submit").html("Submit");

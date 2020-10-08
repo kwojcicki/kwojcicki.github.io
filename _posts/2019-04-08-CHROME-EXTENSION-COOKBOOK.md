@@ -2,7 +2,7 @@
 layout: post
 title: "Signaling Intent"
 subtitle: "How signaling intent can make you a better programmer"
-date: 2022-03-23 15:18:00
+date: 2020-03-23 15:18:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
