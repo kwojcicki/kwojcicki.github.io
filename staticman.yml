@@ -15,6 +15,19 @@ comments:
 
   format: "yaml"
 
+  transforms:
+    email: md5
+
+  # List of fields to be populated automatically by Staticman and included in
+  # the data file. Keys are the name of the field. The value can be an object
+  # with a `type` property, which configures the generated field, or any value
+  # to be used directly (e.g. a string, number or array)
+  generatedFields:
+    date:
+      type: date
+      options:
+        format: "timestamp-seconds"
+
   # You may want a different set of "required fields". Staticman will
   # reject posts without all of these fields
   requiredFields: ["name", "message"]
