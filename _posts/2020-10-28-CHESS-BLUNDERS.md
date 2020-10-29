@@ -9,6 +9,8 @@ comments: true
 tags: [Analysis]
 ---
 
+> Code for generating the graphs can be found at [https://github.com/kwojcicki/chess-stats](https://github.com/kwojcicki/chess-stats)
+
 <style>
 figcaption {
     text-align: center;
