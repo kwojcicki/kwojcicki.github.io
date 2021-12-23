@@ -268,11 +268,11 @@ So if $$ g(n) = 1 $$ we would expect to always win, while $$ g(n) = -1 $$ would 
 
 Next we'll draw a probability tree for a game with a starting roll of $$ 3 $$.
 
-![probability tree for death rolling starting at 3](/img/posts/starting_at_3.png)
+![probability tree for death rolling starting at 3](/img/posts/starting_at_3.PNG)
 
 On the first roll we instantly lose $$ \frac{1}{3}rd $$ of the time, roll $$ 2 $$ a $$ \frac{1}{3}rd $$ of the time and roll $$ 3 $$ a $$ \frac{1}{3}rd $$ of the time. In the cases we roll a $$ 2 $$ or $$ 3 $$ we can draw out what the opponents probability's are.
 
-![probability tree for death rolling starting at 3](/img/posts/starting_at_3_recursive.png)
+![probability tree for death rolling starting at 3](/img/posts/starting_at_3_recursive.PNG)
 
 Quite quickly we see the recursive nature of this game.
 
@@ -295,13 +295,13 @@ Now we need to figure out what $$ g(2) $$ is equal to.
 
 We'll start off again by drawing its probability tree
 
-![probability tree for death rolling starting at 2](/img/posts/starting_at_2.png)
+![probability tree for death rolling starting at 2](/img/posts/starting_at_2.PNG)
 
 $$ g(2) = -\frac{1}{2} - \frac{1}{2}g(2) $$
 
 We'll expand that several times and see if we can see any pattern.
 
-![probability tree for death rolling starting at 2](/img/posts/starting_at_2_recursive.png)
+![probability tree for death rolling starting at 2](/img/posts/starting_at_2_recursive.PNG)
 
 $$
 \begin{align}
@@ -376,7 +376,7 @@ While these equations are helpful there doesn't seem to be any obvious pattern t
 
 First will define $$ g(n) $$ recursively as
 
-![probability tree for death rolling starting at n](/img/posts/starting_at_n.png)
+![probability tree for death rolling starting at n](/img/posts/starting_at_n.PNG)
 
 $$
 \begin{align}
@@ -423,7 +423,7 @@ $$\lim_{n\to\infty} W(n) = \frac{1}{2} - \frac{1}{\infty} = \frac{1}{2}$$
 Which if we graph out looks very similar to our simulation results
 
 <figure class="image">
-  <img src="/img/posts/final_wr.png" alt="Simulated results vs expected results for death rolling">
+  <img src="/img/posts/final_wr.PNG" alt="Simulated results vs expected results for death rolling">
   <figcaption><b>Fig 2</b>:Depicting the simulated and expected winrates, one can very faintly see a small discrepancy around wagers of 60. Overall, however, the expected and simulated results match up very well.</figcaption>
 </figure>
 
