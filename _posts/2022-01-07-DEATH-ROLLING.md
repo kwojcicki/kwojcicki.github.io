@@ -2,7 +2,7 @@
 layout: post
 title: "Death Rolling"
 subtitle: "Analyzing World of Warcraft players funnest past time."
-date: 2021-12-14 15:18:00
+date: 2022-01-07 18:48:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
