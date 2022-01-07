@@ -48,7 +48,7 @@ Bob rolls 3 [1-12]<br/>
 Alice rolls 1 [1-3]<br/>
 Alice transfers 100 gold to Bob.<br/>
 
-Now as a player trying to maximize their returns should you go first or second? Bet large or small? Naturally I wanted to find out.
+Now, as a player trying to maximize your returns should you go first or second? Bet large or small? Naturally, I wanted to find out.
 
 # Game
 
@@ -210,13 +210,13 @@ width: 200px;
   <div id="money">Your cash: 10000$</div>
   <div id="tool_tip">
     <div class="help-tip">
-    <p>Death roll against a computer, alternating who goes first. Skip ahead to find out how to size your wagers. Keep in mind you can only wager whole integer amounts.</p>
+    <p>Death roll against a computer, alternating who goes first. Skip ahead to find out how to size your rolls. Keep in mind you can only roll whole integer amounts.</p>
     </div>
   </div>
 
 </div>
 
-<label for="wager">Desired Wager</label>
+<label for="wager">Desired Starting Roll</label>
 <input id='wager' type="number" step="1" placeholder="10"/>
 
 <div id="log" style="overflow-y: scroll; height:400px;"></div>
@@ -235,42 +235,42 @@ document.getElementById('wager').value = 1000;
 
 # Simulation
 
-My initial assumption was for very small bets the second roller would have a large advantage and the first roller would have a minimal $$ 1/2\% $$ advantage for larger rolls. The intuition behind that is small rolls, for example starting at $$ 2 $$, there is a large probability that the initial roll will be a $$ 1 $$ resulting in an instantaneous victory for the 2nd player. While for larger rolls there is a very small chance you roll a $$ 1 $$, but you are almost guaranteed the 2nd player will have to roll between 1 and a smaller number, giving them a larger chance of rolling a $$ 1 $$.
+My initial assumption was for very small bets the second roller would have a large advantage and the first roller would have a minimal $$ 1/2\% $$ advantage for larger rolls. The intuition behind this assumption is the following: for small starting rolls, for example starting at $$ 2 $$, there is a large probability that the initial roll will be a $$ 1 $$ resulting in an instantaneous victory for the 2nd player. While for larger starting rolls there is a very small chance you roll a $$ 1 $$, but it's almost guaranteed the 2nd player will have to roll between 1 and a smaller number giving them a larger chance of rolling a $$ 1 $$.
 
 With a bit of [code](https://colab.research.google.com/drive/1v1zcegJFMhxCg7KoFOlXWLKd7g8oNpRh#scrollTo=bdLKX82Yutjp) we can simulate thousands of death rolls and see our winrate.
 
 <figure class="image">
-  <img src="/img/posts/wr-vs-wager.PNG" alt="Wager vs win rate for death rolling">
-  <figcaption><b>Fig 1</b>:Depicting our winrate, with us rolling first, across a variety of starting rolls.</figcaption>
+  <img src="/img/posts/wr-vs-wager.PNG" alt="Starting roll vs win rate for death rolling">
+  <figcaption><b>Fig 1</b>: Depicting our winrate, with us rolling first, across a variety of starting rolls.</figcaption>
 </figure>
 
-We can also simulate the winrate of our opponent
+We can also simulate the winrate of our opponent:
 
-![Wager vs win rate for death rolling](/img/posts/wr-vs-wager-2.PNG)
+![Starting roll vs win rate for death rolling](/img/posts/wr-vs-wager-2.PNG)
 
-Our winrate for very small wagers $$ (2,3,4,5) $$ is quite low, but very quickly approaches a near $$ 50\% $$ winrate.
+Our winrate for very small starting rolls $$ (2,3,4,5) $$ is quite low, but nevertheless very quickly approaches a near $$ 50\% $$ winrate as the initial roll increases.
 
-If we perform $$ 10,000,000 $$ simulations with a starting roll of $$ 10,000 $$ the winrate is essentially $$ 50\% $$.
+For example, if we perform $$ 10,000,000 $$ simulations with a starting roll of $$ 10,000 $$ the winrate is essentially $$ 50\% $$.
 
-![Wager vs win rate for death rolling](/img/posts/large_sample_50.PNG)
+![Roll vs win rate for death rolling](/img/posts/large_sample_50.PNG)
 
-It seems for small rolls my initial assumption was correct,however, for larger initial rolls neither side has an advantage.
+It seems for small rolls my initial assumption was correct; however, for larger initial rolls neither side has an advantage.
 
 # Analysis
 
-Now we'll try and be more exact about our chances of winning.
+Now, we'll try to calculate our exact chances of winning.
 
 Let
 
 $$ g(n) = \text{expected chance of winning over losing}, -1 <= g(n) <= 1 $$.
 
-So if $$ g(n) = 1 $$ we would expect to always win, while $$ g(n) = -1 $$ would mean we always lose and $$ g(n) = 0 $$ means we lose as often as we win.
+So if $$ g(n) = 1 $$ we would expect to always win, while $$ g(n) = -1 $$ would mean we always expect to lose and $$ g(n) = 0 $$ means we expect to lose as often as we win.
 
-Next we'll draw a probability tree for a game with a starting roll of $$ 3 $$.
+Next, we'll draw a probability tree for a game with a starting roll of $$ 3 $$.
 
 ![probability tree for death rolling starting at 3](/img/posts/starting_at_3.PNG)
 
-On the first roll we instantly lose $$ \frac{1}{3}rd $$ of the time, roll $$ 2 $$ a $$ \frac{1}{3}rd $$ of the time and roll $$ 3 $$ a $$ \frac{1}{3}rd $$ of the time. In the cases we roll a $$ 2 $$ or $$ 3 $$ we can draw out what the opponents probability's are.
+On the first roll we instantly lose $$ \frac{1}{3}rd $$ of the time, for roll $$ 2 $$ a $$ \frac{1}{3}rd $$ of the time and for roll $$ 3 $$ a $$ \frac{1}{3}rd $$ of the time. In the cases we roll a $$ 2 $$ or $$ 3 $$ we can draw out what the opponent's probabilities are.
 
 ![probability tree for death rolling starting at 3](/img/posts/starting_at_3_recursive.PNG)
 
@@ -280,7 +280,7 @@ Expected value is typically calculated as
 
 $$ \text{EV} = \sum{(P(X_i) \times X_i)} $$
 
-Where $$ P(X_i) $$ is the probability that outcome $$ X_i $$ occurs. In our case we have 3 outcomes, either we roll a $$ \{1,2,3\} $$, each having an equal probability $$ P(1) = P(2) = P(3) = \frac{1}{3} $$.
+Where $$ P(X_i) $$ is the probability that outcome $$ X_i $$ occurs. In our case we have 3 outcomes: either we roll a $$ \{1,2,3\} $$, each having an equal probability $$ P(1) = P(2) = P(3) = \frac{1}{3} $$.
 
 Therefore<sup id="a1">[1](#f1)</sup>
 
@@ -291,7 +291,7 @@ g(3) &= \frac{1}{3} \times (-1) - \frac{1}{3} \times g(2) - \frac{1}{3} \times g
 \end{align}
 $$
 
-Now we need to figure out what $$ g(2) $$ is equal to.
+Now, we need to figure out what $$ g(2) $$ is equal to.
 
 We'll start off again by drawing its probability tree
 
@@ -322,7 +322,7 @@ $$\sum_{n=1}^{\infty}(ar^k) = \frac{ar}{1-r}, \text{iff } \vert r \vert < 1$$.
 
 $$g(2) = \frac{1 \times \frac{-1}{2}}{1 - \frac{-1}{2}} = -\frac{1}{3}$$
 
-Therefore we can expect to lose $$ 33.\bar{3}\% $$ more games than we win. Another way to write the equation is $$ g(n) = \text{win %} - \text{lose %} $$. Additionally we know $$ \text{win %} + \text{lose %} = 1 $$. We can express our winrate directly.
+Therefore we can expect to lose $$ 33.\bar{3}\% $$ more games than we win. Another way to write the equation is $$ g(n) = \text{win %} - \text{lose %} $$. Additionally we know $$ \text{win %} + \text{lose %} = 1 $$. Using these two equations we can express our winrate directly.
 
 $$
 \begin{align}
@@ -338,9 +338,9 @@ Using our previously calculated results
 
 $$ g(2) = - \frac{1}{3} \longrightarrow W = \frac{g(2) + 1}{2} = \frac{ -\frac{1}{3} + 1}{2} = \frac{1}{3}, L = \frac{2}{3} $$
 
-Hence, we can expect to win once every $$ 3 $$ wagers assuming we roll first and begin the rolls at $$ 2 $$.
+Hence, we can expect to win once every $$ 3 $$ games assuming we roll first and begin the rolls at $$ 2 $$.
 
-Now that we've calculated $$ g(2) $$ let's go back to $$ g(3) $$. From above we have
+Now that we've calculated $$ g(2), $$ let's go back to $$ g(3) $$. From above we have
 
 $$
 \begin{align}
@@ -370,11 +370,11 @@ g(6) &= -\frac{1}{21} \\
 \end{align}
 $$
 
-While these equations are helpful there doesn't seem to be any obvious pattern that we could exploit, so instead we'll obtain a explicit formula for $$ g(n) $$ through solving its recurrence equation.
+While these equations are helpful there doesn't seem to be any obvious pattern that we can exploit, so instead we'll obtain a explicit formula for $$ g(n) $$ through solving its recurrence equation.
 
 # Explicit Formula
 
-First will define $$ g(n) $$ recursively as
+First, we'll define $$ g(n) $$ recursively as
 
 ![probability tree for death rolling starting at n](/img/posts/starting_at_n.PNG)
 
@@ -385,7 +385,7 @@ g(n) &= - \frac{1}{n} - \sum_{i = 2}^{n}(\frac{1}{n}g(i)) \\
 \end{align}
 $$
 
-Next we'll define $$s(n) = \sum_{i=2}^{n}{g(i)}$$ then we have that $$ g(n) = - \frac{1}{n}(1 + s(n)) $$. We can also see that $$ g(n) = s(n) - s(n - 1) $$ <sup id="a2"><a href="#f2">[2]</a></sup>. Therefore we can plug that into the above recursive formula we have for $$ g(n) $$.
+Next, we'll define $$s(n) = \sum_{i=2}^{n}{g(i)}$$ then we have that $$ g(n) = - \frac{1}{n}(1 + s(n)) $$. We can also see that $$ g(n) = s(n) - s(n - 1) $$ <sup id="a2"><a href="#f2">[2]</a></sup>. Therefore we can plug that into the above recursive formula we have for $$ g(n) $$.
 
 $$
 \begin{align}
@@ -396,7 +396,7 @@ s(n) - s(n-1) &= -\frac{1}{n}(1 + s(n)) \\
 \end{align}
 $$
 
-Let's guess that $$ s(n) = -\frac{n-1}{n+1} $$ solves the above equation as well as satisfying $$ s(2) = g(2) = -\frac{1}{3} $$<sup id="a3"><a href="#f3">[3]</a></sup>. Thus
+Let's guess that $$ s(n) = -\frac{n-1}{n+1} $$ solves the above equation as well as satisfies $$ s(2) = g(2) = -\frac{1}{3} $$<sup id="a3"><a href="#f3">[3]</a></sup>. Thus,
 
 $$
 \begin{align}
@@ -420,22 +420,22 @@ $$
 
 $$\lim_{n\to\infty} W(n) = \frac{1}{2} - \frac{1}{\infty} = \frac{1}{2}$$
 
-Which if we graph out looks very similar to our simulation results
+which if we graph out looks very similar to our simulation results.
 
 <figure class="image">
   <img src="/img/posts/final_wr.PNG" alt="Simulated results vs expected results for death rolling">
-  <figcaption><b>Fig 2</b>:Depicting the simulated and expected winrates, one can very faintly see a small discrepancy around wagers of 60. Overall, however, the expected and simulated results match up very well.</figcaption>
+  <figcaption><b>Fig 2</b>: Depicting the simulated and expected winrates, one can very faintly see a small discrepancy around starting rolls of 60. Overall, however, the expected and simulated results match up very well.</figcaption>
 </figure>
 
-In the end we see that regardless of the starting wager size the second player always has some advantage, which for sufficiently large wagers has negligible impact.
+In the end we see that regardless of the starting roll the second player always has some advantage, which for sufficiently large starting rolls has negligible impact.
 
-Death rolling, while funner than flipping a coin essentially can be simplified to exactly that, a $$ 50/50 $$ chance of winning or losing.
+Death rolling, while more fun than flipping a coin, can essentially be simplified to exactly that, a $$ 50/50 $$ chance of winning or losing.
 
 # Notes
 
 Lots of the equations/math was verified using [this Desmos calculator](https://www.desmos.com/calculator/nctehklw29).
 
-<b id="f1">[1]</b> In the case of rolling a $$ 1 $$ we instantly lose so we assign that a $$ -1 $$ value, and we minus the recursive cases since its returning the probability the opponent wins when starting to roll from $$ 2,3 $$. [↩](#a1)
+<b id="f1">[1]</b> In the case of rolling a $$ 1 $$ we instantly lose, so we assign that a $$ -1 $$ value and we minus the recursive cases since it's returning the probability the opponent wins when starting to roll from $$ 2,3 $$. [↩](#a1)
 
 <b id="f2">[2]</b>
 
