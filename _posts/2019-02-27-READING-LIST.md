@@ -101,3 +101,4 @@ Blog
 - [](http://bradfitz.com/misc/bct/)
 - [Marketing for Engineers](https://github.com/LisaDziuba/Marketing-for-Engineers)
 - [](https://ncase.me/trust/)
+- [](https://www.youtube.com/watch?v=BE77h7dmoQU&ab_channel=Honeypot)
