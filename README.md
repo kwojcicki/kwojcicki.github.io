@@ -2,6 +2,12 @@ Website for Backend Developer Krystian Wojcicki.
 
 Cloned repo of CleanBlogEnchanced jekyll template [here](https://github.com/ShikherVerma/Shikherverma.github.io)
 
+To run
+
+```
+bundle exec jekyll serve
+```
+
 ## Copyright and License
 
 Copyright ShikherVerma.  

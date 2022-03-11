@@ -11,6 +11,20 @@ tags: [Living]
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+Book
+Video
+Webpage
+Blog
+
+- [ITT 2016 - Kevlin Henney - Seven Ineffective Coding Habits of Many Programmers](https://www.youtube.com/watch?v=ZsHMHukIlJY&ab_channel=IstanbulTechTalks)
+- [Zero to One: Notes on Startups, or How to Build the Future](https://www.goodreads.com/book/show/18050143-zero-to-one)
+- [The Phoenix Project (A Novel About IT, DevOps, and Helping Your Business Win)](https://www.goodreads.com/book/show/17255186-the-phoenix-project)
+    - [10+ Deploys Per Day: Dev and Ops Cooperation at Flickr](https://www.youtube.com/watch?v=LdOe18KhtT4&ab_channel=O%27Reilly)
+    - [The Goal: A Process of Ongoing Improvement - 30th Anniversary Edition](https://www.goodreads.com/en/book/show/113934.The_Goal)
+- [Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones](https://www.goodreads.com/book/show/40121378-atomic-habits)
+- [Founders at Work: Stories of Startups' Early Days](https://www.goodreads.com/book/show/98233.Founders_at_Work)
+- [Zen and the Art of Motorcycle Maintenance: An Inquiry Into Values](https://www.goodreads.com/book/show/629.Zen_and_the_Art_of_Motorcycle_Maintenance)
+
 # Startups
 
 - [Summary: How to Start a Startup (YC)](https://docs.google.com/document/d/1wkJ6Ruh2IiR-caT-PS3n5Yt5VKcmIsVhuQwjgqK7030/edit)
