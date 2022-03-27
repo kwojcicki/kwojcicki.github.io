@@ -15,7 +15,7 @@ tags: [ Money ]
 ***Take anything I say in this article with a grain of salt, and the numbers are sometimes rounded sometimes not depending on my mood when I was calculating :).***
 
 
-***All these prices/nutrition facts will be based on the [independent city market website](https://www.independentcitymarket.ca***
+***All these prices/nutrition facts will be based on the [independent city market website](https://www.independentcitymarket.ca)***
 
 As I am slightly larger than average, 6 feet ~200 pounds, I tend to eat more than people around me. This got me thinking, maybe if I just starve myself I could lose weight and make a few million dollars! 
 
