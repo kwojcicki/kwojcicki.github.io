@@ -2,7 +2,7 @@
 layout: post
 title: "The power of the Dev Console"
 subtitle: "Stop over engineering your solution and rely on your browsers Dev Console"
-date: 2020-10-30 13:44:00
+date: 2020-04-02 16:00:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
