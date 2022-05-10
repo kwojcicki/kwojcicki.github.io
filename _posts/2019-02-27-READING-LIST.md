@@ -11,7 +11,11 @@ tags: []
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+# May 
+- [Deep Work: Rules for Focused Success in a Distracted World](https://www.goodreads.com/book/show/25744928-deep-work)
+
 # April 2022
+- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow)
 - [The Bogleheads' Guide to Investing](https://www.goodreads.com/book/show/381355.The_Bogleheads_Guide_to_Investing)
 
 # March 2022
@@ -117,7 +121,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Climate Change](https://www.goodreads.com/book/show/7799004-merchants-of-doubt)
 - [Lying](https://www.goodreads.com/book/show/18869177-lying)
 - [The Score Takes Care of Itself: My Philosophy of Leadership](https://www.goodreads.com/book/show/6342995-the-score-takes-care-of-itself)
-- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow)
 - [The Mom Test](http://manuelohan.com/wp-content/uploads/2017/05/The-Mom-Test-en.pdf)
 - [Monetizing Innovation: How Smart Companies Design the Product Around the Price](https://www.goodreads.com/en/book/show/30121516-monetizing-innovation)
 - [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google)
@@ -130,8 +133,9 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Almanack of Naval Ravikant: A Guide to Wealth and Happiness](https://www.goodreads.com/en/book/show/54898389-the-almanack-of-naval-ravikant)
 - [The Psychology of Money](https://www.goodreads.com/en/book/show/41881472-the-psychology-of-money0)
 - [Ikigai: The Japanese Secret to a Long and Happy Life / The Little Book of Lykke / Lagom: The Swedish Art of Balanced Living](https://www.goodreads.com/en/book/show/40534545-ikigai)
-- [Deep Work: Rules for Focused Success in a Distracted World](https://www.goodreads.com/book/show/25744928-deep-work)
 - [Tuesdays with Morrie](https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie)
 - [Sapiens: A Brief History of Humankind](https://www.goodreads.com/book/show/23692271-sapiens)
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
+- [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
+- [Digital Minimalism: Choosing a Focused Life in a Noisy World](https://www.goodreads.com/book/show/40672036-digital-minimalism)
