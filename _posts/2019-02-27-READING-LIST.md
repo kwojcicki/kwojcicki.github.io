@@ -15,7 +15,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Deep Work: Rules for Focused Success in a Distracted World](https://www.goodreads.com/book/show/25744928-deep-work)
 
 # April 2022
-- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow)
+- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow) In a well written and interesting fashion the author describes the two systems that dictate how we think as well as the types of biases or lapses of judgement created by these two systems. A multitude of studies are given and explained to show how we humans, when trusting our intuition (System 1), will come up with incorrect decisions that we wholeheartedly believe are true. However, this book is on the longer side, and on occasion can be tedious or repetitive when read in longer sittings. Another downside is readers know the examples given in the book are meant to exploit are System 1 therefore will actively engage our System 2 when reading the provided question prompts ruining some of the whimsical power of the examples provided. Overall, I would highly recommend reading this book, but keep your System 2 disengaged during the prompts and interlace your reading sessions with another novel.
 - [The Bogleheads' Guide to Investing](https://www.goodreads.com/book/show/381355.The_Bogleheads_Guide_to_Investing)
 
 # March 2022
