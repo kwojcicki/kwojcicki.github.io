@@ -138,4 +138,16 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
 - [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
+
+### new 
+
 - [Digital Minimalism: Choosing a Focused Life in a Noisy World](https://www.goodreads.com/book/show/40672036-digital-minimalism)
+- [The Laws of Human Nature](https://www.goodreads.com/book/show/39330937-the-laws-of-human-nature)
+- [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
+- [Start with Why: How Great Leaders Inspire Everyone to Take Action](https://www.goodreads.com/book/show/7108725-start-with-why)
+- [The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers](https://www.goodreads.com/book/show/18176747-the-hard-thing-about-hard-things)
+- [Guns, Germs, and Steel: The Fates of Human Societies](https://www.goodreads.com/book/show/1842.Guns_Germs_and_Steel)
+- [The Selfish Gene](https://www.goodreads.com/book/show/61535.The_Selfish_Gene)
+- [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
+- [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
+- [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
