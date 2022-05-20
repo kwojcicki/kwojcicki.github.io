@@ -138,9 +138,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
 - [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
-
-### new 
-
 - [Digital Minimalism: Choosing a Focused Life in a Noisy World](https://www.goodreads.com/book/show/40672036-digital-minimalism)
 - [The Laws of Human Nature](https://www.goodreads.com/book/show/39330937-the-laws-of-human-nature)
 - [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
@@ -151,3 +148,14 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
 - [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
 - [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
+
+### new 
+
+- [The Expanse](https://www.goodreads.com/series/56399-the-expanse)
+- [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
+- [Essentialism: The Disciplined Pursuit of Less](https://www.goodreads.com/book/show/18077875-essentialism)
+- [Java Concurrency in Practice](https://www.goodreads.com/book/show/127932.Java_Concurrency_in_Practice)
+- [The Pragmatic Programmer: From Journeyman to Master](https://www.goodreads.com/book/show/4099.The_Pragmatic_Programmer)
+- [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.goodreads.com/book/show/3735293-clean-code)
+- [A Man Called Ove](https://www.goodreads.com/book/show/18774964-a-man-called-ove)
+- [Effective Java](https://www.goodreads.com/book/show/34927404-effective-java)
