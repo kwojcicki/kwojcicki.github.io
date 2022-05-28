@@ -440,3 +440,38 @@ function updateData(m) {
 for (var m in mapping) {
     document.getElementById(m).onchange = updateData(m);
 }
+
+var panning = false;
+canvas.on('mouse:up', function (e) {
+    panning = false;
+});
+canvas.on('mouse:out', function (e) {
+    panning = false;
+});
+canvas.on('mouse:down', function (e) {
+    panning = true;
+});
+canvas.on('mouse:move', function (e) {
+    if (panning && e && e.e) {
+        var x = e.e.movementX;
+        var y = e.e.movementY;
+        if (!x) {
+            x = e.e.screenX - previousEvent.e.screenX;
+            y = e.e.screenY - previousEvent.e.screenY;
+        }
+        var delta = new fabric.Point(x, y);
+        canvas.relativePan(delta);
+    }
+    previousEvent = e;
+});
+
+canvas.on('mouse:wheel', function (opt) {
+    var delta = opt.e.deltaY;
+    var zoom = canvas.getZoom();
+    zoom *= 0.999 ** delta;
+    if (zoom > 20) zoom = 20;
+    if (zoom < 0.01) zoom = 0.01;
+    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+    opt.e.preventDefault();
+    opt.e.stopPropagation();
+});

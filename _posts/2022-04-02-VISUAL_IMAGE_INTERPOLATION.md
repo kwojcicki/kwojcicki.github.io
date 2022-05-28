@@ -113,5 +113,5 @@ Using the below graphical tool you can dive deeper into the various interpolatio
 <script src="../js/image_interpolation.js"></script>
 
 To learn more about the actual math and implementation of these various interpolation methods see the below blog posts:
-- [nearest neighbor](./NEAREST-NEIGHBOUR)
+- [Nearest neighbor](./NEAREST-NEIGHBOUR)
 - Bilinear interpolation
