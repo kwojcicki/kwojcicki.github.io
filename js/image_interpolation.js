@@ -21,21 +21,20 @@ window.onload = setUpCanvas();
 var canvas = new fabric.Canvas("myCanvas");
 var ctx = canvas.getContext('2d');
 var font = '14px sans-serif';
-var hasInput = false;
 
 const rectWidth = 150;
 const rectHeight = 150;
 
+var rhsColumns = 4;
+var rhsRows = 4;
 const rhsLeftOffset = 900;
 const rhsTopOffset = 200;
-const rhsColumns = 4;
-const rhsRows = 4;
 const rhsPad = 0;
 
+var lhsColumns = 2;
+var lhsRows = 2;
 const lhsLeftOffset = 200;
-const lhsTopOffset = 300;
-const lhsColumns = 2;
-const lhsRows = 2;
+const lhsTopOffset = (rectHeight * rhsRows - rectHeight * lhsRows) / 2 + rhsTopOffset;
 const lhsWidth = lhsColumns * rectWidth;
 const lhsHeight = lhsRows * rectHeight;
 var lhsPad = 0;
@@ -43,18 +42,26 @@ var lhsPad = 0;
 var sx = lhsRows / rhsRows;
 var sy = lhsColumns / rhsColumns;
 
+var lastCircle = null;
+
+var customProperties = {
+    lockMovementX: true,
+    lockMovementY: true,
+    lockRotation: true,
+    lockScalingFlip: true,
+    lockScalingX: true,
+    lockScalingY: true,
+    lockSkewingX: true,
+    lockSkewingY: true,
+    lockUniScaling: true,
+    hoverCursor: "text"
+};
+
 // 0 == nearest
 // 1 == linear interpolation
-var interMethod = 0;
+var interMethod = 1;
 var lhsMatrix;
-var rhsMatrix = Array.from(Array(rhsRows), () => new Array(rhsColumns));
-
-if (interMethod == 0) {
-    lhsMatrix = Array.from(Array(lhsRows), () => new Array(lhsColumns));
-} else if (interMethod == 1) {
-    lhsMatrix = Array.from(Array(lhsRows + 2), () => new Array(lhsColumns + 2));
-    lhsPad = 1;
-}
+var rhsMatrix;
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
@@ -76,39 +83,62 @@ function calculateMatrix(lhs, rhs, inter) {
             }
         }
     } else if (inter == 1) {
-        for (var i = 0; i < rhs.length; i++) {
-            for (var j = 0; j < rhs[i].length; j++) {
-                rhs[i][j] = lhs[Math.floor(i * sx)][Math.floor(j * sy)];
+        for (var x = 0; x < rhs.length; x++) {
+            for (var y = 0; y < rhs[x].length; y++) {
+                x_pos = (x + 0.5) * sx + 0.5
+                y_pos = (y + 0.5) * sy + 0.5
+
+                x_1 = Math.floor(x_pos)
+                y_1 = Math.floor(y_pos)
+
+                fx = ((x + 0.5) * sx - 0.5) - Math.floor(((x + 0.5) * sx - 0.5));
+
+                fy = ((y + 0.5) * sy - 0.5) - Math.floor(((y + 0.5) * sy - 0.5));
+
+                value = (
+                    lhs[x_1][y_1] * (1 - fx) * (1 - fy) +
+                    lhs[x_1][y_1 + 1] * fy * (1 - fx) +
+                    lhs[x_1 + 1][y_1] * (1 - fy) * fx +
+                    lhs[x_1 + 1][y_1 + 1] * fx * fy
+                )
+
+                rhs[x][y] = value
             }
         }
     }
 }
 
-fillMatrix(lhsMatrix, lhsColumns, lhsRows, Array.from(Array(lhsRows), () => Array.from(Array(lhsColumns).keys())));
-calculateMatrix(lhsMatrix, rhsMatrix, interMethod);
+function regenerate() {
+    sx = lhsRows / rhsRows;
+    sy = lhsColumns / rhsColumns;
+    rhsMatrix = Array.from(Array(rhsRows), () => new Array(rhsColumns));
 
-var lastCircle = null;
+    if (interMethod == 0) {
+        lhsMatrix = Array.from(Array(lhsRows), () => new Array(lhsColumns));
+    } else if (interMethod == 1) {
+        lhsMatrix = Array.from(Array(lhsRows + 2), () => new Array(lhsColumns + 2));
+        lhsPad = 1;
+    }
+    lhsOrg = Array.from(Array(lhsRows), () => Array.from(Array(lhsColumns).keys()));
+}
 
-var customProperties = {
-    lockMovementX: true,
-    lockMovementY: true,
-    lockRotation: true,
-    lockScalingFlip: true,
-    lockScalingX: true,
-    lockScalingY: true,
-    lockSkewingX: true,
-    lockSkewingY: true,
-    lockUniScaling: true,
-    hoverCursor: "text"
-};
+function redraw() {
+    canvas.clear();
+    fillMatrix(lhsMatrix, lhsColumns, lhsRows, lhsOrg);
+    calculateMatrix(lhsMatrix, rhsMatrix, interMethod);
 
-drawGrid(rhsColumns, rhsRows, rhsLeftOffset, rhsTopOffset, 1, true, rhsPad, rhsMatrix);
-drawGrid(lhsColumns, lhsRows, lhsLeftOffset, lhsTopOffset, lhsRows * lhsColumns + 1, false, lhsPad, lhsMatrix);
+    drawGrid(rhsColumns, rhsRows, rhsLeftOffset, rhsTopOffset, 1, true, rhsPad, rhsMatrix);
+    drawGrid(lhsColumns, lhsRows, lhsLeftOffset, lhsTopOffset, lhsRows * lhsColumns + 1, false, lhsPad, lhsMatrix);
+}
+
+regenerate();
+redraw();
 
 function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding, values) {
     for (var i = - padding; i < cols + padding; i++) {
         for (var j = - padding; j < rows + padding; j++) {
 
+            var padSquare = (i < 0 || i >= cols || j < 0 || j >= rows);
             var rect = new fabric.Rect({
                 left: leftOffset + i * rectWidth,
                 top: topOffset + j * rectHeight,
@@ -117,7 +147,7 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
                 width: rectWidth,
                 height: rectHeight,
                 angle: 0,
-                fill: (i < 0 || i >= cols || j < 0 || j >= rows) ? 'rgba(10, 10, 10, 0.5)' : 'rgba(255,0,0,0.5)',
+                fill: padSquare ? 'rgba(10, 10, 10, 0.5)' : 'rgba(255,0,0,0.5)',
                 stroke: 'rgba(0,0,255,0.5)',
                 strokeWidth: 1,
                 transparentCorners: false,
@@ -125,8 +155,6 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
                 hoverCursor: "point"
             });
 
-            console.log(i + padding, j + padding);
-            console.log(values[j + padding][i + padding]);
             var textEditable = new fabric.IText(
                 values[j + padding][i + padding] + "", {
                 left: leftOffset + i * rectWidth,
@@ -205,6 +233,10 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
                     ...customProperties,
                 });
                 canvas.add(grp);
+                lhsOrg[items[0].appProperties.j][items[0].appProperties.i] = parseInt(items[0].text);
+
+                redraw();
+
                 grp.on('mousedown', fabricDblClick(grp, items[0], function (obj, obj1) {
                     ungroup(obj);
                     canvas.setActiveObject(obj1);
@@ -226,7 +258,7 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
                         e.target.appProperties.j,
                         e.target);
                 });
-            } else {
+            } else if (!padSquare) {
                 group.on('mousedown', fabricDblClick(group, textEditable, function (obj, obj1) {
                     ungroup(obj);
                     canvas.setActiveObject(obj1);
@@ -261,8 +293,8 @@ function drawInterpolationLines(i, j, org) {
         canvas.remove(extraLines[extraLine]);
     }
 
-    var toX = rectWidth * ((i + 0.5) * sx) + lhsLeftOffset;
-    var toY = rectHeight * ((j + 0.5) * sy) + lhsTopOffset;
+    var toX = rectWidth * ((i + 0.5) * sy) + lhsLeftOffset;
+    var toY = rectHeight * ((j + 0.5) * sx) + lhsTopOffset;
     pline = drawArrow(org.left, org.top + org.height - 10,
         toX, toY, 100);
 
@@ -305,8 +337,8 @@ function drawInterpolationLines(i, j, org) {
 
 function drawLinear(i, j, startingX, startingY) {
 
-    i = (i + 0.5) * sx;
-    j = (j + 0.5) * sy;
+    i = (i + 0.5) * sy;
+    j = (j + 0.5) * sx;
 
     i1 = Math.round(i) - 1;
     j1 = Math.round(j) - 1;
@@ -395,51 +427,30 @@ function drawArrow(fromx, fromy, tox, toy, zIndex) {
     return line;
 }
 
-
-canvas.onclick = function (e) {
-    if (hasInput) return;
-    // addInput(e.clientX, e.clientY);
+var mapping = {
+    lhsCols: "lhsColumns"
 }
 
-//Function to dynamically add an input box: 
-function addInput(x, y) {
+document.getElementById('lhsCols').onchange = function () {
+    lhsColumns = parseInt(document.getElementById('lhsCols').value);
+    regenerate();
+    redraw();
+};
 
-    console.log("filling1");
-    var input = document.createElement('input');
+document.getElementById('lhsRows').onchange = function () {
+    lhsRows = parseInt(document.getElementById('lhsRows').value);
+    regenerate();
+    redraw();
+};
 
-    input.type = 'text';
-    input.style.position = 'fixed';
-    input.style.left = (x - 4 - canvas.style.left) + 'px';
-    input.style.top = (y - 4 - canvas.style.top) + 'px';
-    input.data = { x, y };
+document.getElementById('rhsCols').onchange = function () {
+    rhsColumns = parseInt(document.getElementById('rhsCols').value);
+    regenerate();
+    redraw();
+};
 
-    input.onkeydown = handleEnter;
-
-    document.body.appendChild(input);
-
-    input.focus();
-
-    hasInput = true;
-}
-
-//Key handler for input box:
-function handleEnter(e) {
-    var keyCode = e.keyCode;
-    if (keyCode === 13) {
-        console.log("filling2");
-        drawText(this.value, this.data.x, this.data.y);
-        document.body.removeChild(this);
-        hasInput = false;
-    }
-}
-
-//Draw the text onto canvas:
-function drawText(txt, x, y) {
-    ctx.textBaseline = 'top';
-    ctx.textAlign = 'left';
-    ctx.font = font;
-    console.log("filling3: " + txt + " " + x + " " + y);
-    ctx.fillStyle = "#FF0000";
-    // ctx.fillRect(20, 20, 150, 100);
-    ctx.fillText(txt, x - 4, y - 4);
-}
+document.getElementById('rhsRows').onchange = function () {
+    rhsRows = parseInt(document.getElementById('rhsCols').value);
+    regenerate();
+    redraw();
+};
