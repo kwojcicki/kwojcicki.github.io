@@ -1,4 +1,3 @@
-
 function setUpCanvas() {
     canvas = document.getElementById("myCanvas");
     ctx = canvas.getContext('2d');
@@ -115,6 +114,7 @@ function regenerate() {
 
     if (interMethod == 0) {
         lhsMatrix = Array.from(Array(lhsRows), () => new Array(lhsColumns));
+        lhsPad = 0;
     } else if (interMethod == 1) {
         lhsMatrix = Array.from(Array(lhsRows + 2), () => new Array(lhsColumns + 2));
         lhsPad = 1;
@@ -156,7 +156,7 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
             });
 
             var textEditable = new fabric.IText(
-                values[j + padding][i + padding] + "", {
+                parseFloat(values[j + padding][i + padding].toFixed(4)) + "", {
                 left: leftOffset + i * rectWidth,
                 top: topOffset + j * rectHeight,
                 originX: 'left',
@@ -345,12 +345,6 @@ function drawLinear(i, j, startingX, startingY) {
     i = Math.round(i);
     j = Math.round(j);
 
-    console.log("--");
-    console.log(i, j);
-    console.log(i1, j1);
-    console.log(i, j1);
-    console.log(i1, j);
-
     drawToIJ(i, j, startingX, startingY);
     drawToIJ(i, j1, startingX, startingY);
     drawToIJ(i1, j, startingX, startingY);
@@ -428,29 +422,21 @@ function drawArrow(fromx, fromy, tox, toy, zIndex) {
 }
 
 var mapping = {
-    lhsCols: "lhsColumns"
+    lhsRows: "lhsRows",
+    lhsCols: "lhsColumns",
+    imageInter: "interMethod",
+    rhsRows: "rhsRows",
+    rhsCols: "rhsColumns",
 }
 
-document.getElementById('lhsCols').onchange = function () {
-    lhsColumns = parseInt(document.getElementById('lhsCols').value);
-    regenerate();
-    redraw();
-};
+function updateData(m) {
+    return () => {
+        window[mapping[m]] = parseInt(document.getElementById(m).value);
+        regenerate();
+        redraw();
+    };
+}
 
-document.getElementById('lhsRows').onchange = function () {
-    lhsRows = parseInt(document.getElementById('lhsRows').value);
-    regenerate();
-    redraw();
-};
-
-document.getElementById('rhsCols').onchange = function () {
-    rhsColumns = parseInt(document.getElementById('rhsCols').value);
-    regenerate();
-    redraw();
-};
-
-document.getElementById('rhsRows').onchange = function () {
-    rhsRows = parseInt(document.getElementById('rhsCols').value);
-    regenerate();
-    redraw();
-};
+for (var m in mapping) {
+    document.getElementById(m).onchange = updateData(m);
+}
