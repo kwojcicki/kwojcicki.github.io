@@ -17,13 +17,17 @@ img {
 
 <script type="text/javascript" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
 # Introduction
 
 Have you ever wondered how an image can have its size doubled yet keep its original image quality? This is thanks to a technique called [image interpolation](https://en.wikipedia.org/wiki/Image_scaling) which has been developed by mathematicians and researchers over hundreds of years. Some of the more intricate image interpolation formulas include: Lanczos resampling and bicubic interpolation.
 
 ![Image scaling example](/img/posts/image_scaling.PNG)
 
-Before understanding how image interpolation works, we need to better understand what an image is actually composed of. We can imagine an image as 1 or more 2d matrices. Where each matrix represents a channel; the most common channels are Red, Green, Blue and Alpha (commonly abbreviated to rbga). A pixel at position $$ (i, j) $$ is represented by a tuple created by concatenating the values from each channel at $$ (i, j) $$. For example a pixel in an rgba image could be generally represented as $$ ( R_{i,j}, G_{i,j}, B_{i,j}, A_{i,j} ) $$ where $$ R, G, B, A $$ are all matrices. 
+Before understanding how image interpolation works, we need to better understand what an image is actually composed of. We can imagine an image as 1 or more 2d matrices. Where each matrix represents a channel; the most common channels are Red, Green, Blue and Alpha (commonly abbreviated to rbga). A pixel at position $$ (i, j) $$ is represented by a tuple created by concatenating the values from each channel at $$ (i, j) $$. For example a pixel in an rgba image could be generally represented as $$ P_{i,j} = ( R_{i,j}, G_{i,j}, B_{i,j}, A_{i,j} ) $$ where $$ R, G, B, A $$ are all matrices. 
 
 ![RGB channel separated image](https://upload.wikimedia.org/wikipedia/commons/5/56/RGB_channels_separation.png?20110219015028)
 
@@ -44,12 +48,10 @@ Using the below graphical tool you can dive deeper into the various interpolatio
   left: calc(-45vw + 50%);
 }
 </style>
-<canvas id="myCanvas" width="600vw" height="500"></canvas>
 
-
-<div style="display: flex">
+<div style="display: flex;">
   <div style="padding-right: 20px">
-    <label for="lhsRows">Original image rows</label>
+    <label for="lhsRows">Input image rows</label>
     <select name="lhsRows" id="lhsRows">
       <option value="1">1</option>
       <option value="2" selected>2</option>
@@ -61,7 +63,7 @@ Using the below graphical tool you can dive deeper into the various interpolatio
     </select>
   </div>
   <div style="padding-right: 20px">
-    <label for="lhsCols">Original image columns</label>
+    <label for="lhsCols">Input image columns</label>
     <select name="lhsCols" id="lhsCols">
       <option value="1">1</option>
       <option value="2" selected>2</option>
@@ -75,14 +77,15 @@ Using the below graphical tool you can dive deeper into the various interpolatio
   <div style="padding-right: 20px">
     <label for="imageInter">Image interpolation technique</label>
     <select name="imageInter" id="imageInter">
-      <option value="0">Nearest neighbor</option>
-      <option value="1" selected>Bilinear interpolation</option>
+      <option value="0" selected>Nearest neighbor</option>
+      <option value="1">Bilinear interpolation</option>
     </select>
   </div>
 </div>
-<div style="display: flex; padding-top: 40px">
+
+<div style="display: flex; padding-top: 40px; padding-bottom: 20px;">
   <div style="padding-right: 20px">
-    <label for="rhsRows">New image rows</label><br/>
+    <label for="rhsRows">Output image rows</label><br/>
     <select name="rhsRows" id="rhsRows">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -94,7 +97,7 @@ Using the below graphical tool you can dive deeper into the various interpolatio
     </select>
   </div>
   <div style="padding-right: 20px">
-    <label for="rhsCols">New image columns</label><br/>
+    <label for="rhsCols">Output image columns</label><br/>
     <select name="rhsCols" id="rhsCols">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -107,10 +110,15 @@ Using the below graphical tool you can dive deeper into the various interpolatio
   </div>
 </div>
 
+<canvas id="myCanvas" width="600vw" height="500"></canvas>
+
+
 <script src=
 "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/500/fabric.min.js">
 </script>
 <script src="../js/image_interpolation.js"></script>
+
+<div id="calculation" style="text-align: center; padding-top: 20px"></div>
 
 To learn more about the actual math and implementation of these various interpolation methods see the below blog posts:
 - [Nearest neighbor](./NEAREST-NEIGHBOUR)

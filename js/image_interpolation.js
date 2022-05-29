@@ -32,8 +32,8 @@ const rhsPad = 0;
 
 var lhsColumns = 2;
 var lhsRows = 2;
-const lhsLeftOffset = 200;
-const lhsTopOffset = (rectHeight * rhsRows - rectHeight * lhsRows) / 2 + rhsTopOffset;
+var lhsLeftOffset = 200;
+var lhsTopOffset = (rectHeight * rhsRows - rectHeight * lhsRows) / 2 + rhsTopOffset;
 const lhsWidth = lhsColumns * rectWidth;
 const lhsHeight = lhsRows * rectHeight;
 var lhsPad = 0;
@@ -58,7 +58,7 @@ var customProperties = {
 
 // 0 == nearest
 // 1 == linear interpolation
-var interMethod = 1;
+var interMethod = 0;
 var lhsMatrix;
 var rhsMatrix;
 
@@ -78,7 +78,10 @@ function calculateMatrix(lhs, rhs, inter) {
     if (inter == 0) {
         for (var i = 0; i < rhs.length; i++) {
             for (var j = 0; j < rhs[i].length; j++) {
-                rhs[i][j] = lhs[Math.floor(i * sx)][Math.floor(j * sy)];
+                console.log(i * sx, j * sy);
+                console.log(sx, sy);
+                console.log("--")
+                rhs[i][j] = lhs[Math.floor((i + 0.5) * sx)][Math.floor((j + 0.5) * sy)];
             }
         }
     } else if (inter == 1) {
@@ -120,6 +123,8 @@ function regenerate() {
         lhsPad = 1;
     }
     lhsOrg = Array.from(Array(lhsRows), () => Array.from(Array(lhsColumns).keys()));
+    lhsTopOffset = (rectHeight * rhsRows - rectHeight * lhsRows) / 2 + rhsTopOffset;
+    lhsLeftOffset = rhsLeftOffset - (rectWidth * (lhsColumns + lhsPad + 1.5));
 }
 
 function redraw() {
@@ -127,14 +132,33 @@ function redraw() {
     fillMatrix(lhsMatrix, lhsColumns, lhsRows, lhsOrg);
     calculateMatrix(lhsMatrix, rhsMatrix, interMethod);
 
-    drawGrid(rhsColumns, rhsRows, rhsLeftOffset, rhsTopOffset, 1, true, rhsPad, rhsMatrix);
-    drawGrid(lhsColumns, lhsRows, lhsLeftOffset, lhsTopOffset, lhsRows * lhsColumns + 1, false, lhsPad, lhsMatrix);
+    drawGrid(rhsColumns, rhsRows, rhsLeftOffset, rhsTopOffset, 1, true, rhsPad, rhsMatrix, "Output image");
+    drawGrid(lhsColumns, lhsRows, lhsLeftOffset, lhsTopOffset, lhsRows * lhsColumns + 1, false, lhsPad, lhsMatrix, "Input image");
+    drawArrow(
+        (lhsColumns + lhsPad + 0.25) * rectWidth + lhsLeftOffset,
+        (lhsRows) * rectHeight / 2 + lhsTopOffset,
+        (-0.25) * rectWidth + rhsLeftOffset,
+        (rhsRows) * rectHeight / 2 + rhsTopOffset,
+        10);
 }
 
 regenerate();
 redraw();
 
-function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding, values) {
+function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding, values, title) {
+    var titleText = new fabric.IText(
+        title, {
+        left: 10,
+        top: 10,
+        originX: 'left',
+        originY: 'top',
+        editable: true,
+        ...customProperties
+    });
+    titleText.left = leftOffset + (cols * rectWidth - titleText.width) / 2;
+    titleText.top = topOffset - rectHeight * (padding + 1);
+    canvas.add(titleText);
+
     for (var i = - padding; i < cols + padding; i++) {
         for (var j = - padding; j < rows + padding; j++) {
 
@@ -279,7 +303,34 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
 var pline = null;
 var gcircle = null;
 var extraLines = [];
+
 function drawInterpolationLines(i, j, org) {
+
+    const el = document.getElementById("calculation");
+    if (interMethod == 0) {
+        el.innerHTML = `
+        \\( \\text{Position of } {\\color{purple}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} = (x,y) = (${i + 0.5}, ${j + 0.5})  \\\\
+    \\text{Position of } {\\color{green}{\\huge\\bullet}} = P_{\\color{green}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}}, \\frac{\\text{input rows}}{\\text{output rows}}) = (${i + 0.5}, ${j + 0.5}) * (${sy}, ${sx}) = (${(i + 0.5) * sy}, ${(j + 0.5) * sx}) \\\\
+    \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = I_{\\lfloor P_{\\color{green}{\\huge\\bullet}} \\rfloor} = I_{\\lfloor ${Math.floor((i + 0.5) * sy)} \\rfloor, \\lfloor ${Math.floor((j + 0.5) * sx)} \\rfloor} = ${lhsMatrix[Math.floor((j + 0.5) * sx)][Math.floor((i + 0.5) * sy)]} \\)
+        `;
+    } else if (interMethod == 1) {
+        el.innerHTML = `
+        \\( \\text{Position of } {\\color{purple}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} = (x,y) = (${i + 0.5}, ${j + 0.5})  \\\\
+    \\text{Position of } {\\color{green}{\\huge\\bullet}} = P_{\\color{green}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}}, \\frac{\\text{input rows}}{\\text{output rows}}) = (${i + 0.5}, ${j + 0.5}) * (${sy}, ${sx}) = (${(i + 0.5) * sy}, ${(j + 0.5) * sx}) \\\\
+    \\text{Position of 4 known points } Q_{11} = (x_1, y_1), Q_{12} = (x_1, y_1 + 1), Q_{21} = (x_1 + 1, y_1), Q_{22} = (x_1 + 1, y_1 + 1) \\\\
+    \\text{where } (x_1, y_1) = \\lfloor P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}},  \\frac{\\text{input rows}}{\\text{output rows}}) + 0.5 \\rfloor = (${Math.floor((i + 0.5) * sy + 0.5)}, ${Math.floor((j + 0.5) * sx + 0.5)}) \\\\
+    \\text{x-direction linear co-efficient} = f_x = ((x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5) - \\lfloor(x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5\\rfloor \\\\
+    \\text{y-direction linear co-efficient} = f_y = ((y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5) - \\lfloor(y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5\\rfloor \\\\
+    \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = 
+    I_{x_1, y_1} * (1 - f_x) * (1 - f_y) + \\\\
+    I_{x_2, y_1} * f_x * (1 - f_y) + \\\\
+    I_{x_1, y_2} * (1 - f_x) * f_y + \\\\
+    I_{x_2, y_2} * f_x * f_y + \\\\
+    = ${rhsMatrix[j][i]} \\)
+        `;
+    }
+
+    MathJax.Hub.Queue(['Typeset', MathJax.Hub, el]);
 
     if (pline != null) {
         canvas.remove(pline);
@@ -358,8 +409,8 @@ function drawToIJ(i, j, startingX, startingY) {
 }
 
 function drawNearest(i, j, startingX, startingY) {
-    var toX = rectWidth * (Math.floor((i + 0.5) * sx) + 0.5) + lhsLeftOffset;
-    var toY = rectHeight * (Math.floor((j + 0.5) * sy) + 0.5) + lhsTopOffset;
+    var toX = rectWidth * (Math.floor((i + 0.5) * sy) + 0.5) + lhsLeftOffset;
+    var toY = rectHeight * (Math.floor((j + 0.5) * sx) + 0.5) + lhsTopOffset;
     extraLines.push(drawArrow(startingX, startingY, toX, toY, 100))
 }
 
