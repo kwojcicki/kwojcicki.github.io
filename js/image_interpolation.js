@@ -62,6 +62,10 @@ var interMethod = 0;
 var lhsMatrix;
 var rhsMatrix;
 
+var pline = null;
+var gcircle = null;
+var extraLines = [];
+
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 function fillMatrix(m, cols, rows, org) {
@@ -142,8 +146,20 @@ function redraw() {
         10);
 }
 
-regenerate();
-redraw();
+
+function defer(method) {
+    console.log("deferring");
+    if (window.MathJax) {
+        method();
+    } else {
+        setTimeout(function () { defer(method) }, 50);
+    }
+}
+
+defer(() => {
+    regenerate();
+    redraw();
+})
 
 function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding, values, title) {
     var titleText = new fabric.IText(
@@ -296,13 +312,20 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
             rect.moveTo(startingZ + i * rows + j);
             canvas.add(group);
             group.moveTo(startingZ + 1000 + i * rows + j);
+
+            if (onClick && i == 0 && j == 0) {
+                canvas.setActiveObject(group);
+                lastCircle = circle;
+                circle.set({ fill: 'purple', stroke: 'purple' });
+
+                drawInterpolationLines(
+                    i,
+                    j,
+                    group);
+            }
         }
     }
 }
-
-var pline = null;
-var gcircle = null;
-var extraLines = [];
 
 function drawInterpolationLines(i, j, org) {
 
@@ -526,3 +549,17 @@ canvas.on('mouse:wheel', function (opt) {
     opt.e.preventDefault();
     opt.e.stopPropagation();
 });
+
+console.log(rhsLeftOffset + rectWidth / 2)
+console.log(rhsTopOffset + rectHeight / 2)
+// canvas.upperCanvasEl
+//     .dispatchEvent(
+//         new MouseEvent(
+//             "mousedown", // or "mousedown" if the canvas listens for such an event
+//             {
+//                 clientX: rhsLeftOffset + rectWidth / 2 + 100,
+//                 clientY: rhsTopOffset + rectHeight / 2 + 600,
+//                 bubbles: true
+//             }
+//         )
+//     );
