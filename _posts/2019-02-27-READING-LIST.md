@@ -11,11 +11,15 @@ tags: []
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+# June
+- [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google)
+
 # May 
-- [Deep Work: Rules for Focused Success in a Distracted World](https://www.goodreads.com/book/show/25744928-deep-work)
+- [Sapiens: A Brief History of Humankind](https://www.goodreads.com/book/show/23692271-sapiens). Sapiens is incredibly well written and entertaining. It covers the entire history of humankind but, as one can expect for a book of around 450 pages, presented at a very high level. Some sections are covered exhaustively while others are glossed over, which helps keep the book interesting and fast paced. For history buffs Sapiens may lack the intricate details they are searching for, however for individuals okay with receiving a meta history lesson this book will be a hit.
+- [Deep Work: Rules for Focused Success in a Distracted World](https://www.goodreads.com/book/show/25744928-deep-work).
 
 # April 2022
-- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow) In a well written and interesting fashion the author describes the two systems that dictate how we think as well as the types of biases or lapses of judgement created by these two systems. A multitude of studies are given and explained to show how we humans, when trusting our intuition (System 1), will come up with incorrect decisions that we wholeheartedly believe are true. However, this book is on the longer side, and on occasion can be tedious or repetitive when read in longer sittings. Another downside is readers know the examples given in the book are meant to exploit are System 1 therefore will actively engage our System 2 when reading the provided question prompts ruining some of the whimsical power of the examples provided. Overall, I would highly recommend reading this book, but keep your System 2 disengaged during the prompts and interlace your reading sessions with another novel.
+- [Thinking, Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow). In a well written and interesting fashion the author describes the two systems that dictate how we think as well as the types of biases or lapses of judgement created by these two systems. A multitude of studies are given and explained to show how we humans, when trusting our intuition (System 1), will come up with incorrect decisions that we wholeheartedly believe are true. However, this book is on the longer side, and on occasion can be tedious or repetitive when read in longer sittings. Another downside is readers know the examples given in the book are meant to exploit are System 1 therefore will actively engage our System 2 when reading the provided question prompts ruining some of the whimsical power of the examples provided. Overall, I would highly recommend reading this book, but keep your System 2 disengaged during the prompts and interlace your reading sessions with another novel.
 - [The Bogleheads' Guide to Investing](https://www.goodreads.com/book/show/381355.The_Bogleheads_Guide_to_Investing)
 
 # March 2022
@@ -123,7 +127,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Score Takes Care of Itself: My Philosophy of Leadership](https://www.goodreads.com/book/show/6342995-the-score-takes-care-of-itself)
 - [The Mom Test](http://manuelohan.com/wp-content/uploads/2017/05/The-Mom-Test-en.pdf)
 - [Monetizing Innovation: How Smart Companies Design the Product Around the Price](https://www.goodreads.com/en/book/show/30121516-monetizing-innovation)
-- [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google)
 - [Think Like a Monk: Train Your Mind for Peace and Purpose Every Day](https://www.goodreads.com/book/show/51942513-think-like-a-monk)
 - [Think Again: The Power of Knowing What You Don't Know](https://www.goodreads.com/book/show/55539565-think-again)
 - [Factfulness: Ten Reasons We're Wrong About the World – and Why Things Are Better Than You Think](https://www.goodreads.com/book/show/34890015-factfulness)
@@ -134,7 +137,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Psychology of Money](https://www.goodreads.com/en/book/show/41881472-the-psychology-of-money0)
 - [Ikigai: The Japanese Secret to a Long and Happy Life / The Little Book of Lykke / Lagom: The Swedish Art of Balanced Living](https://www.goodreads.com/en/book/show/40534545-ikigai)
 - [Tuesdays with Morrie](https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie)
-- [Sapiens: A Brief History of Humankind](https://www.goodreads.com/book/show/23692271-sapiens)
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
 - [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
