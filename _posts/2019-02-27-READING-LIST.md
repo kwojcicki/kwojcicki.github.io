@@ -150,9 +150,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
 - [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
 - [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
-
-### new 
-
 - [The Expanse](https://www.goodreads.com/series/56399-the-expanse)
 - [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
 - [Essentialism: The Disciplined Pursuit of Less](https://www.goodreads.com/book/show/18077875-essentialism)
@@ -161,3 +158,8 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.goodreads.com/book/show/3735293-clean-code)
 - [A Man Called Ove](https://www.goodreads.com/book/show/18774964-a-man-called-ove)
 - [Effective Java](https://www.goodreads.com/book/show/34927404-effective-java)
+
+### new 
+
+- [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.goodreads.com/book/show/15014.Crucial_Conversations)
+- [I Think You're Wrong (But I'm Listening): A Guide to Grace-Filled Political Conversations](https://www.goodreads.com/book/show/40591258-i-think-you-re-wrong-but-i-m-listening)
