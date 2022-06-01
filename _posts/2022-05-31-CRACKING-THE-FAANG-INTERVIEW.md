@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      "Cracking the FAANG internship"
-subtitle:   "Comprehensive guide for getting you your next FAANG internship"
-date:       2022-05-17 22:09:00
+title:      "Cracking the FAANG interview"
+subtitle:   "Learn how to preapre for your next FAANG interview!"
+date:       2022-05-31 22:09:00
 author:     "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"	
 comments: true
