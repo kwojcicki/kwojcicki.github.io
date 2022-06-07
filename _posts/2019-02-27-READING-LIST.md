@@ -12,7 +12,7 @@ tags: []
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 # June
-- [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google)
+- [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google). Super interesting book. Many of the complaints given to this book are due to the fact that the authors discuss closed source in house solutions which cannot be easily replicated or used by non Googlers. While these are valid complaints, I found it liberating, I could dream or think of the ideal workflows and processes that would enable maximum productivity. The lessons explained in this book are very very transferable, the book has completely revolutionized how I view and approaching test software. For those trying to get a sneak peek at what Google is like, or what well developed Software Engineering practices look like, then I will highly recommend this book.
 
 # May 
 - [Sapiens: A Brief History of Humankind](https://www.goodreads.com/book/show/23692271-sapiens). Sapiens is incredibly well written and entertaining. It covers the entire history of humankind but, as one can expect for a book of around 450 pages, presented at a very high level. Some sections are covered exhaustively while others are glossed over, which helps keep the book interesting and fast paced. For history buffs Sapiens may lack the intricate details they are searching for, however for individuals okay with receiving a meta history lesson this book will be a hit.
@@ -29,10 +29,10 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 # December 2021
 - [How to Win Friends and Influence People](https://www.goodreads.com/book/show/4865.How_to_Win_Friends_and_Influence_People)
-- [Founders at Work: Stories of Startups' Early Days](https://www.goodreads.com/book/show/98233.Founders_at_Work)
+- [Founders at Work: Stories of Startups' Early Days](https://www.goodreads.com/book/show/98233.Founders_at_Work). While many of these companies have since been bought or forgotten this is still an incredible thought provoking read. Even those not directly interested in startups may find these stories inspirational and interesting.
 
 # November 2021
-- [Zero to One: Notes on Startups, or How to Build the Future](https://www.goodreads.com/book/show/18050143-zero-to-one)
+- [Zero to One: Notes on Startups, or How to Build the Future](https://www.goodreads.com/book/show/18050143-zero-to-one). One of my favorite books.
 - [The Goal: A Process of Ongoing Improvement - 30th Anniversary Edition](https://www.goodreads.com/en/book/show/113934.The_Goal)
 
 # October 2021
