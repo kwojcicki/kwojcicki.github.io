@@ -11,7 +11,12 @@ tags: []
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+# July
+- [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
+
 # June
+- [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
+- [Digital Minimalism: Choosing a Focused Life in a Noisy World](https://www.goodreads.com/book/show/40672036-digital-minimalism)
 - [Software Engineering at Google: Lessons Learned from Programming Over Time](https://www.goodreads.com/en/book/show/48816586-software-engineering-at-google). Super interesting book. Many of the complaints given to this book are due to the fact that the authors discuss closed source in house solutions which cannot be easily replicated or used by non Googlers. While these are valid complaints, I found it liberating, I could dream or think of the ideal workflows and processes that would enable maximum productivity. The lessons explained in this book are very very transferable, the book has completely revolutionized how I view and approaching test software. For those trying to get a sneak peek at what Google is like, or what well developed Software Engineering practices look like, then I will highly recommend this book.
 
 # May 
@@ -139,8 +144,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Tuesdays with Morrie](https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie)
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
-- [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
-- [Digital Minimalism: Choosing a Focused Life in a Noisy World](https://www.goodreads.com/book/show/40672036-digital-minimalism)
 - [The Laws of Human Nature](https://www.goodreads.com/book/show/39330937-the-laws-of-human-nature)
 - [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
 - [Start with Why: How Great Leaders Inspire Everyone to Take Action](https://www.goodreads.com/book/show/7108725-start-with-why)
@@ -149,7 +152,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Selfish Gene](https://www.goodreads.com/book/show/61535.The_Selfish_Gene)
 - [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
 - [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
-- [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
 - [The Expanse](https://www.goodreads.com/series/56399-the-expanse)
 - [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
 - [Essentialism: The Disciplined Pursuit of Less](https://www.goodreads.com/book/show/18077875-essentialism)
