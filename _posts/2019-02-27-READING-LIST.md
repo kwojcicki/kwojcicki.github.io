@@ -165,3 +165,4 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 - [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.goodreads.com/book/show/15014.Crucial_Conversations)
 - [I Think You're Wrong (But I'm Listening): A Guide to Grace-Filled Political Conversations](https://www.goodreads.com/book/show/40591258-i-think-you-re-wrong-but-i-m-listening)
+- [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://www.goodreads.com/book/show/38315.Fooled_by_Randomness)
