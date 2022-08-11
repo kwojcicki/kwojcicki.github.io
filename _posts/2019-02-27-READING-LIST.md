@@ -11,8 +11,14 @@ tags: []
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+# August 
+- [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
+- [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://www.goodreads.com/book/show/38315.Fooled_by_Randomness)
+
 # July
 - [The Black Swan: The Impact of the Highly Improbable](https://www.goodreads.com/book/show/242472.The_Black_Swan)
+- [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.goodreads.com/book/show/3735293-clean-code)
+- [Guns, Germs, and Steel: The Fates of Human Societies](https://www.goodreads.com/book/show/1842.Guns_Germs_and_Steel)
 
 # June
 - [Outliers: The Story of Success](https://www.goodreads.com/book/show/3228917-outliers)
@@ -145,10 +151,8 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
 - [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
 - [The Laws of Human Nature](https://www.goodreads.com/book/show/39330937-the-laws-of-human-nature)
-- [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
 - [Start with Why: How Great Leaders Inspire Everyone to Take Action](https://www.goodreads.com/book/show/7108725-start-with-why)
 - [The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers](https://www.goodreads.com/book/show/18176747-the-hard-thing-about-hard-things)
-- [Guns, Germs, and Steel: The Fates of Human Societies](https://www.goodreads.com/book/show/1842.Guns_Germs_and_Steel)
 - [The Selfish Gene](https://www.goodreads.com/book/show/61535.The_Selfish_Gene)
 - [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
 - [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
@@ -157,7 +161,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Essentialism: The Disciplined Pursuit of Less](https://www.goodreads.com/book/show/18077875-essentialism)
 - [Java Concurrency in Practice](https://www.goodreads.com/book/show/127932.Java_Concurrency_in_Practice)
 - [The Pragmatic Programmer: From Journeyman to Master](https://www.goodreads.com/book/show/4099.The_Pragmatic_Programmer)
-- [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.goodreads.com/book/show/3735293-clean-code)
 - [A Man Called Ove](https://www.goodreads.com/book/show/18774964-a-man-called-ove)
 - [Effective Java](https://www.goodreads.com/book/show/34927404-effective-java)
 
@@ -165,4 +168,3 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 - [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.goodreads.com/book/show/15014.Crucial_Conversations)
 - [I Think You're Wrong (But I'm Listening): A Guide to Grace-Filled Political Conversations](https://www.goodreads.com/book/show/40591258-i-think-you-re-wrong-but-i-m-listening)
-- [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://www.goodreads.com/book/show/38315.Fooled_by_Randomness)
