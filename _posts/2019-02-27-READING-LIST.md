@@ -12,7 +12,9 @@ tags: []
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
 # August 
-- [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power)
+- [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power). Each of the 48 chapters are split into alternating sections; one depicting interesting and delightful historical anecdotes in an understandable and clear prose, the other an insufferable, contradictory, repetitive and useless "interpretation" of events stricken by survivorship bias. The margins of the book are filled with cute short stories, folktales and fables which are very entertaining to read. My suggestion would be to read the story portions of the novel and skip everything else. The "advice" given in this novel can be summarized by: be lucky, handsome and charismatic.
+  - The advice sections of this book remind me of an [article written by Jakob Greenfeld](https://jakobgreenfeld.com/insight-porn) which I would highly recommend everyone go read.
+  - The authors, of The 48 Laws of Power, should have taken a note from Black Swan and Outliers before attempting to "understand" and categorize how "successful" people have acquired their power.
 - [Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets](https://www.goodreads.com/book/show/38315.Fooled_by_Randomness)
 
 # July
@@ -163,8 +165,8 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Pragmatic Programmer: From Journeyman to Master](https://www.goodreads.com/book/show/4099.The_Pragmatic_Programmer)
 - [A Man Called Ove](https://www.goodreads.com/book/show/18774964-a-man-called-ove)
 - [Effective Java](https://www.goodreads.com/book/show/34927404-effective-java)
-
-### new 
-
 - [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.goodreads.com/book/show/15014.Crucial_Conversations)
 - [I Think You're Wrong (But I'm Listening): A Guide to Grace-Filled Political Conversations](https://www.goodreads.com/book/show/40591258-i-think-you-re-wrong-but-i-m-listening)
+
+### New 
+- [Discourses and Selected Writings](https://www.goodreads.com/book/show/4143812-discourses-and-selected-writings?ac=1&from_search=true&qid=PdH1Rf841c&rank=1)
