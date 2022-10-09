@@ -154,6 +154,6 @@ The pixels have unit width and length, and their position is described by the ce
 
 To learn more about the actual math and implementation of these various interpolation methods see the blog posts below:
 - [Nearest neighbor](./NEAREST-NEIGHBOUR)
-- Bilinear interpolation
+- [Bilinear interpolation](./BILINEAR-IMAGE-INTERPOLATION)
   
 <script src="../js/image_interpolation.js"></script>
