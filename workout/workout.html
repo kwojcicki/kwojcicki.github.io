@@ -3,6 +3,17 @@
 
 <head>
     <link rel="stylesheet" href="./pico.min.css">
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: black;
+            text-align: center;
+            background: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -609,7 +620,10 @@
             for (let day in workouts) {
                 console.log(day);
                 console.log(workouts[day])
-                let tableHTML = `<table>
+                let tableHTML = `<details>
+  <summary><h2>${day}</h2></summary>
+  <button onclick="startWorkout('${day}')">Start Workout</button>
+            <table>
                 <thead>
                     <tr>
                         <th scope="col"><h6>Exercise</h6></th>
@@ -637,11 +651,52 @@
                             `
                     }
                 }
-                tableHTML += `</tr ></tbody ></table > <br />`
+                tableHTML += `</tr ></tbody ></table ></details> <br />`
                 container.innerHTML += tableHTML;
             }
         }
+
+        let timer = null;
+        let val = 0;
+        let currentDay = null;
+        let currentWorkout = null;
+        const startTimer = () => {
+            console.log("starting timer");
+            document.getElementById("start").disabled = true;
+            document.getElementById("stop").disabled = false;
+            if (timer !== null) return;
+            timer = setInterval(function () {
+                val += 1;
+                document.getElementById("timer").innerHTML = `${Math.floor(val / 60)}:${(val % 60).toLocaleString('en-US', {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false
+                })}s`;
+            }, 1000);
+        }
+
+        const endTimer = () => {
+            document.getElementById("start").disabled = false;
+            document.getElementById("stop").disabled = true;
+            clearInterval(timer);
+            timer = null;
+            console.log("ending timer");
+        }
+
+        const startWorkout = (day) => {
+            console.log(`starting: ${day}`);
+            document.getElementById("start").disabled = false;
+            currentDay = day;
+            currentWorkout = workouts[currentDay];
+            console.log(currentWorkout);
+        }
     </script>
+
+    <div class="footer">
+        <button id="start" onclick="startTimer()" disabled>Start Timer</button>
+        <div id="timer">0:00s</div>
+        <button id="stop" onclick="endTimer()" disabled>Stop Timer</button>
+    </div>
+
 </body>
 
 </html>
