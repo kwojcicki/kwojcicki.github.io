@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Nerdle Solver"
-subtitle: "Entropy and Nerdle"
-date: 2022-10-08 11:36:00
+title: "Manually self hosting a ASP.NET Core Controller"
+subtitle: "How to remove mocks from your unit tests"
+date: 2022-10-23 11:36:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
@@ -11,13 +11,29 @@ tags: [Tutorial]
 
 # Introduction
 
+In the world of microservices unit tests are generally plagued by mocks and stubs. Leading to unit tests with the following problems:
+- Bulky and difficult to read, most of these tests consistent of a lot of boilerplate code that prevents the reader from easily understanding what is being tested. It's typically the case that understanding what's being mocked and how requires more effort than understanding what's actually being tested.
+- Often times we end up testing our mocks rather then the original code we set out to test. For example, we may test that we've called `xyz` endpoint, but without knowing the exact implementation of `xyz` we cannot be certain we've correctly invoked the endpoint.
+- Challenging to implement cleanly and keep up to date. Personally implementing mocks which enable testing pagination has always lead to disastrous illegible code.
+- Impractical. Mocks are `O(n)`, every time a new endpoint is being tested another mock has to be added. 
+
+Some of these issues can be solved by adding integration tests. However integration tests do not easily fit in a dev loop, due to their long running nature.
+
+What are the alternatives? Ideally our unit tests would stand up the service we depend on and then we could directly interface with it. Often this isn't feasible (as it may require standing up their dependencies and so on). Instead we can use fakes as described by [Martin Fowler in Mocks Aren't Stubs](https://www.martinfowler.com/articles/mocksArentStubs.html) to achieve this. 
+
+In this post we'll discuss how we can create a [C# `HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-7.0) which routes corresponding requests to pre instantiated [ASP.NET Core MVC controllers](https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-6.0#apicontroller-attribute)
+
+In a follow up post we'll discover how to use this special `HttpClient` to remove mocks from your unit tests and transition over to fakes.
+
 # Implementing
 
-Now that we understand the problem space lets get started. The first thing we'll need to do is verify which `ControllerBase` a given `HttpRequestMessage` is requesting for.
+Now that we understand the problem space lets get started. The first thing we'll need to do is verify which `ControllerBase` a given `HttpRequestMessage` should be routed to.
 
 ## Routing
 
-Unfortunately `AspNetCore.MVC` doesn't provide an easy way to extract the routes you've setup through your `RouteAttribute`s. For a request to match a given controller it needs to first match the controllers top level path.
+Unfortunately `AspNetCore.MVC` doesn't provide an easy way to extract the routes you've setup through your `RouteAttribute`s, so we'll have to do it ourselves.
+
+For a request to match a given controller it needs to first match the controllers top level path.
 
 ```cs
 private static (bool, string) MatchesController(ControllerBase controller, HttpRequestMessage request)
@@ -37,9 +53,9 @@ private static (bool, string) MatchesController(ControllerBase controller, HttpR
 }
 ```
 
-Relatively straightforward code, the only tricky portion is remembering that routes can have [route attributes](https://learn.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2#why-attribute-routing) which we can handle by creating a regex which will handle capturing anything between two `/`. [Regex101](https://regex101.com/) is a great resource for understanding how a given regex works (keep in mind our C# code has to double escape the backslashes).
+Relatively straightforward code, the only tricky portion is remembering that routes can have [route attributes](https://learn.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2#why-attribute-routing) which we can handle by creating a regex that will handle capturing anything between two `/`. [Regex101](https://regex101.com/) is a great resource for understanding how a given regex works (keep in mind our C# code has to double escape the backslashes).
 
-Now we know if a request matches a given controller, next we need to find which exact endpoint does it match on the controller.
+Now we know if a request matches a given controller, next we need to find the exact endpoint which matches the request.
 
 ```cs
 private static (bool, System.Text.RegularExpressions.Match) MatchesAction(HttpRequestMessage request, HttpMethodAttribute action, string topLevelPath)
@@ -95,7 +111,7 @@ private List<object?> ParseParameters(HttpRequestMessage request, MethodInfo met
 
 There are 3 different types of parameters we need to worry about
 
-- `FromQueryAttribute` which are appended at the end of the url in the form of `?param_name1=param_value1&param_name2=param_value2`. We can use the builtin [`HttpUtility`](https://learn.microsoft.com/en-us/dotnet/api/system.web.httputility?view=net-6.0) class to help us with that.
+- `FromQueryAttribute` which are appended at the end of the url in the form of `?param_name1=param_value1&param_name2=param_value2...`. We can use the builtin [`HttpUtility`](https://learn.microsoft.com/en-us/dotnet/api/system.web.httputility?view=net-6.0) class to help us with that.
 ```cs
 if (parameter.IsDefined(typeof(FromQueryAttribute), false))
 {
@@ -115,7 +131,7 @@ if (parameter.IsDefined(typeof(FromQueryAttribute), false))
     }
 }
 ```
-- `FromBodyAttribute` are the second type of parameters we can encounter. These are simpler. We extract the requests content and parse it as necessary
+- `FromBodyAttribute` are the second type of parameters we can encounter. These are simpler. We extract the requests content and parse it as necessary.
 ```cs
 else if (parameter.IsDefined(typeof(FromBodyAttribute), false))
 {
@@ -154,10 +170,6 @@ public class ObjectDeserializer : IObjectDeserializer
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject(value, outType);
         }
-        else if (outType == typeof(string))
-        {
-            return value;
-        }
 
         TypeConverter obj = TypeDescriptor.GetConverter(outType);
         object? outValue = obj.ConvertFromString(null, CultureInfo.InvariantCulture, value);
@@ -190,7 +202,7 @@ private static async Task<HttpResponseMessage> InvokeController(MethodInfo metho
 } 
 ```
 
-Here we are assuming that the returned content will be in json formatted. Ideally we would look at the [`Accept`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header and pick a corresponding format. For the purposes of this tutorial, this will work fine.
+Here we are assuming that the returned content will be JSON formatted. Ideally we would look at the [`Accept`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) header and pick a corresponding format. For the purposes of this tutorial, this will work fine.
 
 ## Putting it all together
 
@@ -274,13 +286,13 @@ public HttpClient GetHttpClient(ControllerBase[] controllers)
 }
 ```
 
-## Optimizations
+# Conclusion
 
-As is this code is horribly inefficient. Every time a request comes in we iterate through all the controllers and all of the endpoints, generating quite a few regexes. Instead we can upfront create a map/dictionary of regex strings to endpoints. Then we could reuse this map every time we process a request.
+That's it! With these bits of code we can instantiate a controller and provide our unit tests an `HttpClient` which will route requests to the correct endpoint. Now we can remove those pesky mocks and rely on the actual controllers logic. In the next post we'll go about modifying some mock styled tests into fake based tests.
 
 # Code
 
-You can visit TODO: to view the entire code base and see how to use it within your unit tests!
+You can visit [here](https://github.com/kwojcicki/manual-self-host) to view the entire code base and see how to use it within your unit tests!
 
 # FAQ
 
@@ -290,8 +302,8 @@ You can visit TODO: to view the entire code base and see how to use it within yo
 
 ## Isn't this the same as mocking?
 
-Yes and no. Yes we will need to manually setup the test data, but no we do not need to explicitly define the behavior of our dependencies. That's a huge win given our dependencies can at any moment introduce a hidden change (that isn't technically a breaking change) but will break your implementation. This is the reverse of [Hyrum's Law](https://www.hyrumslaw.com/) where you want to minimize the chances of a breaking API change making it's way to production. Ideally using unit tests with self hosted webservers will only you and your coworkers to instantly know if a change will break any of your downstream dependencies and either provide them with a migration strategy or gives you the ability to rethink your current approach.
+Yes and no. Yes we we'll need to manually setup the test data, but no we do not need to explicitly define the behavior of our dependencies. That's a huge win given our dependencies can at any moment introduce a hidden change (that isn't technically a breaking change) but will break your implementation. This is the reverse of [Hyrum's Law](https://www.hyrumslaw.com/) where you want to minimize the chances of a breaking API change making it's way to production. Ideally using unit tests with self hosted webservers will allow you and your coworkers to instantly know if a change will break a downstream dependency and either provide them with a migration strategy or the opportunity to rethink your current approach.
 
 ## How do we handle 3rd party dependencies
 
-Unfortunately in the case of 3rd party dependencies you only really have two options. Either use their in memory implementation ([CosmosDB in memory configuration flag](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html) or [Embedded Redis](https://github.com/kstyrc/embedded-redis) are such examples) or continue mocking out these dependencies and ask the maintainers to provide you with an in memory option.  
+Unfortunately in the case of 3rd party dependencies you only really have two options. Either use their in memory implementation ([DynamoDB in memory configuration flag](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html) or [Embedded Redis](https://github.com/kstyrc/embedded-redis) are such examples) or continue mocking out these dependencies and ask the maintainers to provide you with an in memory option.  
