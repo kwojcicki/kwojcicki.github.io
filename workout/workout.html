@@ -9,48 +9,55 @@
             left: 0;
             bottom: 0;
             width: 100%;
-            color: black;
             text-align: center;
-            background: white;
+            margin: 0px;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="container">
-        <h2>Day 1</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <h6>Exercise</h6>
-                    </th>
-                    <th scope="col">
-                        <h6>Set 1</h6>
-                    </th>
-                    <th scope="col">
-                        <h6>Set 2</h6>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Bench Press</th>
-                    <td>
-                        <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
-                        <br />
-                        <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
-                    </td>
-                    <td>
-                        <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
-                        <br />
-                        <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <article>
+        <div id="container">
+            <h2>Day 1</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h6>Exercise</h6>
+                        </th>
+                        <th scope="col">
+                            <h6>Set 1</h6>
+                        </th>
+                        <th scope="col">
+                            <h6>Set 2</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Bench Press</th>
+                        <td>
+                            <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
+                            <br />
+                            <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
+                        </td>
+                        <td>
+                            <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
+                            <br />
+                            <input type="text" id="firstname" name="firstname" placeholder="4x12" required>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="footer">
+            <button id="start" onclick="startTimer()" disabled>Start Timer</button>
+            <div id="timer">0:00s</div>
+            <button id="stop" onclick="endTimer(event)" disabled>Stop Timer</button>
+        </footer>
+    </article>
 
 
 
@@ -674,12 +681,13 @@
             }, 1000);
         }
 
-        const endTimer = () => {
+        const endTimer = (event) => {
             document.getElementById("start").disabled = false;
             document.getElementById("stop").disabled = true;
             clearInterval(timer);
             timer = null;
             console.log("ending timer");
+            toggleModal("modal-example");
         }
 
         const startWorkout = (day) => {
@@ -691,12 +699,126 @@
         }
     </script>
 
-    <div class="footer">
-        <button id="start" onclick="startTimer()" disabled>Start Timer</button>
-        <div id="timer">0:00s</div>
-        <button id="stop" onclick="endTimer()" disabled>Stop Timer</button>
-    </div>
+    <!-- Button to trigger the modal -->
+    <button class="contrast" data-target="modal-example" onClick="toggleModal(event)">
+        Launch demo modal
+    </button>
 
+    <!-- Modal -->
+    <dialog id="modal-example">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-example" onClick="toggleModal(event)">
+            </a>
+            <h3>Set Finished!</h3>
+            <label for="firstname">
+                First name
+                <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+            </label>
+            <label for="firstname">
+                First name
+                <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+            </label>
+            <footer>
+                <a href="#cancel" role="button" class="secondary" data-target="modal-example"
+                    onClick="toggleModal(event)">
+                    Cancel
+                </a>
+                <a href="#confirm" role="button" data-target="modal-example" onClick="toggleModal(event)">
+                    Confirm
+                </a>
+            </footer>
+        </article>
+    </dialog>
+
+    <script>
+        // Config
+        const isOpenClass = 'modal-is-open';
+        const openingClass = 'modal-is-opening';
+        const closingClass = 'modal-is-closing';
+        const animationDuration = 400; // ms
+        let visibleModal = null;
+
+
+        // Toggle modal
+        const toggleModal = id => {
+            const modal = document.getElementById(id);
+            (typeof (modal) != 'undefined' && modal != null)
+                && isModalOpen(modal) ? closeModal(modal) : openModal(modal)
+        }
+
+        // Is modal open
+        const isModalOpen = modal => {
+            return modal.hasAttribute('open') && modal.getAttribute('open') != 'false' ? true : false;
+        }
+
+        // Open modal
+        const openModal = modal => {
+            if (isScrollbarVisible()) {
+                document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
+            }
+            document.documentElement.classList.add(isOpenClass, openingClass);
+            setTimeout(() => {
+                visibleModal = modal;
+                document.documentElement.classList.remove(openingClass);
+            }, animationDuration);
+            modal.setAttribute('open', true);
+        }
+
+        // Close modal
+        const closeModal = modal => {
+            visibleModal = null;
+            document.documentElement.classList.add(closingClass);
+            setTimeout(() => {
+                document.documentElement.classList.remove(closingClass, isOpenClass);
+                document.documentElement.style.removeProperty('--scrollbar-width');
+                modal.removeAttribute('open');
+            }, animationDuration);
+        }
+
+        // Close with a click outside
+        document.addEventListener('click', event => {
+            if (visibleModal != null) {
+                const modalContent = visibleModal.querySelector('article');
+                const isClickInside = modalContent.contains(event.target);
+                !isClickInside && closeModal(visibleModal);
+            }
+        });
+
+        // Close with Esc key
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && visibleModal != null) {
+                closeModal(visibleModal);
+            }
+        });
+
+        // Get scrollbar width
+        const getScrollbarWidth = () => {
+
+            // Creating invisible container
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+            outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+            document.body.appendChild(outer);
+
+            // Creating inner element and placing it in the container
+            const inner = document.createElement('div');
+            outer.appendChild(inner);
+
+            // Calculating difference between container's full width and the child width
+            const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+            // Removing temporary elements from the DOM
+            outer.parentNode.removeChild(outer);
+
+            return scrollbarWidth;
+        }
+
+        // Is scrollbar visible
+        const isScrollbarVisible = () => {
+            return document.body.scrollHeight > screen.height;
+        }
+    </script>
 </body>
 
 </html>

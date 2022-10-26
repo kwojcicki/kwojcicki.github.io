@@ -57,7 +57,8 @@ var customProperties = {
 };
 
 // 0 == nearest
-// 1 == linear interpolation
+// 1 == bilinear interpolation
+// 2 == bicubic interpolation
 var interMethod = 0;
 var lhsMatrix;
 var rhsMatrix;
@@ -111,6 +112,50 @@ function calculateMatrix(lhs, rhs, inter) {
                 rhs[x][y] = value
             }
         }
+    } else if (inter === 2) {
+        for (var x = 0; x < rhs.length; x++) {
+            for (var y = 0; y < rhs[x].length; y++) {
+                let x_pos = Math.floor((x + 0.5) * sx + 0.5);
+                let y_pos = Math.floor((y + 0.5) * sy + 0.5);
+
+                let fx = ((x + 0.5) * sx - 0.5);
+                fx -= Math.floor(fx);
+
+                let fy = ((y + 0.5) * sy - 0.5);
+                fy -= Math.floor(fy);
+
+                let A = -0.75;
+                let coeffsx = [0, 0, 0, 0];
+                let coeffsy = [0, 0, 0, 0];
+
+                coeffsx[0] = ((A * (fx + 1) - 5 * A) * (fx + 1) + 8 * A) * (fx + 1) - 4 * A;
+                coeffsx[1] = ((A + 2) * fx - (A + 3)) * fx * fx + 1;
+                coeffsx[2] = ((A + 2) * (1 - fx) - (A + 3)) * (1 - fx) * (1 - fx) + 1;
+                coeffsx[3] = 1.0 - coeffsx[0] - coeffsx[1] - coeffsx[2];
+
+                coeffsy[0] = ((A * (fy + 1) - 5 * A) * (fy + 1) + 8 * A) * (fy + 1) - 4 * A;
+                coeffsy[1] = ((A + 2) * fy - (A + 3)) * fy * fy + 1;
+                coeffsy[2] = ((A + 2) * (1 - fy) - (A + 3)) * (1 - fy) * (1 - fy) + 1;
+                coeffsy[3] = 1.0 - coeffsy[0] - coeffsy[1] - coeffsy[2];
+
+                let value = 0;
+                for (let i = 0; i < 4; i++) {
+                    value += coeffsy[i] * (
+                        coeffsx[0] * lhs[x_pos][y_pos + i] +
+                        coeffsx[1] * lhs[x_pos + 1][y_pos + i] +
+                        coeffsx[2] * lhs[x_pos + 2][y_pos + i] +
+                        coeffsx[3] * lhs[x_pos + 3][y_pos + i]
+                    )
+                }
+
+                console.log(A);
+                console.log(coeffsx);
+                console.log(coeffsy);
+                console.log(fx + " " + sx);
+                console.log(fy + " " + sy);
+                rhs[x][y] = value
+            }
+        }
     }
 }
 
@@ -125,6 +170,9 @@ function regenerate() {
     } else if (interMethod == 1) {
         lhsMatrix = Array.from(Array(lhsRows + 2), () => new Array(lhsColumns + 2));
         lhsPad = 1;
+    } else if (interMethod == 2) {
+        lhsMatrix = Array.from(Array(lhsRows + 4), () => new Array(lhsColumns + 4));
+        lhsPad = 2;
     }
     lhsOrg = Array.from(Array(lhsRows), () => Array.from(Array(lhsColumns).keys()));
     lhsTopOffset = (rectHeight * rhsRows - rectHeight * lhsRows) / 2 + rhsTopOffset;
@@ -174,7 +222,8 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
     titleText.left = leftOffset + (cols * rectWidth - titleText.width) / 2;
     titleText.top = topOffset - rectHeight * (padding + 1);
     canvas.add(titleText);
-
+    console.log(values);
+    console.log(padding);
     for (var i = - padding; i < cols + padding; i++) {
         for (var j = - padding; j < rows + padding; j++) {
 
@@ -330,13 +379,13 @@ function drawGrid(cols, rows, leftOffset, topOffset, startingZ, onClick, padding
 function drawInterpolationLines(i, j, org) {
 
     const el = document.getElementById("calculation");
-    if (interMethod == 0) {
+    if (interMethod === 0) {
         el.innerHTML = `
         \\( \\text{Position of } {\\color{purple}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} = (x,y) = (${i + 0.5}, ${j + 0.5})  \\\\
     \\text{Position of } {\\color{green}{\\huge\\bullet}} = P_{\\color{green}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}}, \\frac{\\text{input rows}}{\\text{output rows}}) = (${i + 0.5}, ${j + 0.5}) * (${sy}, ${sx}) = (${(i + 0.5) * sy}, ${(j + 0.5) * sx}) \\\\
     \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = I_{\\lfloor P_{\\color{green}{\\huge\\bullet}} \\rfloor} = I_{\\lfloor ${Math.floor((i + 0.5) * sy)} \\rfloor, \\lfloor ${Math.floor((j + 0.5) * sx)} \\rfloor} = ${lhsMatrix[Math.floor((j + 0.5) * sx)][Math.floor((i + 0.5) * sy)]} \\)
         `;
-    } else if (interMethod == 1) {
+    } else if (interMethod === 1) {
         el.innerHTML = `
         \\( \\text{Position of } {\\color{purple}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} = (x,y) = (${i + 0.5}, ${j + 0.5})  \\\\
     \\text{Position of } {\\color{green}{\\huge\\bullet}} = P_{\\color{green}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}}, \\frac{\\text{input rows}}{\\text{output rows}}) = (${i + 0.5}, ${j + 0.5}) * (${sy}, ${sx}) = (${(i + 0.5) * sy}, ${(j + 0.5) * sx}) \\\\
@@ -344,11 +393,41 @@ function drawInterpolationLines(i, j, org) {
     \\text{where } (x_1, y_1) = \\lfloor P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}},  \\frac{\\text{input rows}}{\\text{output rows}}) + 0.5 \\rfloor = (${Math.floor((i + 0.5) * sy + 0.5)}, ${Math.floor((j + 0.5) * sx + 0.5)}) \\\\
     \\text{x-direction linear co-efficient} = f_x = ((x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5) - \\lfloor(x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5\\rfloor \\\\
     \\text{y-direction linear co-efficient} = f_y = ((y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5) - \\lfloor(y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5\\rfloor \\\\
-    \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = 
+    \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = \\\\
     I_{x_1, y_1} * (1 - f_x) * (1 - f_y) + \\\\
     I_{x_2, y_1} * f_x * (1 - f_y) + \\\\
     I_{x_1, y_2} * (1 - f_x) * f_y + \\\\
     I_{x_2, y_2} * f_x * f_y + \\\\
+    = ${rhsMatrix[j][i]} \\)
+        `;
+    } else if (interMethod === 2) {
+        el.innerHTML = `
+        \\( \\text{Position of } {\\color{purple}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} = (x,y) = (${i + 0.5}, ${j + 0.5})  \\\\
+    \\text{Position of } {\\color{green}{\\huge\\bullet}} = P_{\\color{green}{\\huge\\bullet}} = P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}}, \\frac{\\text{input rows}}{\\text{output rows}}) = (${i + 0.5}, ${j + 0.5}) * (${sy}, ${sx}) = (${(i + 0.5) * sy}, ${(j + 0.5) * sx}) \\\\
+    \\text{Position of 16 known points } Q_{11} = (x_1, y_1), Q_{12} = (x_1, y_1 + 1), Q_{21} = (x_1 + 1, y_1), \\dots, Q_{44} = (x_1 + 3, y_1 + 3) \\\\
+    \\text{where } (x_1, y_1) = \\lfloor P_{\\color{purple}{\\huge\\bullet}} * (\\frac{\\text{input columns}}{\\text{output columns}},  \\frac{\\text{input rows}}{\\text{output rows}}) + 0.5 \\rfloor = (${Math.floor((i + 0.5) * sy + 0.5)}, ${Math.floor((j + 0.5) * sx + 0.5)}) \\\\
+    f_x = ((x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5) - \\lfloor(x + 0.5) * \\frac{\\text{input columns}}{\\text{output columns}} - 0.5\\rfloor \\\\
+    f_y = ((y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5) - \\lfloor(y + 0.5) * \\frac{\\text{input rows}}{\\text{output rows}} - 0.5\\rfloor \\\\
+    \\alpha = -0.75 \\\\
+    \\text{x-direction co-efficient} = cx = \\\\
+    \\begin{bmatrix}
+    (\\alpha * (f_x + 1) - 5 * \\alpha) * (f_x + 1) + 8 * \\alpha) * (f_x + 1) - 4 * \\alpha \\\\
+    ((\\alpha + 2) * f_x - (\\alpha + 3)) * f_x * f_x + 1 \\\\
+    ((\\alpha + 2) * (1 - f_x) - (\\alpha + 3)) * (1 - f_x) * (1 - f_x) + 1 \\\\
+    1.0 - cx_0 - cx_1 - cx_2
+    \\end{bmatrix} \\\\
+    \\text{y-direction co-efficient} = cy = \\\\
+    \\begin{bmatrix}
+    (\\alpha * (f_y + 1) - 5 * \\alpha) * (f_y + 1) + 8 * \\alpha) * (f_y + 1) - 4 * \\alpha \\\\
+    ((\\alpha + 2) * f_y - (\\alpha + 3)) * f_y * f_y + 1 \\\\
+    ((\\alpha + 2) * (1 - f_y) - (\\alpha + 3)) * (1 - f_y) * (1 - f_y) + 1 \\\\
+    1.0 - cy_0 - cy_1 - cy_2
+    \\end{bmatrix} \\\\
+    \\text{Value of output image } (${i}, ${j}) = O_{${i}, ${j}} = \\\\
+    cy_0 * ( cx_0 * I_{x_1, y_1} + cx_1 * I_{x_2, y_1} + cx_2 * I_{x_3, y_1} + cx_3 * I_{x_4, y_1} ) + \\\\
+    cy_1 * ( cx_0 * I_{x_1, y_2} + cx_1 * I_{x_2, y_2} + cx_2 * I_{x_3, y_2} + cx_3 * I_{x_4, y_2} ) + \\\\
+    cy_2 * ( cx_0 * I_{x_1, y_3} + cx_1 * I_{x_2, y_3} + cx_2 * I_{x_3, y_3} + cx_3 * I_{x_4, y_3} ) + \\\\
+    cy_3 * ( cx_0 * I_{x_1, y_4} + cx_1 * I_{x_2, y_4} + cx_2 * I_{x_3, y_4} + cx_3 * I_{x_4, y_4} ) + \\\\
     = ${rhsMatrix[j][i]} \\)
         `;
     }
@@ -376,6 +455,8 @@ function drawInterpolationLines(i, j, org) {
         drawNearest(i, j, toX, toY);
     } else if (interMethod == 1) {
         drawLinear(i, j, toX, toY);
+    } else if (interMethod === 2) {
+        drawCubic(i, j, toX, toY);
     }
 
     gcircle = new fabric.Circle({
@@ -409,8 +490,18 @@ function drawInterpolationLines(i, j, org) {
     canvas.add(gcircle);
 }
 
-function drawLinear(i, j, startingX, startingY) {
+function drawCubic(i, j, startingX, startingY) {
+    i = Math.round((i + 0.5) * sy) + 1;
+    j = Math.round((j + 0.5) * sx) + 1;
 
+    for (let y = 0; y < 4; y++) {
+        for (let x = 0; x < 4; x++) {
+            drawToIJ(i - y, j - x, startingX, startingY);
+        }
+    }
+}
+
+function drawLinear(i, j, startingX, startingY) {
     i = (i + 0.5) * sy;
     j = (j + 0.5) * sx;
 

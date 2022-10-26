@@ -11,6 +11,13 @@ tags: []
 
 Soft Paywall == can be circumvented using multiple browsers/private sessions
 
+# November
+- [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
+
+# October
+- [Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Climate Change](https://www.goodreads.com/book/show/7799004-merchants-of-doubt)
+- [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
+
 # August 
 - [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power). Each of the 48 chapters are split into alternating sections; one depicting interesting and delightful historical anecdotes in an understandable and clear prose, the other an insufferable, contradictory, repetitive and useless "interpretation" of events stricken by survivorship bias. The margins of the book are filled with cute short stories, folktales and fables which are very entertaining to read. My suggestion would be to read the story portions of the novel and skip everything else. The "advice" given in this novel can be summarized by: be lucky, handsome and charismatic.
   - The advice sections of this book remind me of an [article written by Jakob Greenfeld](https://jakobgreenfeld.com/insight-porn) which I would highly recommend everyone go read.
@@ -135,7 +142,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [ITT 2016 - Kevlin Henney - Seven Ineffective Coding Habits of Many Programmers](https://www.youtube.com/watch?v=ZsHMHukIlJY&ab_channel=IstanbulTechTalks)
 - [Alex Ellis book wish list](https://www.amazon.co.uk/hz/wishlist/genericItemsPage/3N6F3YMWH6J7Q?type=wishlist&filter=unpurchased&sort=priority&viewType=list)
 - [Art0fLife_ 20 books to read in your 20s](https://twitter.com/Art0fLife_/status/1513110918288355330/photo/1)
-- [Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Climate Change](https://www.goodreads.com/book/show/7799004-merchants-of-doubt)
 - [Lying](https://www.goodreads.com/book/show/18869177-lying)
 - [The Score Takes Care of Itself: My Philosophy of Leadership](https://www.goodreads.com/book/show/6342995-the-score-takes-care-of-itself)
 - [The Mom Test](http://manuelohan.com/wp-content/uploads/2017/05/The-Mom-Test-en.pdf)
@@ -151,7 +157,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Ikigai: The Japanese Secret to a Long and Happy Life / The Little Book of Lykke / Lagom: The Swedish Art of Balanced Living](https://www.goodreads.com/en/book/show/40534545-ikigai)
 - [Tuesdays with Morrie](https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie)
 - [Lifespan: Why We Age—and Why We Don't Have To](https://www.goodreads.com/book/show/43723901-lifespan)
-- [Ego Is the Enemy](https://www.goodreads.com/book/show/27036528-ego-is-the-enemy)
 - [The Laws of Human Nature](https://www.goodreads.com/book/show/39330937-the-laws-of-human-nature)
 - [Start with Why: How Great Leaders Inspire Everyone to Take Action](https://www.goodreads.com/book/show/7108725-start-with-why)
 - [The Hard Thing About Hard Things: Building a Business When There Are No Easy Answers](https://www.goodreads.com/book/show/18176747-the-hard-thing-about-hard-things)
@@ -159,7 +164,6 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [The Alchemist](https://www.goodreads.com/book/show/18144590-the-alchemist)
 - [The Dip: A Little Book That Teaches You When to Quit (and When to Stick)](https://www.goodreads.com/book/show/324748.The_Dip)
 - [The Expanse](https://www.goodreads.com/series/56399-the-expanse)
-- [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
 - [Essentialism: The Disciplined Pursuit of Less](https://www.goodreads.com/book/show/18077875-essentialism)
 - [Java Concurrency in Practice](https://www.goodreads.com/book/show/127932.Java_Concurrency_in_Practice)
 - [The Pragmatic Programmer: From Journeyman to Master](https://www.goodreads.com/book/show/4099.The_Pragmatic_Programmer)
@@ -167,6 +171,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Effective Java](https://www.goodreads.com/book/show/34927404-effective-java)
 - [Crucial Conversations: Tools for Talking When Stakes Are High](https://www.goodreads.com/book/show/15014.Crucial_Conversations)
 - [I Think You're Wrong (But I'm Listening): A Guide to Grace-Filled Political Conversations](https://www.goodreads.com/book/show/40591258-i-think-you-re-wrong-but-i-m-listening)
-
-### New 
 - [Discourses and Selected Writings](https://www.goodreads.com/book/show/4143812-discourses-and-selected-writings?ac=1&from_search=true&qid=PdH1Rf841c&rank=1)
+
+### New
+- [So Good They Can't Ignore You: Why Skills Trump Passion in the Quest for Work You Love](https://www.goodreads.com/book/show/13525945-so-good-they-can-t-ignore-you)

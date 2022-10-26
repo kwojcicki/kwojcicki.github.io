@@ -99,6 +99,7 @@ Using the graphical tool below you can dive deeper into the various interpolatio
     <select name="imageInter" id="imageInter">
       <option value="0" selected>Nearest neighbor</option>
       <option value="1">Bilinear interpolation</option>
+      <option value="2">Bicubic interpolation</option>
     </select>
   </div>
 </div>
