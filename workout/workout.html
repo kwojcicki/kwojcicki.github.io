@@ -54,12 +54,13 @@
 
         <footer class="footer">
             <button id="start" onclick="startTimer()" disabled>Start Timer</button>
-            <div id="timer">0:00s</div>
-            <button id="stop" onclick="endTimer(event)" disabled>Stop Timer</button>
+            <div id="timer" style="margin-bottom:20px;">0:00s</div>
+            <div class="grid">
+                <button id="reset" onclick="resetTimer()" disabled>Reset Timer</button>
+                <button id="stop" onclick="endTimer(event)" disabled>Stop Timer</button>
+            </div>
         </footer>
     </article>
-
-
 
     <script>
         // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
@@ -570,14 +571,6 @@
         }
     </script>
     <script>
-        console.log("hello'");
-        var string = "This is my compression test.";
-        console.log("Size of sample is: " + string.length);
-        var compressed = LZString.compress(string);
-        console.log("Size of compressed sample is: " + compressed.length);
-        string = LZString.decompress(compressed);
-        console.log("Sample is: " + string);
-
         var data = {
             day1: [
                 "bench press:80,12,80,10,80,8,80,8",
@@ -607,19 +600,10 @@
             ]
         };
 
-        console.log(JSON.stringify(data));
-        console.log("raw data length: " + JSON.stringify(data).length);
-        console.log("compressed data length: " + LZString.compressToEncodedURIComponent(JSON.stringify(data)).length);
-        console.log(LZString.compressToEncodedURIComponent(JSON.stringify(data)));
-        console.log(JSON.stringify(LZString.compressToEncodedURIComponent(JSON.stringify(data))));
-
         var urlData = new URLSearchParams(window.location.search).get("data");
         if (urlData) {
-            console.log(urlData)
-            console.log(JSON.stringify(urlData));
-            console.log(LZString.compressToEncodedURIComponent(JSON.stringify(data)).length + " " + urlData.length)
-            console.log(LZString.compressToEncodedURIComponent(JSON.stringify(data)) === urlData)
             var workouts = JSON.parse(LZString.decompressFromEncodedURIComponent(urlData));
+            var parsedWorkouts = {};
             console.log(workouts);
 
             const container = document.getElementById("container");
@@ -627,9 +611,10 @@
             for (let day in workouts) {
                 console.log(day);
                 console.log(workouts[day])
+                parsedWorkouts[day] = [];
                 let tableHTML = `<details>
   <summary><h2>${day}</h2></summary>
-  <button onclick="startWorkout('${day}')">Start Workout</button>
+  <button id="start${day}" onclick="startWorkout('${day}')">Start Workout</button>
             <table>
                 <thead>
                     <tr>
@@ -646,14 +631,15 @@
                     const e = workouts[day][ex].split(":");
                     const name = e[0];
                     const sets = e[1].split(",");
+                    parsedWorkouts[day].push(sets.length / 2);
                     console.log(name + " " + sets);
-                    tableHTML += `<tr><th scope="row">${name}</th>`;
+                    tableHTML += `<tr><th scope="row"><input type="text" id="${name}" value="${name}"></th>`;
                     for (let i = 0; i < sets.length; i += 2) {
                         tableHTML += `
                         <td>
-                        <input type="text" id="firstname" name="firstname" placeholder="${sets[i]}">
+                        <input type="number" id="${day}${ex}${i / 2}weight" placeholder="${sets[i]}">
                         <br />
-                        <input type="text" id="firstname" name="firstname" placeholder="${sets[i + 1]}">
+                        <input type="number" id="${day}${ex}${i / 2}reps" placeholder="${sets[i + 1]}">
                         </td >
                             `
                     }
@@ -666,12 +652,15 @@
         let timer = null;
         let val = 0;
         let currentDay = null;
-        let currentWorkout = null;
+        let currentExercise = 0;
+        let currentSet = 0;
         const startTimer = () => {
             console.log("starting timer");
             document.getElementById("start").disabled = true;
             document.getElementById("stop").disabled = false;
+            document.getElementById("reset").disabled = false;
             if (timer !== null) return;
+            val = 0;
             timer = setInterval(function () {
                 val += 1;
                 document.getElementById("timer").innerHTML = `${Math.floor(val / 60)}:${(val % 60).toLocaleString('en-US', {
@@ -679,52 +668,63 @@
                     useGrouping: false
                 })}s`;
             }, 1000);
+            document.getElementById("reps").value = document.getElementById(`${currentDay}${currentExercise}${currentSet}reps`).placeholder;
+            document.getElementById("weight").value = document.getElementById(`${currentDay}${currentExercise}${currentSet}weight`).placeholder;
+            toggleModal("set-modal");
+        }
+
+        const resetTimer = () => {
+            val = 0;
+        }
+
+        const logSet = () => {
+            toggleModal("set-modal");
+            document.getElementById(`${currentDay}${currentExercise}${currentSet}reps`).value = document.getElementById("reps").value;
+            document.getElementById(`${currentDay}${currentExercise}${currentSet}weight`).value = document.getElementById("weight").value;
+            document.getElementById(`${currentDay}${currentExercise}${currentSet}reps`).setAttribute('aria-invalid', "false");
+            document.getElementById(`${currentDay}${currentExercise}${currentSet}weight`).setAttribute('aria-invalid', "false");
+            currentSet++;
+            if (currentSet > parsedWorkouts[currentDay][currentExercise]) {
+                currentExercise++;
+                currentSet = 0;
+            }
         }
 
         const endTimer = (event) => {
             document.getElementById("start").disabled = false;
             document.getElementById("stop").disabled = true;
+            document.getElementById("reset").disabled = true;
             clearInterval(timer);
             timer = null;
             console.log("ending timer");
-            toggleModal("modal-example");
         }
 
         const startWorkout = (day) => {
             console.log(`starting: ${day}`);
+            document.getElementById(`start${day}`).disabled = true;
             document.getElementById("start").disabled = false;
             currentDay = day;
-            currentWorkout = workouts[currentDay];
-            console.log(currentWorkout);
+            currentExercise = 0;
+            currentSet = 0;
+            console.log(parsedWorkouts[currentDay][currentExercise]);
         }
     </script>
 
-    <!-- Button to trigger the modal -->
-    <button class="contrast" data-target="modal-example" onClick="toggleModal(event)">
-        Launch demo modal
-    </button>
-
     <!-- Modal -->
-    <dialog id="modal-example">
+    <dialog id="set-modal">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-example" onClick="toggleModal(event)">
-            </a>
             <h3>Set Finished!</h3>
-            <label for="firstname">
-                First name
-                <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+            <label for="weight">
+                Weight
+                <input type="number" id="weight" name="weight" value="First name" required>
             </label>
-            <label for="firstname">
-                First name
-                <input type="text" id="firstname" name="firstname" placeholder="First name" required>
+            <label for="reps">
+                Rep Count
+                <input type="number" id="reps" name="reps" value="First name" required>
             </label>
             <footer>
-                <a href="#cancel" role="button" class="secondary" data-target="modal-example"
-                    onClick="toggleModal(event)">
-                    Cancel
-                </a>
-                <a href="#confirm" role="button" data-target="modal-example" onClick="toggleModal(event)">
-                    Confirm
+                <a href="#confirm" role="button" data-target="modal-example" onClick="logSet()">
+                    Done
                 </a>
             </footer>
         </article>
