@@ -17,6 +17,7 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 # October
 - [Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Climate Change](https://www.goodreads.com/book/show/7799004-merchants-of-doubt)
 - [The Anthropocene Reviewed](https://www.goodreads.com/book/show/55145261-the-anthropocene-reviewed)
+- [So Good They Can't Ignore You: Why Skills Trump Passion in the Quest for Work You Love](https://www.goodreads.com/book/show/13525945-so-good-they-can-t-ignore-you). This novel begins Cal Newport's trilogy (Deep Work and Digital Minimalism being the other two novels) around self improvement and career advice. I found this novel interesting for two reasons: it shows Cal's progression as an author (in terms of writing prowess) and he discovers important topics he later addresses in their own novels, Deliberate practice (Deep Work) and avoiding inefficient activities (Digital Minimalism). While I found the advice in the latter two novels much more impactful the anecdotes were enough to keep me hooked and continuing reading. Overall I would recommend Deep Work and Digital Minimalism over this book.
 
 # August 
 - [The 48 Laws of Power](https://www.goodreads.com/book/show/1303.The_48_Laws_of_Power). Each of the 48 chapters are split into alternating sections; one depicting interesting and delightful historical anecdotes in an understandable and clear prose, the other an insufferable, contradictory, repetitive and useless "interpretation" of events stricken by survivorship bias. The margins of the book are filled with cute short stories, folktales and fables which are very entertaining to read. My suggestion would be to read the story portions of the novel and skip everything else. The "advice" given in this novel can be summarized by: be lucky, handsome and charismatic.
@@ -174,4 +175,3 @@ Soft Paywall == can be circumvented using multiple browsers/private sessions
 - [Discourses and Selected Writings](https://www.goodreads.com/book/show/4143812-discourses-and-selected-writings?ac=1&from_search=true&qid=PdH1Rf841c&rank=1)
 
 ### New
-- [So Good They Can't Ignore You: Why Skills Trump Passion in the Quest for Work You Love](https://www.goodreads.com/book/show/13525945-so-good-they-can-t-ignore-you)

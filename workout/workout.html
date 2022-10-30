@@ -601,6 +601,8 @@
         };
 
         var urlData = new URLSearchParams(window.location.search).get("data");
+        var currentData = new URLSearchParams(window.location.search).get("current");
+        let currentWorkout = currentData ? JSON.parse(LZString.decompressFromEncodedURIComponent(currentData)) : {};
         if (urlData) {
             var workouts = JSON.parse(LZString.decompressFromEncodedURIComponent(urlData));
             var parsedWorkouts = {};
@@ -633,13 +635,13 @@
                     const sets = e[1].split(",");
                     parsedWorkouts[day].push(sets.length / 2);
                     console.log(name + " " + sets);
-                    tableHTML += `<tr><th scope="row"><input type="text" id="${name}" value="${name}"></th>`;
+                    tableHTML += `<tr><th scope="row"><input type="text" id="${day}${ex}" value="${name}"></th>`;
                     for (let i = 0; i < sets.length; i += 2) {
                         tableHTML += `
                         <td>
-                        <input type="number" id="${day}${ex}${i / 2}weight" placeholder="${sets[i]}">
+                        <input type="number" id="${day}${ex}${i / 2}weight" placeholder="${sets[i]}" onchange="recalculateUrl()">
                         <br />
-                        <input type="number" id="${day}${ex}${i / 2}reps" placeholder="${sets[i + 1]}">
+                        <input type="number" id="${day}${ex}${i / 2}reps" placeholder="${sets[i + 1]}" onchange="recalculateUrl()">
                         </td >
                             `
                     }
@@ -647,6 +649,36 @@
                 tableHTML += `</tr ></tbody ></table ></details> <br />`
                 container.innerHTML += tableHTML;
             }
+        }
+
+        const recalculateUrl = () => {
+            for (const day in workouts) {
+                for (const ex in workouts[day]) {
+                    let exercise = document.getElementById(`${day}${ex}`).value + ":";
+                    const sets = workouts[day][ex].split(":")[1].split(",").length / 2;
+                    let foundOne = false;
+                    for (let i = 0; i < sets; i++) {
+                        const weight = document.getElementById(`${day}${ex}${i}weight`).value;
+                        const reps = document.getElementById(`${day}${ex}${i}reps`).value;
+                        if (!weight || !reps)
+                            break;
+                        exercise +=
+                            + weight + "," + reps + ",";
+                        foundOne = true;
+                    }
+                    if (foundOne) {
+                        exercise = exercise.slice(0, -1);
+                        console.log(exercise);
+                        if (!currentWorkout[day]) {
+                            currentWorkout[day] = [];
+                        }
+                        currentWorkout[day].push(exercise);
+                    }
+                }
+            }
+            console.log("current workout");
+            console.log(currentWorkout);
+            window.history.pushState({}, 'Workout App', `?current=${LZString.compressToEncodedURIComponent(JSON.stringify(currentWorkout))}&data=${urlData}`)
         }
 
         let timer = null;
@@ -716,11 +748,11 @@
             <h3>Set Finished!</h3>
             <label for="weight">
                 Weight
-                <input type="number" id="weight" name="weight" value="First name" required>
+                <input type="number" id="weight" name="weight" required>
             </label>
             <label for="reps">
                 Rep Count
-                <input type="number" id="reps" name="reps" value="First name" required>
+                <input type="number" id="reps" name="reps" required>
             </label>
             <footer>
                 <a href="#confirm" role="button" data-target="modal-example" onClick="logSet()">
