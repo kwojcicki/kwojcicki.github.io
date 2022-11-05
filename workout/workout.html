@@ -600,8 +600,9 @@
             ]
         };
 
-        var urlData = new URLSearchParams(window.location.search).get("data");
-        var currentData = new URLSearchParams(window.location.search).get("current");
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlData = urlParams.get("data");
+        var currentData = urlParams.get("current");
         let currentWorkout = currentData ? JSON.parse(LZString.decompressFromEncodedURIComponent(currentData)) : {};
         if (urlData) {
             var workouts = JSON.parse(LZString.decompressFromEncodedURIComponent(urlData));
@@ -652,6 +653,7 @@
         }
 
         const recalculateUrl = () => {
+            currentWorkout = {};
             for (const day in workouts) {
                 for (const ex in workouts[day]) {
                     let exercise = document.getElementById(`${day}${ex}`).value + ":";
@@ -678,14 +680,23 @@
             }
             console.log("current workout");
             console.log(currentWorkout);
+            pushUrl();
+        }
+
+        const pushUrl = () => {
             window.history.pushState({}, 'Workout App', `?current=${LZString.compressToEncodedURIComponent(JSON.stringify(currentWorkout))}&data=${urlData}`)
         }
 
         let timer = null;
         let val = 0;
-        let currentDay = null;
-        let currentExercise = 0;
-        let currentSet = 0;
+        let currentDay = urlParams.get("currentDay") || null;
+        let currentExercise = urlParams.get("currentExercise") || 0;
+        let currentSet = urlParams.get("currentSet") || 0;
+
+        if (currentDay && currentExercise && currentSet) {
+            disableStartWorkoutButtons();
+        }
+
         const startTimer = () => {
             console.log("starting timer");
             document.getElementById("start").disabled = true;
@@ -715,10 +726,17 @@
             document.getElementById(`${currentDay}${currentExercise}${currentSet}weight`).value = document.getElementById("weight").value;
             document.getElementById(`${currentDay}${currentExercise}${currentSet}reps`).setAttribute('aria-invalid', "false");
             document.getElementById(`${currentDay}${currentExercise}${currentSet}weight`).setAttribute('aria-invalid', "false");
+            recalculateUrl();
             currentSet++;
-            if (currentSet > parsedWorkouts[currentDay][currentExercise]) {
+            if (currentSet >= parsedWorkouts[currentDay][currentExercise]) {
                 currentExercise++;
                 currentSet = 0;
+            }
+            if (currentExercise === parsedWorkouts[currentDay].length) {
+                mergeWorkout();
+                urlData = LZString.compressToEncodedURIComponent(JSON.stringify(workouts));
+                currentWorkout = {};
+                pushUrl();
             }
         }
 
@@ -733,12 +751,25 @@
 
         const startWorkout = (day) => {
             console.log(`starting: ${day}`);
-            document.getElementById(`start${day}`).disabled = true;
+            disableStartWorkoutButtons();
             document.getElementById("start").disabled = false;
             currentDay = day;
             currentExercise = 0;
             currentSet = 0;
             console.log(parsedWorkouts[currentDay][currentExercise]);
+        }
+
+        const disableStartWorkoutButtons = () => {
+            for (const day in workouts) {
+                document.getElementById(`start${day}`).disabled = true;
+            }
+        }
+
+        const mergeWorkout = () => {
+            console.log("merging");
+            console.log(currentWorkout);
+            console.log(workouts);
+            workouts[currentDay] = currentWorkout[currentDay];
         }
     </script>
 
