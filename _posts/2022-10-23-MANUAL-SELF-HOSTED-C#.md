@@ -11,29 +11,29 @@ tags: [Tutorial]
 
 # Introduction
 
-In the world of microservices unit tests are generally plagued by mocks and stubs. Leading to unit tests with the following problems:
-- Bulky and difficult to read, most of these tests consistent of a lot of boilerplate code that prevents the reader from easily understanding what is being tested. It's typically the case that understanding what's being mocked and how requires more effort than understanding what's actually being tested.
-- Often times we end up testing our mocks rather then the original code we set out to test. For example, we may test that we've called `xyz` endpoint, but without knowing the exact implementation of `xyz` we cannot be certain we've correctly invoked the endpoint.
-- Challenging to implement cleanly and keep up to date. Personally implementing mocks which enable testing pagination has always lead to disastrous illegible code.
-- Impractical. Mocks are `O(n)`, every time a new endpoint is being tested another mock has to be added. 
+In the world of microservices, unit tests are generally plagued by mocks and stubs, leading to unit tests with the following problems:
+- Bulky and difficult to read, most of these tests consist of a lot of boilerplate code that prevents the reader from easily understanding what is being tested. It's typically the case that understanding what's being mocked and how requires more effort than understanding what's actually being tested.
+- Often times, we end up testing our mocks rather than the original code we set out to test. For example, we may test that we've called `xyz` endpoint, but without knowing the exact implementation of `xyz` we cannot be certain we've correctly invoked the endpoint.
+- Challenging to implement cleanly and keep up to date. Personally, implementing mocks which enable testing pagination has always led to disastrous illegible code.
+- Impractical. Mocks are `O(n)`; every time a new endpoint is being tested another mock must be added. 
 
-Some of these issues can be solved by adding integration tests. However integration tests do not easily fit in a dev loop, due to their long running nature.
+Some of these issues can be solved by adding integration tests. However, integration tests do not easily fit in a dev loop due to their long running nature.
 
-What are the alternatives? Ideally our unit tests would stand up the service we depend on and then we could directly interface with it. Often this isn't feasible (as it may require standing up their dependencies and so on). Instead we can use fakes as described by [Martin Fowler in Mocks Aren't Stubs](https://www.martinfowler.com/articles/mocksArentStubs.html) to achieve this. 
+What are the alternatives? Ideally our unit tests would stand up the service we depend on and then we could directly interface with it. Often this isn't feasible (as it may require standing up their dependencies and so on). Instead, we can use fakes as described by [Martin Fowler in Mocks Aren't Stubs](https://www.martinfowler.com/articles/mocksArentStubs.html)to achieve this. 
 
-In this post we'll discuss how we can create a [C# `HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-7.0) which routes corresponding requests to pre instantiated [ASP.NET Core MVC controllers](https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-6.0#apicontroller-attribute)
+In this post, we'll discuss how we can create a [C# `HttpClient`](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-7.0) which routes corresponding requests to pre-instantiated [ASP.NET Core MVC controllers](https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-6.0#apicontroller-attribute)
 
-In a follow up post we'll discover how to use this special `HttpClient` to remove mocks from your unit tests and transition over to fakes.
+In a follow up post, we'll discover how to use this special `HttpClient` to remove mocks from your unit tests and transition over to fakes.
 
 # Implementing
 
-Now that we understand the problem space lets get started. The first thing we'll need to do is verify which `ControllerBase` a given `HttpRequestMessage` should be routed to.
+Now that we understand the problem space, let’s get started. The first thing we'll need to do is verify which `ControllerBase` a given `HttpRequestMessage` should be routed to.
 
 ## Routing
 
-Unfortunately `AspNetCore.MVC` doesn't provide an easy way to extract the routes you've setup through your `RouteAttribute`s, so we'll have to do it ourselves.
+Unfortunately, `AspNetCore.MVC` doesn't provide an easy way to extract the routes you've setup through your `RouteAttribute`s, so we'll have to do it ourselves.
 
-For a request to match a given controller it needs to first match the controllers top level path.
+For a request to match a given controller it needs to first match the controller’s top-level path.
 
 ```cs
 private static (bool, string) MatchesController(ControllerBase controller, HttpRequestMessage request)
@@ -53,7 +53,7 @@ private static (bool, string) MatchesController(ControllerBase controller, HttpR
 }
 ```
 
-Relatively straightforward code, the only tricky portion is remembering that routes can have [route attributes](https://learn.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2#why-attribute-routing) which we can handle by creating a regex that will handle capturing anything between two `/`. [Regex101](https://regex101.com/) is a great resource for understanding how a given regex works (keep in mind our C# code has to double escape the backslashes).
+Relatively straightforward code. The only tricky portion is remembering that routes can have [route attributes](https://learn.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2#why-attribute-routing) which we can handle by creating a regex that will handle capturing anything between the two `/`. [Regex101](https://regex101.com/) is a great resource for understanding how a given regex works (keep in mind our C# code has to double escape the backslashes).
 
 Now we know if a request matches a given controller, next we need to find the exact endpoint which matches the request.
 
@@ -85,13 +85,13 @@ private static (bool, System.Text.RegularExpressions.Match) MatchesAction(HttpRe
 }
 ```
 
-Essentially the same code as matching the top level route, except now we are also verifying we have the correct HTTP Verb as well as including a `$` in our regex to ensure the request url matches the entire endpoint url (not just a portion).
+Essentially the same code as matching the top-level route, except now we are also verifying that we have the correct HTTP Verb as well as including a `$` in our regex to ensure the request url matches the entire endpoint url (not just a portion).
 
 ## Parameter Extraction
 
 We've got the right controller and the right endpoint, let's extract out the necessary parameters. 
 
-We'll start with the following blueprint
+We'll start with the following blueprint:
 
 ```cs
 private List<object?> ParseParameters(HttpRequestMessage request, MethodInfo method, System.Text.RegularExpressions.Match match)
@@ -180,7 +180,7 @@ public class ObjectDeserializer : IObjectDeserializer
 
 ## Controller Invocation
 
-We've got the right controller, right endpoint and all the necessary parameters. All that's left for us is to actually invoke the endpoint.
+We've got the right controller, right endpoint and all the necessary parameters. All that's left for us to do is to actually invoke the endpoint.
 
 ```cs
 private static async Task<HttpResponseMessage> InvokeController(MethodInfo method, ControllerBase controller, List<object?> parameters)
@@ -206,7 +206,7 @@ Here we are assuming that the returned content will be JSON formatted. Ideally w
 
 ## Putting it all together
 
-Let's create a small convenience wrapper method which given a controller and a request, returns the results of an invocation (if there was a match).
+Let's create a small convenience wrapper method which given a controller and a request, returns the results of an invocation (if there is a match).
 
 ```cs
 private async Task<HttpResponseMessage?> TryController(ControllerBase controller, HttpRequestMessage request)
@@ -239,7 +239,7 @@ private async Task<HttpResponseMessage?> TryController(ControllerBase controller
 
 ## Setup
 
-Finally we need someway for our routing and invocation logic to be called. In order to minimize any changes necessary in your clients, we can directly call our `TryController` method as part of a mocked `HttpClient`.
+Finally, we need someway for our routing and invocation logic to be called. To minimize any changes necessary in your clients, we can directly call our `TryController` method as part of a mocked `HttpClient`.
 
 ```cs
 public HttpClient GetHttpClient(ControllerBase[] controllers)
@@ -288,7 +288,7 @@ public HttpClient GetHttpClient(ControllerBase[] controllers)
 
 # Conclusion
 
-That's it! With these bits of code we can instantiate a controller and provide our unit tests an `HttpClient` which will route requests to the correct endpoint. Now we can remove those pesky mocks and rely on the actual controllers logic. In the next post we'll go about modifying some mock styled tests into fake based tests.
+That's it! With these bits of code, we can instantiate a controller and provide our unit tests an `HttpClient` which will route requests to the correct endpoint. Now we can remove those pesky mocks and rely on the actual controller’s logic. In the next post we'll go about modifying some mock styled tests into fake based tests.
 
 # Code
 
@@ -302,8 +302,8 @@ You can visit [here](https://github.com/kwojcicki/manual-self-host) to view the 
 
 ## Isn't this the same as mocking?
 
-Yes and no. Yes we we'll need to manually setup the test data, but no we do not need to explicitly define the behavior of our dependencies. That's a huge win given our dependencies can at any moment introduce a hidden change (that isn't technically a breaking change) but will break your implementation. This is the reverse of [Hyrum's Law](https://www.hyrumslaw.com/) where you want to minimize the chances of a breaking API change making it's way to production. Ideally using unit tests with self hosted webservers will allow you and your coworkers to instantly know if a change will break a downstream dependency and either provide them with a migration strategy or the opportunity to rethink your current approach.
+Yes and no. Yes, we'll need to manually setup the test data, but no we do not need to explicitly define the behavior of our dependencies. That's a huge win given our dependencies can at any moment introduce a hidden change (that isn't technically a breaking change) but will break your implementation. This is the reverse of [Hyrum's Law](https://www.hyrumslaw.com/) where you want to minimize the chances of a breaking API change making it's way to production. Ideally, using unit tests with self hosted webservers will allow you and your coworkers to instantly know if a change will break a downstream dependency and either provide them with a migration strategy or the opportunity to rethink your current approach.
 
 ## How do we handle 3rd party dependencies
 
-Unfortunately in the case of 3rd party dependencies you only really have two options. Either use their in memory implementation ([DynamoDB in memory configuration flag](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html) or [Embedded Redis](https://github.com/kstyrc/embedded-redis) are such examples) or continue mocking out these dependencies and ask the maintainers to provide you with an in memory option.  
+Unfortunately, in the case of 3rd party dependencies you only really have two options. Either use their in memory implementation ([DynamoDB in memory configuration flag](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html) or [Embedded Redis](https://github.com/kstyrc/embedded-redis) are such examples) or continue mocking out these dependencies and ask the maintainers to provide you with an in memory option.
