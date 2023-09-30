@@ -42,7 +42,7 @@ export const handler = async (event) => {
 };
 ```
 
-and then we'll invoke that lambda, concurrently and repeatedly, multiple times a second and see how often each environment is reused by the same user.
+and then we'll invoke that lambda, concurrently and repeatedly, multiple times and see how often each environment is reused by the same user.
 
 ```javascript
 const call = async (startTime) => {
@@ -85,9 +85,9 @@ const call = async (startTime) => {
 })();
 ```
 
-Depending on the number of concurrent imitated users and the sleep time between requests the session based hit rates differed. In a sample ran with 10 users and 1 second between each request the hit rates were ```rates: 0.63,0.38,0.41,0.45,0.47,0.26,0.46,0.42,0.43,0.36```. Pretty good if each hit means we are saving 1 call to DynamoDB or S3.
+Depending on the number of concurrent imitated users and the sleep time between requests the session based hit rates differed. In a sample ran with 10 users and up to 1 second between each request the hit rates were ```rates: 0.63,0.38,0.41,0.45,0.47,0.26,0.46,0.42,0.43,0.36```. Pretty good if each hit means we are saving 1 call to DynamoDB or S3.
 
-In systems I've worked on we've seen in-memory session cache hit rates of close to 90%. However, your milage will vary based on user activity patterns and your exact cache usage, as with most performance enhancements it's good to measure before and after to see if the extra computation is worth it!
+In systems I've worked on we've seen in-memory session cache hit rates as high as 90%. However, your milage will vary based on user activity patterns and your exact cache usage, as with most performance enhancements it's good to measure before and after to see if the extra computation is worth it!
 
 # Notes
 
@@ -95,4 +95,4 @@ In systems I've worked on we've seen in-memory session cache hit rates of close 
 
 For example if you want to perform post request user analytics (say enriching the logs with what country/state a user is from), you can queue that up to be done during the next request (just be careful of orphaned threads!).
 
-Other common idea is to preemptively establish persistent connections to your databases/external services. 
+Another common idea is to preemptively establish persistent connections to your databases/external services. [↩](#a1)
