@@ -100,8 +100,8 @@ The intersection of these two circles needs to be removed (formulas taken from [
 
 $$
 
-r_1 = \sqrt(x_1^2 + y_1^2) \\
-r_2 = \sqrt((x_1-1)^2 + y_1^2) \\
+r_1 = \sqrt{(x_1^2 + y_1^2)} \\
+r_2 = \sqrt{((x_1-1)^2 + y_1^2)} \\
 c_{bd} = 2 * \arccos{\frac{r_2^2 + 1 - r_1^2}{2r_2}} \\
 c_{ad} = 2 * \arccos{\frac{r_1^2 + 1 - r_2^2}{2r_0}} \\
 \textrm{intersection area} = \frac{1}{2}r_2^2(c_{bd} - \sin(c_{bd})) + \frac{1}{2}r_1^2(c_{ad} - \sin(c_{ad}))
