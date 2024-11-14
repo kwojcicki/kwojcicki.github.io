@@ -2,7 +2,7 @@
 layout: post
 title: "Jane Street Puzzle: Beside the Point"
 subtitle: "Presenting my solution to the Beside the Point puzzle"
-date: 2024-11-11 09:36:00
+date: 2024-12-02 09:36:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
@@ -92,9 +92,9 @@ x ^ 2 + y^2 = x_1^2 + y^2 \\
 x^2 + y^2 -2x = x_1^2 +y_1^2 - 2x_1
 $$
 
-![Expansions](../img/posts/beside_the_point.gif)
+![Visualization of the solution](../img/posts/beside_the_point.gif)
 
-The above clip visually shows how the two circles defined above encompass the entire valid area for the red point.
+The above clip visually shows how the two circles defined above encompass the entire valid area for the red point. You can play with the demo yourself [here](https://www.desmos.com/calculator/nluntf7z6c).
 
 The intersection of these two circles needs to be removed (formulas taken from [here](https://web.archive.org/web/20180422082904/http://mathforum.org/library/drmath/view/54785.html))
 
