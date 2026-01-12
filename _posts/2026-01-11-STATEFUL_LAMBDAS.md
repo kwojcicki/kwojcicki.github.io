@@ -2,7 +2,7 @@
 layout: post
 title: "Abusing AWS Lambda's 'Stateless' model"
 subtitle: "Using in-memory caches to speed up lambda's"
-date: 2023-09-30 13:44:00
+date: 2026-01-11 13:44:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
