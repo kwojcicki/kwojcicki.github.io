@@ -2,7 +2,7 @@
 layout: post
 title: "Let the types do the talking"
 subtitle: "Your documentation should explain the why, while the types explain the what"
-date: 2025-01-04 09:36:00
+date: 2026-01-04 09:36:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
 comments: true
