@@ -9,12 +9,14 @@ comments: true
 tags: []
 ---
 
-> Disclaimer: This is in the context of writing good ol CRUD apps, that don't require withstanding a solar storm or ns latency
+> Disclaimer: This is in the context of writing good ol enterprise CRUD apps, that don't require withstanding a solar storm or ns latency
 
-- I can run `npm install`, open VSC and have auto complete, type hinting and go to implementation
+- I can run `npm install`, open VSC and have auto complete, type hinting and go to implementation working in 2 minutes
 - ESLint enables infinite guardrails for devs and LLMs
   - Prevent specific libraries/methods from being used
-  - Stop error prone call patterns or structure
+  - Stop error prone call patterns or structures
+- It's fast enough and safe enough to fetch and return something from a database or a downstream dependency 
+- Can be used across the full-stack
 - Thriving ecosystem
 - Easily monkey-patch or even edit libraries
   - Library has a bug or a doesn't support your exact use case? Add a post-install script that overrides some `.js` file or
@@ -32,10 +34,9 @@ theme.createVictoryTheme = (
   return victoryTheme;
 };
 ```
-- Can be used across the full-stack
 - I don't have to endlessly `try/catch` or add `throws`
   - If an exception occurs, great a top level `try/catch` can return a 500 or let some other mechanism retry the input (SQS)
-- `JSON.parse(...)` and `JSON.stringify`
+- `JSON.parse(...)` and `JSON.stringify(...)`
 
 ```typescript
 const body = JSON.stringify(...);
@@ -44,7 +45,7 @@ const data = await response.json();
 ```
 - You can take a production bundle, edit it and redeploy it in seconds
 - The standard library is structurally limited and concise
-   - most programmers can read Typescript and understand it
+   - Most programmers can read Typescript and understand it
    - At a granular enough level there is a single way to do things, and it's usually the right one.
    - I have two requests I want done in parallel? No deciding if I want to use a thread, virtual thread, thread pool, coroutine, executor, future, fiber...
 
@@ -97,4 +98,3 @@ else console.error(result.reason);
 const result = doSomething(input);
 return { input, result }
 ```
-- It's fast enough
