@@ -107,7 +107,7 @@ Amazon Web Services (AWS) powers the internet, [each of outage results in millio
 
 The AWS SDK JS is on its third version, with the latest version introducing a [middleware stack](https://aws.amazon.com/blogs/developer/middleware-stack-modular-aws-sdk-js/) enabling developers to customize the SDK behavior via the middleware.
 
-Common usages for the middleware are: authentication, rate limiting, circuit breaking, request deduplication, shadow testing, tracing and routing routing.  
+Common usages for the middleware are: authentication, rate limiting, circuit breaking, request deduplication, shadow testing, tracing and request routing.  
 
 # The AWS SDK v3 middleware stack
 
@@ -152,7 +152,7 @@ Every SDK client owns a `middlewareStack`. When you call `client.send(command)` 
 
 Caching is typically implemented on a per method basis via:
 
-```typscript
+```typescript
 const map: Map<String, Response> = new Map()
 
 const getData = async (id: String) => {
@@ -252,7 +252,7 @@ This leads to a ton of bloat everywhere and actually has a bug for duplicate in-
 
 ## aws-sdk-cache-middleware
 
-[aws-sdk-cache-middleware](https://www.npmjs.com/package/aws-sdk-cache-middleware) is a library that allows you to easily move the caching step into the client.
+[aws-sdk-cache-middleware](https://www.npmjs.com/package/aws-sdk-cache-middleware) is a library that allows you to easily move the caching step into AWS SDK JS's middleware stack.
 
 ```typescript
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
