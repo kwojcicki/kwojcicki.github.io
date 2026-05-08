@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Coding is not solved"
-subtitle: "Why LLMs will only continue to allow software engineers to flourish"
+subtitle: "Why LLMs allow software engineers to flourish"
 date: 2026-05-07 09:36:00
 author: "Krystian Wojcicki"
 header-img: "img/posts/jekyll-bg.jpg"
@@ -38,6 +38,9 @@ Utilizing LLMs inherently requires a good prompt, which inturn requires a [good 
 # Notes
 
 <b id="f1">[1]</b>This blog is agnostic to your thoughts on memory management and type safety [↩](#a1)
+
 <b id="f2">[2]</b> I would love counter examples [↩](#a2)
+
 <b id="f3">[3]</b> It does for very specific use cases https://aws.amazon.com/about-aws/whats-new/2024/11/amazon-s3-express-one-zone-append-data-object/ [↩](#a3)
+
 <b id="f4">[4]</b>I am very much pro LLM/coding agents. I've gotten huge benefits out of them for designing and prototyping applications but I consistently see them breaking when not babied into the proper direction. [↩](#a4)
