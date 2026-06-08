@@ -11,7 +11,7 @@ tags: []
 
 When diagnosing a memory leak I suspected was caused by orphaned processes, I ran into a snag with `ps` not being available within the AWS Lambda NodeJS runtime (potentially other ones as well).
 
-Instead I had to do to get the running processes the hard way.
+Instead I had to do things the hard way.
 
 ![ps command not found within AWS Lambda](/img/posts/missing-ps.png)
 
