@@ -528,7 +528,7 @@ With that set the runtime of the brute force is lighting fast and yields the pat
 
 ![Hand drawn solution to knight move 7](/img/posts/pentupfrustration3_knightmove7.png)
 
-Here's the Java code that produced the final result of $33609$
+Here's the Java code that produced the final result of $$ 33609 $$
 
 ```java
 package janestreet;
