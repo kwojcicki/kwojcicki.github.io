@@ -121,6 +121,8 @@ Tile spacing
     const CANVAS_WIDTH = 1300;
     const CANVAS_HEIGHT = 760;
     const BOARD_CENTER = { x: 650, y: 420 };
+    const TARGET_FRAME_RATE = 30;
+    const FRAME_INTERVAL = 1000 / TARGET_FRAME_RATE;
     // Match the grass tile's top-face proportions so neighboring tile edges align.
     const VIEW_ANGLE = Math.PI / 4;
     const ISO_VERTICAL_SCALE = 0.583;
@@ -207,6 +209,7 @@ Tile spacing
     let selectedMove = 0;
     let tileSpacing = Number(spacingSlider.value);
     let time = 0;
+    let lastRenderedAt = 0;
     let tileWaveStartedAt = null;
     let prismMotion = { fromMove: 0, toMove: 0, startedAt: 0 };
     let autoplayTimer = null;
@@ -405,9 +408,15 @@ Tile spacing
       context.restore();
     }
 
-    function render() {
-      time += 0.016;
-      const now = performance.now();
+    function render(now) {
+      requestAnimationFrame(render);
+      if (now - lastRenderedAt < FRAME_INTERVAL) return;
+
+      const elapsed = lastRenderedAt ? now - lastRenderedAt : FRAME_INTERVAL;
+      lastRenderedAt = now;
+      time += elapsed / 1000;
+      // time += 0.016;
+      // const now = performance.now();
       context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
       if (assets.grass.complete) {
@@ -422,8 +431,6 @@ Tile spacing
       context.font = '700 17px "Arial Rounded MT Bold", "Trebuchet MS", sans-serif';
       context.textAlign = 'center';
       context.fillText(`Move ${selectedMove}`, BOARD_CENTER.x, 51);
-
-      requestAnimationFrame(render);
     }
 
     function updateSelectedMove(move) {
@@ -471,7 +478,7 @@ Tile spacing
     });
 
     updateSelectedMove(0);
-    render();
+    requestAnimationFrame(render);
   </script>
 
 # Discovery
