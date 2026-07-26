@@ -526,7 +526,7 @@ You'll notice that the sequence does not in fact end with z-index of 1, so we'll
 
 With that set the runtime of the brute force is lighting fast and yields the path depicted in the graphic above or more crudely as shown below.
 
-![Hand drawn solution to knight move 7](/img/posts/pentupfrustration3_knightmove7.PNG)
+![Hand drawn solution to knight move 7](/img/posts/pentupfrustration3_knightmove7.png)
 
 Here's the Java code that produced the final result of $33609$
 
