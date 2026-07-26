@@ -9,11 +9,11 @@ comments: true
 tags: [Tutorial]
 ---
 
-<script type="text/javascript" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
 </script>
+
+<script type="text/javascript" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 
 
   <style>
@@ -67,7 +67,7 @@ tags: [Tutorial]
     .spacing-control { padding-top: 0; color: #dbc8a6; font-size: .9rem; }
     .spacing-control output { min-width: 3ch; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 
-    button {
+    .shell button {
       border: 1px solid #9b7047;
       border-radius: 8px;
       background: #4a3022;
@@ -77,7 +77,7 @@ tags: [Tutorial]
       cursor: pointer;
     }
 
-    button:hover { background: #67432e; }
+    .shell button:hover { background: #67432e; }
     input { width: 100%; accent-color: var(--gold); }
     .detail { min-height: 25px; margin: 10px 2px 0; color: #f0d29a; }
     .hint { font-size: .87rem; color: #bda985; }
@@ -489,7 +489,7 @@ Naively a naive brute force DFS would require checking
 
 $$
 \begin{aligned}
-\text{# of moves} &= (\text{# of squares in a row} \times \text{# of squares in a column - 1}) ^{|\text{+ moves}| + |\text{* moves}\ + |\text{/ moves}|} \\
+\text{# of moves} &= (\text{# of squares in a row} \times \text{# of squares in a column} - 1) ^{\substack{|\text{+ moves}| + |\text{* moves}| \\ + |\text{/ moves}|}} \\
 &= 63 ^{8 + 4 + 4} \\
 &= 6.158129128\times10^{28}
 \end{aligned}
