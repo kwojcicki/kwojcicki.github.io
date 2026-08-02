@@ -11,7 +11,7 @@ tags: []
 
 # Introduction
 
-AWS Lambda's are not truly ephemeral (you can read more about that in [this post](./2026-01-11-STATEFUL_LAMBDAS.md)), instead they are short lived stateFUL instances. Lambda instances can be reused across requests for up to two hours, while this is much shorter than a long living EC2 instance this behavior brings in your typical class of stateful bugs.
+AWS Lambda's are not truly ephemeral (you can read more [in this post](./2026-01-11-STATEFUL_LAMBDAS.md)), instead they are short lived stateFUL instances. Lambda instances can be reused across requests for up to two hours, while this is much shorter than a long living EC2 instance this behavior brings in your typical class of stateful bugs.
 
 This post outlines symptoms, diagnosis and remediation for common bugs introduced when developers forget to pay attention to statefullness within their Lambda functions. The examples utilize Typescript to illustrate the point but both the symptoms and fixes are universal to all languages.
 
@@ -35,7 +35,7 @@ const getEmployeeData = (employeeIds: number[]): Promise<Employee[]> => {
 }
 ```
 
-`Promise.all` is the problematic piece of code, it will immediately throw if any of the promises themselves throw (you can think of promises as threads, or subprocesses). This error will bubble up and return an error to the user. However the remaining promises will continue executing upon the resumption of the Lambda instance. This can lead to a recurring resource exhaustion.
+`Promise.all` is the problematic piece of code, it will immediately throw if any of the promises themselves throw (you can think of promises as threads, or subprocesses). This error will bubble up and return an error to the user. However the remaining promises will continue executing upon the resumption of the Lambda instance. This can lead to recurring resource exhaustion.
 
 Imagine the first Lambda invocation has `10_000` employee IDs, one of those promises may fail very quickly and the Lambda will return an error. The next invocation brings in an additional `10_000` employee IDs, the previous `9_999` promises will continue executing (likely in a retry state as their previous request had timed out). This results in a negative pinwheel effect where the Lambda cannot make progress as it immediately crashes or moves at a snail pace.
 
@@ -48,7 +48,7 @@ The general advice would be to:
 - prevent unbounded amounts of work by limiting concurrency
 - load shed
 - add timeouts
-- monitor your key infrastructure resources
+- monitor your key infrastructure resource usage
 
 # Stalled
 
@@ -79,11 +79,11 @@ const processFile = async (): Promise<void> => {
 };
 ```
 
-The Node JS AWS SDK has a maxSocket limit of 50, the socket is held until the underlying response body has been closed. In this case the csv `parse` library does not fully close the stream if a partial read is being done. Thus on the 51st run (using the same Lambda instance) the Lambda will attempt to open a connection to S3, but since all the previous sockets are still used it will wait indefinitely for the socket until the Lambda time's out.
+The Node JS AWS SDK has a maxSocket limit of 50, the socket is held until the underlying response body has been closed. In this case the csv `parse` library does not fully close the stream if a partial read is being done. Thus on the 51st run the Lambda will attempt to open a connection to S3, but since all the previous sockets are still used it will wait indefinitely for the socket until the Lambda time's out.
 
 **Remediation**:
 
-To prevent this class of failure, give every acquired resource an explicit lifecycle add logs when an allocated resource is acquired and then a subsequent logs when the resource is released. Consume or destroy response bodies, close streams, files, and sockets, release pooled connections, cancel timers and background work, and remove event listeners.
+To prevent this class of failure, give every acquired resource an explicit lifecycle, add logs when an allocated resource is acquired and then subsequent logs when the resource is released. Consume or destroy response bodies, close streams, files, and sockets, release pooled connections, cancel timers and background work, and remove event listeners.
 
 # Never ending
 
